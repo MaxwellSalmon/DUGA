@@ -3,7 +3,7 @@
 DUGA is a raycaster made in Python3 with Pygame. It is a game built on top of a simple engine of the same name. An example of what the Pygame framework is capable of.
 
 The trailer for the Tech Demo
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ai0-Cr_RElo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![DUGA Trailer](http://i3.ytimg.com/vi/By_cbsacvTM/maxresdefault.jpg)](https://www.youtube.com/watch?v=Ai0-Cr_RElo)
 
 ## My goal
 
