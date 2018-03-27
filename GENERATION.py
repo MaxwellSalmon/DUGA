@@ -14,6 +14,8 @@ class Generator:
         self.segpath = []
         self.all_segs = []
         self.seed = None
+        self.max_item_amount = 12
+        self.max_npc_amount = SETTINGS.current_level*2
 
     def create_seed(self, seed):
         print(seed)
@@ -412,8 +414,20 @@ class Generator:
     #How do I ensure, that items and npcs don't spawn outside maps?
 
     def place_random_items(self):
-        #(max number of spawned items?)
+        items = 0
+
+        for seg in self.segpath:
+            for item in seg.items:
+                items += 1
+
+        if items >= self.max_item_amount:
+            return
+            
         #Higher chance of spawning items in dead ends.
+#        for seg in self.segpath:
+#            if len(seg.doors) == 1:
+                
+        
         #Higher chance of spawning ammo next to weapons.
         #Items rarity should be added - higher lvl number = rare items
         #(Higher chance of health and armor close to enemies)
@@ -422,6 +436,7 @@ class Generator:
     def spawn_random_npcs(self):
         #(Max number of spawned enemies?)
         #More enemies compared to lvl number
+        pass
         
 
 if __name__ == '__main__':
