@@ -36,7 +36,7 @@ class Item:
                         SETTINGS.player_states['armor'] = True
                         remove = True
 
-                elif self.item_type == 'bullet' or self.item_type == 'shell':
+                elif self.item_type == 'bullet' or self.item_type == 'shell' or self.item_type == 'ferromagnetic':
                     if SETTINGS.held_ammo[self.item_type] < SETTINGS.max_ammo[self.item_type]:
                         SETTINGS.held_ammo[self.item_type] += self.effect
                         if SETTINGS.held_ammo[self.item_type] > SETTINGS.max_ammo[self.item_type]:

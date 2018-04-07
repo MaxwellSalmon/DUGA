@@ -139,7 +139,7 @@ def load_guns():
             'magsize': 8,
             'rlspeed': 1.5,
             'zoom': 8,
-            'ammotype': 'bullet',
+            'ammotype': 'ferromagnetic',
             'guntype': 'primary',
             'name': 'Gauss rifle'
             },{
@@ -347,7 +347,14 @@ def load_item_types():
                 'filepath' : tuple(SETTINGS.gun_list[5].itemtexture.split('\\')),
                 'type' : SETTINGS.gun_list[5].guntype,
                 'effect': SETTINGS.gun_list[5],
-                'id': 9
+                'id': 9,
+                },
+            #Ferromagnetic ammo
+            {
+                'filepath' : ('graphics', 'items', 'ferromagnetic.png'),
+                'type' : 'ferromagnetic',
+                'effect': 6,
+                'id': 10,
                 },
             ]
 

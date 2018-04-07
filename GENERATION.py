@@ -6,7 +6,6 @@ import SEGMENTS
 import SETTINGS
 import TEXTURES
 import LEVELS
-import PATHFINDING
 
 class Generator:
 
@@ -32,7 +31,8 @@ class Generator:
                                  6,6,
                                  7,7,
                                  8,8,8,8,8,
-                                 9]
+                                 9,
+                                 10,10,10,10]
 
         self.max_npc_amount = SETTINGS.current_level*2
         self.max_npcs_per_segment = 3
@@ -472,7 +472,7 @@ class Generator:
                                 for pos in adjacents:
                                     occupied = [x for x in seg.items if x[0] == (max(0, min(pos[0], len(seg.array)-1)), max(0, min(pos[1], len(seg.array)-1)))]
                                     print(pos[1], pos[0])
-                                    if self.ammo_spawn_chance >= random.randint(0, 100) and not SETTINGS.tile_solid[self.segpath[i].array[pos[1]][pos[0]]] and not occupied:
+                                    if self.ammo_spawn_chance >= random.randint(0, 100) and not SETTINGS.tile_solid[self.segpath[i].array[max(0, min(pos[0], len(seg.array)-1))][max(0, min(pos[1], len(seg.array)-1))]] and not occupied:
                                         self.segpath[i].items.append(((pos[0], pos[1]), ammo['id']))
                                         print("Spawned ammo near gun")
                                         

@@ -315,7 +315,7 @@ gameLoad.load_resources()
 gameLoad.load_entities()
 
 mapGenerator = GENERATION.Generator()
-mapGenerator.generate_levels(3,3)
+mapGenerator.generate_levels(5,3)
 
 gameLoad.get_canvas_size()
 
