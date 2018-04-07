@@ -125,6 +125,29 @@ def load_guns():
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
                 }, (37,10)))
+    
+    #Gauss - 5
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'gauss_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'gaussitem.png')
+         },{
+            'dmg' : 6,
+            'spread' : 10,
+            'hitchance': 85,
+            'firerate': 0.5,
+            'range': 15,
+            'magsize': 8,
+            'rlspeed': 1.5,
+            'zoom': 8,
+            'ammotype': 'bullet',
+            'guntype': 'primary',
+            'name': 'Gauss rifle'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
 
 def load_npc_types():
     SETTINGS.npc_types = [
@@ -318,6 +341,13 @@ def load_item_types():
                 'type' : SETTINGS.gun_list[4].guntype,
                 'effect': SETTINGS.gun_list[4],
                 'id': 8
+                },
+            #Gauss rifle
+            {
+                'filepath' : tuple(SETTINGS.gun_list[5].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[5].guntype,
+                'effect': SETTINGS.gun_list[5],
+                'id': 9
                 },
             ]
 
