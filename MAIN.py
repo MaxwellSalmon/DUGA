@@ -58,6 +58,9 @@ class Load:
         SETTINGS.player_map_pos = SETTINGS.levels_list[SETTINGS.current_level].player_pos
         SETTINGS.player_pos[0] = int((SETTINGS.levels_list[SETTINGS.current_level].player_pos[0] * SETTINGS.tile_size) + SETTINGS.tile_size/2)
         SETTINGS.player_pos[1] = int((SETTINGS.levels_list[SETTINGS.current_level].player_pos[1] * SETTINGS.tile_size) + SETTINGS.tile_size/2)
+        if len(SETTINGS.gun_list) != 0:
+            for gun in SETTINGS.gun_list:
+                gun.re_init()
 
     def load_entities(self):
         ENTITIES.load_guns()
@@ -88,6 +91,7 @@ class Load:
             SETTINGS.player_states['fade'] = True
             
         SETTINGS.walkable_area = list(PATHFINDING.pathfind(SETTINGS.player_map_pos, SETTINGS.all_tiles[-1].map_pos))
+        gameMap.remove_inaccessible_entities()
         ENTITIES.spawn_npcs()
         ENTITIES.spawn_items()
 
@@ -304,15 +308,18 @@ def main_loop():
         allfps.append(clock.get_fps())
 
 #Probably temporary object init
-mapGenerator = GENERATION.Generator()
-mapGenerator.generate_levels(3,5)
-SETTINGS.current_level = 5 #temporary
+#SETTINGS.current_level = 5 #temporary
 
-#Setup and classes
 gameLoad = Load()
 gameLoad.load_resources()
-gameLoad.get_canvas_size()
 gameLoad.load_entities()
+
+mapGenerator = GENERATION.Generator()
+mapGenerator.generate_levels(3,3)
+
+gameLoad.get_canvas_size()
+
+#Setup and classes
 
 thanks = TEXT.Text(150,250,"THANKS  FOR  PLAYING  DUGA  TECH  DEMO", SETTINGS.WHITE, "DUGAFONT.ttf", 24)
 

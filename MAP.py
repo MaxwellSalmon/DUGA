@@ -32,6 +32,21 @@ class Map:
             if SETTINGS.tile_visible[tile.ID]:
                 tile.draw(canvas)
 
+    def remove_inaccessible_entities(self):
+        wa = []
+        for i in SETTINGS.walkable_area:
+            wa.append(i.map_pos)
+        remove_items = [x for x in SETTINGS.levels_list[SETTINGS.current_level].items if list(x[0]) not in wa]
+        remove_npcs = [x for x in SETTINGS.levels_list[SETTINGS.current_level].npcs if list(x[0]) not in wa]
+
+        for i in remove_items:
+            SETTINGS.levels_list[SETTINGS.current_level].items.remove(i)
+
+        for i in remove_npcs:
+            SETTINGS.levels_list[SETTINGS.current_level].npcs.remove(i)
+        
+        print("ENTITIES: ", remove_items, remove_npcs)
+
 
 class Tile:
     

@@ -6,6 +6,7 @@ import SEGMENTS
 import SETTINGS
 import TEXTURES
 import LEVELS
+import PATHFINDING
 
 class Generator:
 
@@ -14,19 +15,39 @@ class Generator:
         self.segpath = []
         self.all_segs = []
         self.seed = None
-        self.max_item_amount = 12
+        self.spawnable_area = []
+
+        #Constants
+        self.max_item_amount = int(SETTINGS.current_level * 1.5 ) + 16
+        self.max_items_per_segment = 8
+        self.spawn_chance = 8
+        self.spawn_chance_high = 20
+        self.ammo_spawn_chance = 35
+        self.item_probability = [0,0,0,0,0,0,0,0,
+                                 1,1,1,1,1,1,1,1,
+                                 2,2,2,2,2,2,
+                                 3,3,3,3,3,
+                                 4,4,4,
+                                 5,5,5,5,
+                                 6,6,
+                                 7,7,
+                                 8,8,8,8,8,
+                                 9]
+
         self.max_npc_amount = SETTINGS.current_level*2
+        self.max_npcs_per_segment = 3
+        self.npc_spawn_chance = 12
+        self.npc_probability = [0,1,1,2,3,3]
 
     def create_seed(self, seed):
-        print(seed)
-        if not seed:
-            self.seed = random.random()
-        else:
+        if seed:
             while type(seed) is not tuple:
                 self.seed = seed[0]
-       # print(self.seed)
+        else:
+            self.seed = random.random()
 
-        random.seed(seed)
+        random.seed(self.seed)
+        print("Seed: ", self.seed)
 
     def generate_levels(self, amount, size, *seed):
         #Generate sequence of levels and append to SETTINGS.all_levels
@@ -152,8 +173,11 @@ class Generator:
             for col in range(len(array[row])):
                 if not array[row][col]:
                     array[row][col] = SEGMENTS.Segment({'id' : None, 'items' : [], 'npcs' : [], 'array' : empty, 'doors' : [], 'type' : 'empty'})
+
+        self.place_random_items()
+        self.spawn_random_npcs()
             
-        self.translate_map(self.kill_dead_ends(array), size)
+        self.translate_map(self.kill_dead_ends(array), size)            
 
     def rotate_segment(self, segment):
         #Rotate array
@@ -411,32 +435,80 @@ class Generator:
             'player_pos' : calcstart,
             }))
 
-    #How do I ensure, that items and npcs don't spawn outside maps?
+    #How do I ensure, that items and npcs don't spawn outside maps? I will just destroy non-accessible items after spawning.
 
     def place_random_items(self):
         items = 0
 
+        #If there are too many items, return
         for seg in self.segpath:
             for item in seg.items:
                 items += 1
 
         if items >= self.max_item_amount:
             return
-            
-        #Higher chance of spawning items in dead ends.
-#        for seg in self.segpath:
-#            if len(seg.doors) == 1:
-                
         
-        #Higher chance of spawning ammo next to weapons.
-        #Items rarity should be added - higher lvl number = rare items
-        #(Higher chance of health and armor close to enemies)
-        pass
+        #Higher chance of spawning items in dead ends.
+        for i in range(len(self.segpath)):    
+            seg = self.segpath[i]
+            for y in range(self.max_items_per_segment):
+                if (len(seg.doors) <= 1 and self.spawn_chance_high >= random.randint(0,100)) or (len(seg.doors) > 1 and self.spawn_chance >= random.randint(0,100)):
+                    is_good = False
+                    while not is_good:
+                        randomx = random.randint(0, len(seg.array)-1)
+                        randomy = random.randint(0, len(seg.array)-1)
+                        occupied = [x for x in seg.items if list(x[0]) == [randomx, randomy]]
+                        
+                        if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
+                            item = random.choice(self.item_probability)
+                            self.segpath[i].items.append(((randomx, randomy), item))
+                            print("Spawned item ", item)
+
+                            #Higher chance of ammo spawning next to weapons
+                            print(SETTINGS.item_types[item]['type'])
+                            if SETTINGS.item_types[item]['type'] in ['primary', 'secondary']:
+                                ammo = [x for x in SETTINGS.item_types if x['type'] == SETTINGS.item_types[item]['effect'].ammo_type][0]
+                                adjacents = [[randomx+1, randomy], [randomx, randomy+1], [randomx-1, randomy], [randomx, randomy-1]]
+                                for pos in adjacents:
+                                    occupied = [x for x in seg.items if x[0] == (max(0, min(pos[0], len(seg.array)-1)), max(0, min(pos[1], len(seg.array)-1)))]
+                                    print(pos[1], pos[0])
+                                    if self.ammo_spawn_chance >= random.randint(0, 100) and not SETTINGS.tile_solid[self.segpath[i].array[pos[1]][pos[0]]] and not occupied:
+                                        self.segpath[i].items.append(((pos[0], pos[1]), ammo['id']))
+                                        print("Spawned ammo near gun")
+                                        
+                            is_good = True
+        
 
     def spawn_random_npcs(self):
-        #(Max number of spawned enemies?)
-        #More enemies compared to lvl number
-        pass
+        npcs = 0
+        degrees = [90, 180, 270, 360]
+
+        for seg in self.segpath:
+            for npc in seg.npcs:
+                npcs += 1
+
+        if npcs >= self.max_npc_amount:
+            return
+
+        #Spawn NPCs randomly
+        for i in range(len(self.segpath)):
+            seg = self.segpath[i]
+            for y in range(self.max_npcs_per_segment):
+                if self.npc_spawn_chance >= random.randint(0,100):
+                    is_good = False
+                    while not is_good:
+                        randomx = random.randint(0, len(seg.array)-1)
+                        randomy = random.randint(0, len(seg.array)-1)
+                        occupied = [x for x in seg.npcs if list(x[0]) == [randomx, randomy]]
+
+                        if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
+                            npc = random.choice(self.npc_probability)
+                            self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
+                            print("Spawned NPC")
+
+                            is_good = True
+                
+            
         
 
 if __name__ == '__main__':

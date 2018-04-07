@@ -36,6 +36,7 @@ class Gun:
         self.rlspeed = stats['rlspeed']
         self.aim_pos = [SETTINGS.canvas_actual_width/2 - aim_pos[0] * 6, SETTINGS.canvas_target_height/2 - aim_pos[1] * 6]
         self.OG_aim_pos = [SETTINGS.canvas_actual_width/2 - aim_pos[0] * 6, SETTINGS.canvas_target_height/2 - aim_pos[1] * 6]
+        self.raw_aim_pos = aim_pos
         self.mag_size = stats['magsize']
         self.zoom = stats['zoom']
         self.ammo_type = stats['ammotype']
@@ -129,7 +130,7 @@ class Gun:
                     elif self.hipfire.index(self.current_img) <= 1 and self.timer >= self.shoottime:
                         self.current_img = self.hipfire[-1]
                         self.timer = 0
-                    elif self.current_img == self.hipfire[-1]:
+                    elif self.current_img == self.hipfire[-1] and self.timer >= self.shoottime:
                         self.current_img = self.aim[0]
                         self.shoot_busy = False
                         self.current_mag -= 1
@@ -167,7 +168,7 @@ class Gun:
                     elif self.aimdown.index(self.current_img) <= 1 and self.timer >= self.shoottime:
                         self.current_img = self.aimdown[-1]
                         self.timer = 0
-                    elif self.current_img == self.aimdown[-1]:
+                    elif self.current_img == self.aimdown[-1] and self.timer >= self.shoottime:
                         self.current_img = self.aim[-1]
                         self.shoot_busy = False
                         self.current_mag -= 1
@@ -323,7 +324,9 @@ class Gun:
 
         canvas.blit(self.current_img, self.aim_pos)
 
-            
+    def re_init(self):
+        self.aim_pos = [SETTINGS.canvas_actual_width/2 - self.raw_aim_pos[0] * 6, SETTINGS.canvas_target_height/2 - self.raw_aim_pos[1] * 6]
+        self.OG_aim_pos = [SETTINGS.canvas_actual_width/2 - self.raw_aim_pos[0] * 6, SETTINGS.canvas_target_height/2 - self.raw_aim_pos[1] * 6]
 
 
 

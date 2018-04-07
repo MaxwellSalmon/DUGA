@@ -1,7 +1,7 @@
 #Settings for DUGA
 
 '''Game settings'''
-current_level = 4
+current_level = 5
 fps = 230
 caption = "DUGA v09 - %s"
 mode = 1
@@ -64,7 +64,6 @@ godmode = True
 player_pos = [0,0]
 player_map_pos = []
 player_rect = None
-gun_list = []
 mouse_btn_active = False
 mouse2_btn_active = False
 reload_key_active = False
@@ -94,6 +93,7 @@ current_gun = None
 #Below this point are non-configurable variables.
 next_gun = None
 prev_gun = None
+gun_list = []
 
 '''NPC settings'''
 #NPC information goes here
