@@ -91,7 +91,7 @@ class Load:
             SETTINGS.player_states['fade'] = True
             
         SETTINGS.walkable_area = list(PATHFINDING.pathfind(SETTINGS.player_map_pos, SETTINGS.all_tiles[-1].map_pos))
-        gameMap.remove_inaccessible_entities()
+        gameMap.move_inaccessible_entities()
         ENTITIES.spawn_npcs()
         ENTITIES.spawn_items()
 
@@ -328,7 +328,7 @@ gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)
 gameCanvas = Canvas(SETTINGS.canvas_map_width, SETTINGS.canvas_map_height)
 gamePlayer = PLAYER.Player(SETTINGS.player_pos)
 gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
-gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25})
+gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromagnetic' : 50})
 gameHUD = HUD.hud(path.join('graphics', 'hud.png'))
 
 #More loading - Level specific

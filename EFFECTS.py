@@ -39,7 +39,7 @@ def player_hurt(canvas):
 
     if SETTINGS.player_states['hurt']:
         blood.fill((255, 0, 0, hurt_intensity))
-        hurt_intensity = int(hurt_intensity / 2)
+        hurt_intensity = int(hurt_intensity / (2-SETTINGS.dt))
         if hurt_intensity == 0:
             SETTINGS.player_states['hurt'] = False
             hurt_intensity = 128
@@ -56,7 +56,8 @@ def player_heal(canvas):
     heal = pygame.Surface((SETTINGS.canvas_actual_width, SETTINGS.canvas_target_height)).convert_alpha()
 
     heal.fill((0, 255, 0, heal_intensity))
-    heal_intensity = int(heal_intensity / 2)
+    heal_intensity = int(heal_intensity / (2-SETTINGS.dt))
+    
     if heal_intensity == 0:
         SETTINGS.player_states['heal'] = False
         heal_intensity = 85
@@ -68,7 +69,7 @@ def player_armor(canvas):
     armor = pygame.Surface((SETTINGS.canvas_actual_width, SETTINGS.canvas_target_height)).convert_alpha()
 
     armor.fill((0, 0, 225, armor_intensity))
-    armor_intensity = int(armor_intensity / 2)
+    armor_intensity = int(armor_intensity / (2-SETTINGS.dt))
     if armor_intensity == 0:
         SETTINGS.player_states['armor'] = False
         armor_intensity = 85

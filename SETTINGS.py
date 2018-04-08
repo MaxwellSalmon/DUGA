@@ -2,7 +2,7 @@
 
 '''Game settings'''
 current_level = 5
-fps = 230
+fps = 31
 caption = "DUGA v09 - %s"
 mode = 1
 #Below this point are the non-configurable game variables.
@@ -57,9 +57,9 @@ all_doors = []
 player_speed = 256
 sensitivity = 0.25
 player_angle = 270
-player_health = 20
+player_health = 25
 player_armor = 0
-godmode = True
+godmode = False
 #Below this point are the non-configurable player variables.
 player_pos = [0,0]
 player_map_pos = []
@@ -88,7 +88,7 @@ texture_darken = 100
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = True
+unlimited_ammo = False
 current_gun = None
 #Below this point are non-configurable variables.
 next_gun = None

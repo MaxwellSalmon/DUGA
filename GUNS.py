@@ -269,7 +269,7 @@ class Gun:
 
             #Move gun from side to side when walking
             if SETTINGS.player_states['cspeed'] > 0 and SETTINGS.next_gun == SETTINGS.current_gun:
-                self.sintemp += math.pi/14
+                self.sintemp += math.pi/14 * (25 * SETTINGS.dt)
                 self.aim_pos[0] = math.sin(self.sintemp)*(SETTINGS.canvas_actual_width/swing) + self.OG_aim_pos[0]
                 self.aim_pos[1] = math.sin(self.sintemp*2) * wobble + (self.OG_aim_pos[1]+10)
             

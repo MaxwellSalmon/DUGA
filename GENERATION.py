@@ -399,7 +399,6 @@ class Generator:
             if x:
                 newarray.append(x)
 
-        
         #print(newarray)
 
         #Translate player pos
@@ -422,8 +421,6 @@ class Generator:
                 x = npc[0][0] + seg.width * seg.level_pos[0]
                 y = npc[0][1] + seg.height * seg.level_pos[1]
                 translated_npcs.append(((x,y), npc[1], npc[2]))
-
-        
         
         SETTINGS.levels_list.append(LEVELS.Level({
             'items' : translated_items,
@@ -434,8 +431,6 @@ class Generator:
             'npcs' : translated_npcs,
             'player_pos' : calcstart,
             }))
-
-    #How do I ensure, that items and npcs don't spawn outside maps? I will just destroy non-accessible items after spawning.
 
     def place_random_items(self):
         items = 0
@@ -462,19 +457,15 @@ class Generator:
                         if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
                             item = random.choice(self.item_probability)
                             self.segpath[i].items.append(((randomx, randomy), item))
-                            print("Spawned item ", item)
 
                             #Higher chance of ammo spawning next to weapons
-                            print(SETTINGS.item_types[item]['type'])
                             if SETTINGS.item_types[item]['type'] in ['primary', 'secondary']:
                                 ammo = [x for x in SETTINGS.item_types if x['type'] == SETTINGS.item_types[item]['effect'].ammo_type][0]
                                 adjacents = [[randomx+1, randomy], [randomx, randomy+1], [randomx-1, randomy], [randomx, randomy-1]]
                                 for pos in adjacents:
                                     occupied = [x for x in seg.items if x[0] == (max(0, min(pos[0], len(seg.array)-1)), max(0, min(pos[1], len(seg.array)-1)))]
-                                    print(pos[1], pos[0])
                                     if self.ammo_spawn_chance >= random.randint(0, 100) and not SETTINGS.tile_solid[self.segpath[i].array[max(0, min(pos[0], len(seg.array)-1))][max(0, min(pos[1], len(seg.array)-1))]] and not occupied:
                                         self.segpath[i].items.append(((pos[0], pos[1]), ammo['id']))
-                                        print("Spawned ammo near gun")
                                         
                             is_good = True
         
@@ -504,11 +495,8 @@ class Generator:
                         if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
                             npc = random.choice(self.npc_probability)
                             self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
-                            print("Spawned NPC")
 
                             is_good = True
-                
-            
         
 
 if __name__ == '__main__':
