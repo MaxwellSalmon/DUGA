@@ -45,7 +45,7 @@ def load_guns():
             'firerate': 0.3,
             'range': 8,
             'magsize': 2,
-            'rlspeed': 1.2,
+            'rlspeed': 1.4,
             'zoom': 8,
             'ammotype': 'shell',
             'guntype': 'primary',
@@ -137,7 +137,7 @@ def load_guns():
             'firerate': 0.5,
             'range': 15,
             'magsize': 8,
-            'rlspeed': 1.5,
+            'rlspeed': 1,
             'zoom': 8,
             'ammotype': 'ferromagnetic',
             'guntype': 'primary',
@@ -283,7 +283,7 @@ def load_item_types():
             {
                 'filepath' : ('graphics', 'items', 'firstaid.png'),
                 'type' : 'health',
-                'effect' : 15,
+                'effect' : 10,
                 'id' : 0,
                 },
             #Helmet

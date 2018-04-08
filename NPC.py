@@ -59,6 +59,8 @@ class Npc:
         self.dmg = stats['dmg']
         self.atckrate = stats['atckrate']
 
+        self.range = 5
+
         #Npc actions
         self.dead = False
         self.moving = False
@@ -582,7 +584,7 @@ class Npc:
                 
             elif self.atcktype == 'hitscan':
                 #Move somewhat close to player and change position after attacking
-                if self.dist <= SETTINGS.tile_size * 3 and (self.dist >= SETTINGS.tile_size * 1.5 or (SETTINGS.current_gun and SETTINGS.current_gun.guntype == 'melee')) and not self.attack_move:
+                if self.dist <= SETTINGS.tile_size * self.range and (self.dist >= SETTINGS.tile_size * 1.5 or (SETTINGS.current_gun and SETTINGS.current_gun.guntype == 'melee')) and not self.attack_move:
                     self.path = []
                     self.moving = False
                     if not self.attacking:
@@ -730,7 +732,7 @@ class Npc:
                             SETTINGS.player_health -= self.dmg
 
     def drop_item(self):
-        possible_drops = ['bullet', 'bullet', 'bullet', 'shell', 'shell', 'health', 'armor']
+        possible_drops = ['bullet', 'bullet', 'bullet', 'shell', 'shell', 'health', 'armor', 'ferromagnetic']
         drop = random.choice(possible_drops)
         effect = random.randint(2, 10)
         if drop == 'bullet':
@@ -741,6 +743,8 @@ class Npc:
             texture = 'firstaid.png'
         elif drop == 'armor':
             texture = 'helmet.png'
+        elif drop == 'ferromagnetic':
+            texture = 'ferromagnetic.png'
         SETTINGS.all_items.append(ITEMS.Item(self.map_pos, os.path.join('graphics', 'items',  texture), drop, effect))
 
 #stats = {

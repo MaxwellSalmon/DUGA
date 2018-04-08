@@ -32,11 +32,11 @@ class Generator:
                                  7,7,
                                  8,8,8,8,8,
                                  9,
-                                 10,10,10,10]
+                                 10,10,10,10,10]
 
         self.max_npc_amount = SETTINGS.current_level*2
         self.max_npcs_per_segment = 3
-        self.npc_spawn_chance = 12
+        self.npc_spawn_chance = 20 + SETTINGS.current_level*2
         self.npc_probability = [0,1,1,2,3,3]
 
     def create_seed(self, seed):

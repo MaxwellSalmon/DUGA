@@ -196,7 +196,11 @@ class Gun:
                     cap = (self.hit_percent * 0.96 ** (npc.dist*((100-self.hit_percent)/100)))
                         
                 if cap >= random.randint(0,int(npc.dist*(1/self.range))):
-                    npc.health -= self.dmg
+                    #Critical hit
+                    if (npc.state == 'idle' or npc.state == 'patrouling') and not npc.player_in_view:
+                        npc.health -= self.dmg * 2
+                    else:
+                        npc.health -= self.dmg
                     npc.timer = 0
                     npc.hurting = True
                     if npc.health <= 0:

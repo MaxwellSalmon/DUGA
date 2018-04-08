@@ -1,7 +1,7 @@
 #Settings for DUGA
 
 '''Game settings'''
-current_level = 5
+current_level = 0
 fps = 31
 caption = "DUGA v09 - %s"
 mode = 1
