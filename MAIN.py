@@ -130,6 +130,13 @@ class Canvas:
         
         pygame.display.set_caption("DUGA")
 
+        self.shade = [pygame.Surface((self.width, self.height/1.2)).convert_alpha(),
+                      pygame.Surface((self.width, self.height/2)).convert_alpha(),
+                      pygame.Surface((self.width, self.height/4)).convert_alpha(),
+                      pygame.Surface((self.width, self.height/8)).convert_alpha(),
+                      pygame.Surface((self.width, self.height/16)).convert_alpha()]
+        self.rgba = [SETTINGS.shade_rgba[0]/10, SETTINGS.shade_rgba[1]/10, SETTINGS.shade_rgba[2]/10, SETTINGS.shade_rgba[3]/10]
+
     def change_mode(self):
         if SETTINGS.mode == 1: #1 - 3D / 0 - 2D
             SETTINGS.mode = 0
@@ -144,6 +151,15 @@ class Canvas:
             self.canvas.fill(SETTINGS.levels_list[SETTINGS.current_level].sky_color)
             self.window.fill(SETTINGS.BLACK)
             pygame.draw.rect(self.canvas, SETTINGS.levels_list[SETTINGS.current_level].ground_color, (0, self.height/2, self.width, self.height/2))
+
+            if SETTINGS.shade:
+                for i in range(len(self.shade)):
+                    if i != 4:
+                        self.shade[i].fill((self.rgba[0] * i, self.rgba[1] * i, self.rgba[2] * i, self.rgba[3] * i))
+                    else:
+                        self.shade[i].fill((SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], SETTINGS.shade_rgba[3]))
+                    self.canvas.blit(self.shade[i], (0, self.height/2 - self.shade[i].get_height()/2))
+
         else:
             self.window.fill(SETTINGS.WHITE)
 
@@ -205,6 +221,9 @@ def render_screen(canvas):
             if item.vh == 'v':
                 #Make vertical walls slightly darker
                 canvas.blit(item.darkslice, (item.xpos, item.rect.y))
+            if SETTINGS.shade:
+                canvas.blit(item.shade_slice, (item.xpos, item.rect.y))
+                
         else:
             if item.new_rect.right > 0 and item.new_rect.x < SETTINGS.canvas_actual_width and item.distance < (SETTINGS.render * SETTINGS.tile_size):
                 item.draw(canvas)

@@ -33,6 +33,10 @@ screen_shake = 0
 resolution = 140
 fov = 60
 render = 10
+shade = True
+shade_rgba = (0,0,0,200)
+shade_visibility = 800
+
 #Below this point are the non-configurable raycasting variables.
 zbuffer = []
 middle_slice_len = None
@@ -83,8 +87,8 @@ player = None
 
 '''Texture settings'''
 #Wall textures and sprites go here.
-texture_list = []
 texture_darken = 100
+texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
