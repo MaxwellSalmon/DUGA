@@ -20,7 +20,7 @@ class Generator:
         self.max_item_amount = int(SETTINGS.current_level * 1.5 ) + 16
         self.max_items_per_segment = 8
         self.spawn_chance = 8
-        self.spawn_chance_high = 20
+        self.spawn_chance_high = 35
         self.ammo_spawn_chance = 35
         self.item_probability = [0,0,0,0,0,0,0,0,
                                  1,1,1,1,1,1,1,1,

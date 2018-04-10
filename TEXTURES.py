@@ -17,4 +17,8 @@ all_textures = [
     #--Doors--
     os.path.join('graphics', 'tiles', 'walls', 'Wood_door.png'), #9
     os.path.join('graphics', 'tiles', 'walls', 'Wood_door.png'), #10
+    #-- Walls igen... --
+    os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png'), #11
+    os.path.join('graphics', 'tiles', 'walls', 'stone_vent.png'), #12
+    os.path.join('graphics', 'tiles', 'sprites', 'lysestage.png'), #13
      ]

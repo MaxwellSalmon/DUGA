@@ -129,6 +129,9 @@ tile_solid = {
     8 : False,
     9 : True,
     10 : True,
+    11 : True,
+    12 : True,
+    13 : True,
     }
 tile_visible = { #Sprite tiles are not visible
     0 : False,
@@ -142,6 +145,9 @@ tile_visible = { #Sprite tiles are not visible
     8 : False,
     9 : True,
     10 : True,
+    11 : True,
+    12 : True,
+    13 : False,
     }
 texture_type = { #air, wall, trigger, sprite
     0 : 'air',
@@ -155,6 +161,9 @@ texture_type = { #air, wall, trigger, sprite
     8 : 'sprite',
     9 : 'vdoor',
     10 : 'hdoor',
+    11 : 'wall',
+    12 : 'wall',
+    13 : 'sprite',
     }
 
 '''Sprite settings'''
@@ -182,7 +191,7 @@ YELLOW = (255, 255, 0)
 
 #Create a new tile / sprite tile:
 #1. Create texture and add it to TEXTURES.py in the marked area for tiles.
-#2. Assign the tile an ID and give the tile the settings you want in dictionaries above.
+#2. Give the tile by ID the settings you want in dictionaries above.
 #3. Make sure that all tiles has a texture or sprite. Invisible tiles can use null.png
 #4. Note that Sprite tiles are not visible. The tile itself is not rendered.
 #Note: A tile can be solid, but invisible, but not vice versa

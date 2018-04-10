@@ -146,10 +146,14 @@ class Canvas:
         self.stop = False
 
         self.tile_textures = []
-        for texture in TEXTURES.all_textures:
+        for i in range(len(TEXTURES.all_textures)):
+            texture = TEXTURES.all_textures[i]
             t = pygame.image.load(texture).convert_alpha()
             t = pygame.transform.scale(t, (64,64))
+            if SETTINGS.texture_type[i] == 'vdoor':
+                t = pygame.transform.rotate(t, 90)
             self.tile_textures.append(t)
+            
 
         #Export
         self.exporttext = TEXT.Text(20, self.height-32, 'EXPORT', SETTINGS.BLACK, 'DUGAFONT.ttf', 14)
@@ -256,7 +260,7 @@ class Canvas:
         self.previtemrct.topleft = (self.width-140, 150)
         self.previtem.fill(SETTINGS.WHITE)
 
-        self.itemtypetext = TEXT.Text(self.width-110, 110, 'ITEM TYPE', SETTINGS.WHITE, 'DUGAFONT.ttf', 20)
+        self.itemtypetext = TEXT.Text(self.width-140, 110, 'ITEM TYPE', SETTINGS.WHITE, 'DUGAFONT.ttf', 20)
         self.itemrect = self.items[current_item].get_rect()
         self.itemrect.topleft = (self.width-107, 110)
 
@@ -414,7 +418,10 @@ class Canvas:
             if printit:
                 print("{")
                 for x in self.dict:
-                    print("'%s' : %s," % (x, self.dict[x]))
+                    if x == 'type':
+                        print("'%s' : '%s'," % (x, self.dict[x]))
+                    else:
+                        print("'%s' : %s," % (x, self.dict[x]))
                 print("}")
                 
             self.stop = True
