@@ -34,8 +34,8 @@ resolution = 140
 fov = 60
 render = 10
 shade = True
-shade_rgba = (0,0,0,200)
-shade_visibility = 800
+shade_rgba = (0,0,0,255)
+shade_visibility = 200
 
 #Below this point are the non-configurable raycasting variables.
 zbuffer = []

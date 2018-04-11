@@ -17,10 +17,11 @@ class Generator:
         self.spawnable_area = []
 
         #Constants
+        #Item probability
         self.max_item_amount = int(SETTINGS.current_level * 1.5 ) + 16
         self.max_items_per_segment = 8
         self.spawn_chance = 8
-        self.spawn_chance_high = 35
+        self.spawn_chance_high = 40 
         self.ammo_spawn_chance = 35
         self.item_probability = [0,0,0,0,0,0,0,0,
                                  1,1,1,1,1,1,1,1,
@@ -34,10 +35,17 @@ class Generator:
                                  9,
                                  10,10,10,10,10]
 
+        #NPC probability
         self.max_npc_amount = SETTINGS.current_level*2
         self.max_npcs_per_segment = 3
-        self.npc_spawn_chance = 20 + SETTINGS.current_level*2
+        self.npc_spawn_chance = 25 + SETTINGS.current_level*2
         self.npc_probability = [0,1,1,2,3,3]
+
+        #Color list
+        self.ground_colors = [SETTINGS.GRAY, SETTINGS.LIGHTGRAY, SETTINGS.DARKGRAY, SETTINGS.DARKRED, SETTINGS.DARKGREEN]
+        self.sky_colors = [SETTINGS.GRAY, SETTINGS.LIGHTGRAY, SETTINGS.LIGHTBLUE, SETTINGS.BLUE, SETTINGS.LIGHTGREEN]
+        self.shade_colors = [(0,0,0,255), (255,255,255,255)]
+        
 
     def create_seed(self, seed):
         if seed:
@@ -424,12 +432,13 @@ class Generator:
         
         SETTINGS.levels_list.append(LEVELS.Level({
             'items' : translated_items,
-            'ground_color' : SETTINGS.LIGHTGRAY,
-            'sky_color' : SETTINGS.WHITE,
+            'ground_color' : random.choice(self.ground_colors),
+            'sky_color' : random.choice(self.sky_colors),
             'array' : newarray,
             'lvl_number' : len(SETTINGS.levels_list),
             'npcs' : translated_npcs,
             'player_pos' : calcstart,
+            'shade' : (bool(random.getrandbits(1)), random.choice(self.shade_colors), random.randint(150, 1000))
             }))
 
     def place_random_items(self):

@@ -86,6 +86,10 @@ class Load:
             SETTINGS.player_rect.centery += SETTINGS.tile_size/2
             gamePlayer.real_x = SETTINGS.player_rect.centerx
             gamePlayer.real_y = SETTINGS.player_rect.centery
+
+            SETTINGS.shade = SETTINGS.levels_list[SETTINGS.current_level].shade
+            SETTINGS.shade_rgba = SETTINGS.levels_list[SETTINGS.current_level].shade_rgba
+            SETTINGS.shade_visibility = SETTINGS.levels_list[SETTINGS.current_level].shade_visibility
             
             SETTINGS.changing_level = False
             SETTINGS.player_states['fade'] = True
@@ -135,7 +139,7 @@ class Canvas:
                       pygame.Surface((self.width, self.height/4)).convert_alpha(),
                       pygame.Surface((self.width, self.height/8)).convert_alpha(),
                       pygame.Surface((self.width, self.height/16)).convert_alpha()]
-        self.rgba = [SETTINGS.shade_rgba[0]/10, SETTINGS.shade_rgba[1]/10, SETTINGS.shade_rgba[2]/10, SETTINGS.shade_rgba[3]/10]
+        self.rgba = [SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], SETTINGS.shade_rgba[3]/10]
 
     def change_mode(self):
         if SETTINGS.mode == 1: #1 - 3D / 0 - 2D
@@ -155,7 +159,7 @@ class Canvas:
             if SETTINGS.shade:
                 for i in range(len(self.shade)):
                     if i != 4:
-                        self.shade[i].fill((self.rgba[0] * i, self.rgba[1] * i, self.rgba[2] * i, self.rgba[3] * i))
+                        self.shade[i].fill((self.rgba[0], self.rgba[1], self.rgba[2], self.rgba[3] * i))
                     else:
                         self.shade[i].fill((SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], SETTINGS.shade_rgba[3]))
                     self.canvas.blit(self.shade[i], (0, self.height/2 - self.shade[i].get_height()/2))

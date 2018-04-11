@@ -14,6 +14,9 @@ class Level:
         self.items = stats['items']
         self.player_pos = stats['player_pos']
         self.array = stats['array']
+        self.shade = stats['shade'][0]
+        self.shade_rgba = stats['shade'][1]
+        self.shade_visibility = stats['shade'][2]
 
 
 ##SETTINGS.levels_list.append(Level({
