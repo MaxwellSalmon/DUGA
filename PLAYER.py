@@ -217,10 +217,11 @@ class Player:
     #======================================================
             
     def move(self, pos):
-        if pos[0] != 0:
-            self.update(pos[0], 0)
-        if pos[1] != 0:
-            self.update(0, pos[1])
+        if SETTINGS.cfps > 5:
+            if pos[0] != 0:
+                self.update(pos[0], 0)
+            if pos[1] != 0:
+                self.update(0, pos[1])
 
     def update(self, x, y):        
         self.real_x += x * SETTINGS.dt

@@ -22,7 +22,7 @@ class inventory:
         SETTINGS.max_ammo = ammo_dict
 
         #Menu
-        self.menu = pygame.Surface((150, 200)).convert()
+        self.menu = pygame.Surface((160, 200)).convert()
         self.menu_rect = self.menu.get_rect()
         self.menudraw = False
         self.selected = None
@@ -32,10 +32,10 @@ class inventory:
 
         for i in range(0, 9):
             if i == 0 or i == 8:
-                self.submenus.append(self.menu.subsurface(0, 0, 150, 30).convert())
+                self.submenus.append(self.menu.subsurface(0, 0, self.menu_rect.width, 30).convert())
                 self.submenu_rects.append(self.submenus[i].get_rect())
             else:
-                self.submenus.append(self.menu.subsurface(0, 0, 150, 20).convert())
+                self.submenus.append(self.menu.subsurface(0, 0, self.menu_rect.width, 20).convert())
                 self.submenu_rects.append(self.submenus[i].get_rect())
             
             if i % 2 == 0:

@@ -56,7 +56,10 @@ class Npc:
         self.state = stats['state']
         self.OG_state = self.state
         self.atcktype = stats['atcktype']
-        self.dmg = stats['dmg']
+        if stats['dmg'] != 3.1415:
+            self.dmg = stats['dmg']
+        else:
+            self.dmg = random.choice([0,0,1])
         self.atckrate = stats['atckrate']
 
         self.range = 5
@@ -515,7 +518,7 @@ class Npc:
                 player_tile = [x for x in SETTINGS.walkable_area if x.map_pos == SETTINGS.player_map_pos][0]
                 if self.player_in_view:
                     if self.detect_player():
-                        if ((SETTINGS.walkable_area(flee_pos) < SETTINGS.walkable_area.index(player_tile) + int(SETTINGS.current_level_size[0] / 5)) or (SETTINGS.walkable_area.index(flee_pos) > SETTINGS.walkable_area.index(player_tile) - int(SETTINGS.current_level_size[0] / 5))) and self.path == []:
+                        if ((SETTINGS.walkable_area.index(flee_pos) < SETTINGS.walkable_area.index(player_tile) + int(SETTINGS.current_level_size[0] / 5)) or (SETTINGS.walkable_area.index(flee_pos) > SETTINGS.walkable_area.index(player_tile) - int(SETTINGS.current_level_size[0] / 5))) and self.path == []:
                             self.path_progress = 0
                             self.path = PATHFINDING.pathfind(self.map_pos, flee_pos.map_pos)
 
@@ -732,7 +735,8 @@ class Npc:
                             SETTINGS.player_health -= self.dmg
 
     def drop_item(self):
-        possible_drops = ['bullet', 'bullet', 'bullet', 'shell', 'shell', 'health', 'armor', 'ferromagnetic']
+        texture = 'none.png'
+        possible_drops = ['bullet', 'bullet', 'bullet', 'shell', 'shell', 'health', 'armor', 'ferromag']
         drop = random.choice(possible_drops)
         effect = random.randint(2, 10)
         if drop == 'bullet':
@@ -743,8 +747,11 @@ class Npc:
             texture = 'firstaid.png'
         elif drop == 'armor':
             texture = 'helmet.png'
-        elif drop == 'ferromagnetic':
-            texture = 'ferromagnetic.png'
+        elif drop == 'ferromag':
+            texture = 'ferromag.png'
+        else:
+            print("Error: No texture with name ", drop)
+            texture 
         SETTINGS.all_items.append(ITEMS.Item(self.map_pos, os.path.join('graphics', 'items',  texture), drop, effect))
 
 #stats = {

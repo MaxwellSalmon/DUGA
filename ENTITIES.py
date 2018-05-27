@@ -139,11 +139,11 @@ def load_guns():
             'magsize': 8,
             'rlspeed': 1,
             'zoom': 8,
-            'ammotype': 'ferromagnetic',
+            'ammotype': 'ferromag',
             'guntype': 'primary',
             'name': 'Gauss rifle'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
                 'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
@@ -222,6 +222,42 @@ def load_npc_types():
             'soundpack' : 'ninja',
             },
 
+        #Zombie patroling hostile no dmg
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.12,
+            'dmg': 3.1415, #lol this is used to randomize dmg.
+            'health': 6,
+            'speed': 30,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'melee',
+            'atckrate': 0.6,
+            'id': 4,
+            'filepath' : ('graphics', 'npc', 'zombie_spritesheet.png'),
+            'name' : 'hostile zombie',
+            'soundpack' : 'zombie hostile',
+            },
+
+        #Zombie idle shy 
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.12,
+            'dmg': 0,
+            'health': 6,
+            'speed': 30,
+            'mind': 'shy',
+            'state': 'idle',
+            'atcktype': 'melee',
+            'atckrate': 0.6,
+            'id': 5,
+            'filepath' : ('graphics', 'npc', 'zombie_spritesheet.png'),
+            'name' : 'shy zombie',
+            'soundpack' : 'zombie shy',
+            },
+
         #Boss idle
         {
             'pos' : [0,0],
@@ -234,7 +270,7 @@ def load_npc_types():
             'state': 'idle',
             'atcktype': 'hitscan',
             'atckrate': 3,
-            'id': 4,
+            'id': 6,
             'filepath' : ('graphics', 'npc', 'boss_spritesheet.png'),
             'name' : ' idle boss',
             'soundpack' : 'soldier',
@@ -261,6 +297,24 @@ def load_npc_sounds():
             'spot' : pygame.mixer.Sound(path.join('sounds', 'none.ogg')),
             'damage' : [pygame.mixer.Sound(path.join('sounds', 'ninja_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt4.ogg'))],
             'die' : [pygame.mixer.Sound(path.join('sounds', 'ninja_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_die2.ogg'))],
+            },
+
+        #Zombie shy soundpack
+        {
+            'name' : 'zombie shy',
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'none.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'zombie_spot2.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt3.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_die2.ogg'))],
+            },
+
+        #Zombie hostile soundpack
+        {
+            'name' : 'zombie hostile',
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'zombie_attack.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'zombie_spot1.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt3.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_die2.ogg'))],
             },
         ]
 
@@ -349,10 +403,10 @@ def load_item_types():
                 'effect': SETTINGS.gun_list[5],
                 'id': 9,
                 },
-            #Ferromagnetic ammo
+            #ferromag ammo
             {
-                'filepath' : ('graphics', 'items', 'ferromagnetic.png'),
-                'type' : 'ferromagnetic',
+                'filepath' : ('graphics', 'items', 'ferromag.png'),
+                'type' : 'ferromag',
                 'effect': 6,
                 'id': 10,
                 },

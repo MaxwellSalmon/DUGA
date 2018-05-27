@@ -9,6 +9,7 @@ mode = 1
 current_level_size = None
 changing_level = False
 dt = 0
+cfps = 0
 
 '''Level settings'''
 #These are non-configurable.
@@ -33,9 +34,9 @@ screen_shake = 0
 resolution = 140
 fov = 60
 render = 10
-shade = True
+shade = False
 shade_rgba = (0,0,0,255)
-shade_visibility = 200
+shade_visibility = 1000
 
 #Below this point are the non-configurable raycasting variables.
 zbuffer = []
@@ -92,8 +93,8 @@ texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = False
-current_gun = None
+unlimited_ammo = True
+current_gun = 0
 #Below this point are non-configurable variables.
 next_gun = None
 prev_gun = None

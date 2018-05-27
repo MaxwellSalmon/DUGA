@@ -39,7 +39,12 @@ class Generator:
         self.max_npc_amount = SETTINGS.current_level*2
         self.max_npcs_per_segment = 3
         self.npc_spawn_chance = 25 + SETTINGS.current_level*2
-        self.npc_probability = [0,1,1,2,3,3]
+        self.npc_probability = [0,
+                                1,1,
+                                2,
+                                3,3,
+                                4,4,
+                                5,]
 
         #Color list
         self.ground_colors = [SETTINGS.GRAY, SETTINGS.LIGHTGRAY, SETTINGS.DARKGRAY, SETTINGS.DARKRED, SETTINGS.DARKGREEN]

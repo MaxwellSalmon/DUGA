@@ -134,12 +134,13 @@ class Canvas:
         
         pygame.display.set_caption("DUGA")
 
-        self.shade = [pygame.Surface((self.width, self.height/1.2)).convert_alpha(),
+        self.shade = [pygame.Surface((self.width, self.height)).convert_alpha(),
+                      pygame.Surface((self.width, self.height/1.2)).convert_alpha(),
                       pygame.Surface((self.width, self.height/2)).convert_alpha(),
                       pygame.Surface((self.width, self.height/4)).convert_alpha(),
                       pygame.Surface((self.width, self.height/8)).convert_alpha(),
-                      pygame.Surface((self.width, self.height/16)).convert_alpha()]
-        self.rgba = [SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], SETTINGS.shade_rgba[3]/10]
+                      pygame.Surface((self.width, self.height/18)).convert_alpha()]
+        self.rgba = [SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], int(min(255, SETTINGS.shade_rgba[3]*(50/SETTINGS.shade_visibility)))]
 
     def change_mode(self):
         if SETTINGS.mode == 1: #1 - 3D / 0 - 2D
@@ -158,10 +159,10 @@ class Canvas:
 
             if SETTINGS.shade:
                 for i in range(len(self.shade)):
-                    if i != 4:
-                        self.shade[i].fill((self.rgba[0], self.rgba[1], self.rgba[2], self.rgba[3] * i))
+                    if i != 5:
+                        self.shade[i].fill((self.rgba[0], self.rgba[1], self.rgba[2], self.rgba[3]))
                     else:
-                        self.shade[i].fill((SETTINGS.shade_rgba[0], SETTINGS.shade_rgba[1], SETTINGS.shade_rgba[2], SETTINGS.shade_rgba[3]))
+                        self.shade[i].fill((self.rgba[0], self.rgba[1], self.rgba[2], SETTINGS.shade_rgba[3]))
                     self.canvas.blit(self.shade[i], (0, self.height/2 - self.shade[i].get_height()/2))
 
         else:
@@ -326,7 +327,8 @@ def main_loop():
         pygame.display.update()
         delta_time = clock.tick(SETTINGS.fps)
         SETTINGS.dt = delta_time / 1000.0
-        pygame.display.set_caption(SETTINGS.caption % int(clock.get_fps()))
+        SETTINGS.cfps = int(clock.get_fps())
+        pygame.display.set_caption(SETTINGS.caption % SETTINGS.cfps)
 
         allfps.append(clock.get_fps())
 
@@ -351,7 +353,7 @@ gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)
 gameCanvas = Canvas(SETTINGS.canvas_map_width, SETTINGS.canvas_map_height)
 gamePlayer = PLAYER.Player(SETTINGS.player_pos)
 gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
-gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromagnetic' : 50})
+gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromag' : 50})
 gameHUD = HUD.hud(path.join('graphics', 'hud.png'))
 
 #More loading - Level specific
