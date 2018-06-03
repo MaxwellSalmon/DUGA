@@ -2,3 +2,4 @@ __pycache__/
 Andet/
 build/
 dist/
+pyinstaller.exe
