@@ -87,9 +87,9 @@ class Load:
             gamePlayer.real_x = SETTINGS.player_rect.centerx
             gamePlayer.real_y = SETTINGS.player_rect.centery
 
-            SETTINGS.shade = SETTINGS.levels_list[SETTINGS.current_level].shade
-            SETTINGS.shade_rgba = SETTINGS.levels_list[SETTINGS.current_level].shade_rgba
-            SETTINGS.shade_visibility = SETTINGS.levels_list[SETTINGS.current_level].shade_visibility
+            if SETTINGS.shade and SETTINGS.levels_list[SETTINGS.current_level].shade:
+                SETTINGS.shade_rgba = SETTINGS.levels_list[SETTINGS.current_level].shade_rgba
+                SETTINGS.shade_visibility = SETTINGS.levels_list[SETTINGS.current_level].shade_visibility
             
             SETTINGS.changing_level = False
             SETTINGS.player_states['fade'] = True

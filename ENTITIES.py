@@ -149,6 +149,29 @@ def load_guns():
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
                 },(38,7)))
 
+    #Shotgun pistol - 6
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'sgp_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'shotpistol.png')
+         },{
+             'dmg' : 6,
+             'spread': 100,
+             'hitchance': 60,
+             'firerate': 0.2,
+             'range': 6,
+             'magsize': 1,
+             'rlspeed': 0.5,
+             'zoom': 1,
+             'ammotype': 'shell',
+             'guntype': 'secondary',
+             'name': 'SG Pistol'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                }, (37,6)))
+
 def load_npc_types():
     SETTINGS.npc_types = [
         {
