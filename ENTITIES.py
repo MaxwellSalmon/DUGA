@@ -433,6 +433,13 @@ def load_item_types():
                 'effect': 6,
                 'id': 10,
                 },
+            #Shotgun pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[6].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[6].guntype,
+                'effect': SETTINGS.gun_list[6],
+                'id': 11,
+                },
             ]
 
 def spawn_items():
