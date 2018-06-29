@@ -144,6 +144,7 @@ class Canvas:
         self.segtype = 0
         pygame.display.set_caption("DUGA Map Editor")
         self.stop = False
+        self.items = []
 
         self.tile_textures = []
         for i in range(len(TEXTURES.all_textures)):
@@ -237,7 +238,7 @@ class Canvas:
             self.segtyperighttxt = TEXT.Text(135, self.height-140, '>', SETTINGS.BLACK, 'DUGAFONT.ttf', 20)
 
     def load_items(self):
-        self.items = []
+        print("Loading")
         self.item_names = []
         self.item_ids = []
         for i in SETTINGS.item_types:
@@ -739,6 +740,11 @@ class SaveLoad:
             editorCanvas.dict['name'] = name
         else:
             name = ''
+
+        print("Who made this map?")
+        author = input('> ')
+        if author:
+            editorCanvas.dict['author'] = author        
                     
         if ltype == 'level':
             if (location and location < len(self.levels)) or location == 0:
@@ -838,17 +844,21 @@ class SaveLoad:
             y += 1
 
         #add items
-        for item in loadedmap['items']:
-            tile = [x for x in currentMap.tiles if tuple(x.map_pos) == item[0]][0]
-            tile.item = pygame.transform.scale(editorCanvas.items[item[1]], (32,32))
-            tile.item_id = item[1]
+        if loadedmap['items']:
+            editorCanvas.load_items()
+            for item in loadedmap['items']:
+                tile = [x for x in currentMap.tiles if tuple(x.map_pos) == item[0]][0]
+                tile.item = pygame.transform.scale(editorCanvas.items[item[1]], (32,32))
+                tile.item_id = item[1]
 
         #add NPCs
-        for npc in loadedmap['npcs']:
-            tile = [x for x in currentMap.tiles if tuple(x.map_pos) == npc[0]][0]
-            tile.npc = pygame.transform.scale(editorCanvas.npc_textures[npc[2]], (32,32))
-            tile.npc_id = npc[2]
-            tile.npc_face = npc[1]
+        if loadedmap['npcs']:
+            editorCanvas.load_npcs()
+            for npc in loadedmap['npcs']:
+                tile = [x for x in currentMap.tiles if tuple(x.map_pos) == npc[0]][0]
+                tile.npc = pygame.transform.scale(editorCanvas.npc_textures[npc[2]], (32,32))
+                tile.npc_id = npc[2]
+                tile.npc_face = npc[1]
 
         #add start pos
         if loadedmap['player_pos']:

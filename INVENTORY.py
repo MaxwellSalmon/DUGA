@@ -67,6 +67,34 @@ class inventory:
         self.meleeslot_rect.topleft = (self.rect.x + 33, self.rect.y + 225)
         self.meleeslot.fill((100,100,100,100))
 
+        #Ammo textures
+        self.ammotexture1 = pygame.image.load(os.path.join(*[x for x in SETTINGS.item_types if x['type'] == 'bullet'][0]['filepath'])).subsurface(0,112,64,16).convert_alpha()
+        self.ammotexture2 = pygame.image.load(os.path.join(*[x for x in SETTINGS.item_types if x['type'] == 'shell'][0]['filepath'])).subsurface(0,112,64,16).convert_alpha()
+        self.ammotexture3 = pygame.image.load(os.path.join(*[x for x in SETTINGS.item_types if x['type'] == 'ferromag'][0]['filepath'])).subsurface(0,112,64,16).convert_alpha()
+
+        self.ammotexture1 = pygame.transform.scale(self.ammotexture1, (128, 32))
+        self.ammotexture2 = pygame.transform.scale(self.ammotexture2, (128, 32))
+        self.ammotexture3 = pygame.transform.scale(self.ammotexture3, (128, 32))
+        
+
+        #Ammo 1
+        self.ammoslot1 = pygame.Surface((191,79)).convert_alpha()
+        self.ammoslot1_rect = self.ammoslot1.get_rect()
+        self.ammoslot1_rect.topleft = (self.rect.x + 320, self.rect.y + 33)
+        self.ammoslot1.fill((100,100,100,100))
+
+        #Ammo 2
+        self.ammoslot2 = pygame.Surface((191,79)).convert_alpha()
+        self.ammoslot2_rect = self.ammoslot2.get_rect()
+        self.ammoslot2_rect.topleft = (self.rect.x + 320, self.rect.y + 129)
+        self.ammoslot2.fill((100,100,100,100))
+
+        #Ammo 3
+        self.ammoslot3 = pygame.Surface((191,79)).convert_alpha()
+        self.ammoslot3_rect = self.ammoslot3.get_rect()
+        self.ammoslot3_rect.topleft = (self.rect.x + 320, self.rect.y + 225)
+        self.ammoslot3.fill((100,100,100,100))
+
         #Stuff
         self.mousepos = pygame.mouse.get_pos()
         self.timer = 0
@@ -80,20 +108,28 @@ class inventory:
                      TEXT.Text(0, 0, 'RELOAD TIME: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'AMMO TYPE: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'DROP', SETTINGS.WHITE, 'DUGAFONT.ttf', 18)]
+        
+        self.ammotext = [TEXT.Text(480, 116, '-- / --', SETTINGS.DARKGRAY, 'DUGAFONT.ttf', 24),
+                         TEXT.Text(480, 212, '-- / --', SETTINGS.DARKGRAY, 'DUGAFONT.ttf', 24),
+                         TEXT.Text(480, 308, '-- / --', SETTINGS.DARKGRAY, 'DUGAFONT.ttf', 24)]
 
     def draw(self, canvas):
         canvas.blit(self.bg, self.rect)
         self.timer += SETTINGS.dt
 
-        #Draw items
-        if SETTINGS.inventory['primary']:
-            canvas.blit(SETTINGS.inventory['primary'].subitemtexture, (self.primaryslot_rect.x, self.primaryslot_rect.y + 5))
-        if SETTINGS.inventory['secondary']:
-            canvas.blit(SETTINGS.inventory['secondary'].subitemtexture, (self.secondslot_rect.x - self.secondslot_rect.width/4, self.secondslot_rect.y))
-        if SETTINGS.inventory['melee']:
-            canvas.blit(SETTINGS.inventory['melee'].subitemtexture, (self.meleeslot_rect.x - self.secondslot_rect.width/4, self.meleeslot_rect.y))
+        #Ammo text
+        if SETTINGS.held_ammo['bullet'] and not SETTINGS.inv_strings_updated:
+            self.ammotext[0].update_string('%s / %s' % (SETTINGS.held_ammo['bullet'], SETTINGS.max_ammo['bullet']))
+        if SETTINGS.held_ammo['shell'] and not SETTINGS.inv_strings_updated:
+            self.ammotext[1].update_string('%s / %s' % (SETTINGS.held_ammo['shell'], SETTINGS.max_ammo['shell']))
+        if SETTINGS.held_ammo['ferromag'] and not SETTINGS.inv_strings_updated:
+            self.ammotext[2].update_string('%s / %s' % (SETTINGS.held_ammo['ferromag'], SETTINGS.max_ammo['ferromag']))
+        for string in self.ammotext:
+            string.draw(canvas)
+        SETTINGS.inv_strings_updated = True
+        
 
-       #Mouse on close button
+        #Mouse on close button
         if self.closebtn_rect.collidepoint(pygame.mouse.get_pos()):
             canvas.blit(self.closebtn, self.closebtn_rect)
             if pygame.mouse.get_pressed()[0]:
@@ -124,6 +160,19 @@ class inventory:
                 self.menudraw = True
                 self.mousepos = pygame.mouse.get_pos()
 
+        #Mouse on ammo1 - run function
+        elif self.ammoslot1_rect.collidepoint(pygame.mouse.get_pos()):
+            self.ammo_selection(1, canvas)
+
+        #Mouse on ammo2 - run function
+        elif self.ammoslot2_rect.collidepoint(pygame.mouse.get_pos()):
+            self.ammo_selection(2, canvas)
+
+        #Mouse on ammo3 - run function
+        elif self.ammoslot3_rect.collidepoint(pygame.mouse.get_pos()):
+            self.ammo_selection(3, canvas)
+        
+
         #Mouse on menu
         elif self.menu_rect.collidepoint(pygame.mouse.get_pos()) and self.menudraw:
             self.menudraw = True
@@ -132,6 +181,22 @@ class inventory:
             self.menudraw = False
             self.selected = None
 
+        #Draw items - high layer
+        if SETTINGS.inventory['primary']:
+            canvas.blit(SETTINGS.inventory['primary'].subitemtexture, (self.primaryslot_rect.x, self.primaryslot_rect.y + 5))
+        if SETTINGS.inventory['secondary']:
+            canvas.blit(SETTINGS.inventory['secondary'].subitemtexture, (self.secondslot_rect.x - self.secondslot_rect.width/4, self.secondslot_rect.y))
+        if SETTINGS.inventory['melee']:
+            canvas.blit(SETTINGS.inventory['melee'].subitemtexture, (self.meleeslot_rect.x - self.secondslot_rect.width/4, self.meleeslot_rect.y))
+        #Ammo
+        if SETTINGS.held_ammo['bullet']:
+            canvas.blit(self.ammotexture1, (self.ammoslot1_rect.x - self.ammoslot1_rect.width/8, self.ammoslot1_rect.y + 20))
+        if SETTINGS.held_ammo['shell']:
+            canvas.blit(self.ammotexture2, (self.ammoslot2_rect.x - self.ammoslot2_rect.width/8, self.ammoslot2_rect.y + 20))
+        if SETTINGS.held_ammo['ferromag']:
+            canvas.blit(self.ammotexture3, (self.ammoslot3_rect.x - self.ammoslot3_rect.width/8, self.ammoslot3_rect.y + 20))
+
+        #Draw menu top layer
         if self.menudraw and SETTINGS.inventory[self.selected]:
             self.draw_menu(canvas)
 
@@ -140,6 +205,8 @@ class inventory:
             SETTINGS.player_states['invopen'] = False
             self.closing = False
             self.timer = 0
+            SETTINGS.inv_strings_updated = False
+
 
     def draw_menu(self, canvas):
         self.menu_rect.topleft = self.mousepos
@@ -202,10 +269,48 @@ class inventory:
                     SETTINGS.next_gun = None
                     
                 SETTINGS.inventory[self.selected] = None
+                SETTINGS.inv_strings_updated = False
 
         else:
             self.submenus[-1].fill((65,65,65))
 
+
+    def ammo_selection(self, slot, canvas):
+        bulletlist, shelllist, ferrolist = [], [], []
+        
+        if SETTINGS.inventory['primary']:
+            if SETTINGS.inventory['primary'].ammo_type == 'bullet':
+                bulletlist.append([self.primaryslot, self.primaryslot_rect])
+            elif SETTINGS.inventory['primary'].ammo_type == 'shell':
+                shelllist.append([self.primaryslot, self.primaryslot_rect])
+            elif SETTINGS.inventory['primary'].ammo_type == 'ferromag':
+                ferrolist.append([self.primaryslot, self.primaryslot_rect])
+
+        if SETTINGS.inventory['secondary']:
+            if SETTINGS.inventory['secondary'].ammo_type == 'bullet':
+                bulletlist.append([self.secondslot, self.secondslot_rect])
+            elif SETTINGS.inventory['secondary'].ammo_type == 'shell':
+                shelllist.append([self.secondslot, self.secondslot_rect])
+            elif SETTINGS.inventory['secondary'].ammo_type == 'ferromag':
+                ferrolist.append([self.secondslot, self.secondslot_rect])
+                
+        if slot == 1:
+            canvas.blit(self.ammoslot1, self.ammoslot1_rect)
+            if SETTINGS.held_ammo['bullet']:
+                for i in bulletlist:
+                    canvas.blit(i[0], i[1])
+
+        elif slot == 2:
+            canvas.blit(self.ammoslot2, self.ammoslot2_rect)
+            if SETTINGS.held_ammo['shell']:
+                for i in shelllist:
+                    canvas.blit(i[0], i[1])
+
+        elif slot == 3:
+            canvas.blit(self.ammoslot3, self.ammoslot3_rect)
+            if SETTINGS.held_ammo['ferromag']:
+                for i in ferrolist:
+                    canvas.blit(i[0], i[1])
             
 
 
@@ -214,5 +319,5 @@ class inventory:
             
 
 
-#Ammo types: bullet, shell
+#Ammo types: bullet, shell, ferromag
 #gun types: primary, secondary, melee

@@ -2,6 +2,7 @@
 
 import SETTINGS
 import EFFECTS
+import INVENTORY
 import pygame
 import math
 
@@ -167,8 +168,10 @@ class Player:
             if key[pygame.K_i] and self.inventory < 1:
                 if SETTINGS.player_states['invopen']:
                     SETTINGS.player_states['invopen'] = False
+                    SETTINGS.inv_strings_updated = False
                 else:
                     SETTINGS.player_states['invopen'] = True
+                    
                 self.inventory += 1
             elif not key[pygame.K_i]:
                 self.inventory = 0

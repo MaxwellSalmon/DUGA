@@ -93,7 +93,7 @@ texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = True
+unlimited_ammo = False
 current_gun = 0
 #Below this point are non-configurable variables.
 next_gun = None
@@ -118,6 +118,7 @@ inventory = {
     'secondary': None,
     'melee': None}
 item_types = []
+inv_strings_updated = False
 
 '''Tile configurations'''
 #Assign each kind of tile with a texture or sprite
@@ -137,6 +138,11 @@ tile_solid = {
     11 : True,
     12 : True,
     13 : True,
+    14 : True,
+    15 : True,
+    16 : True,
+    17 : True,
+    18 : True,
     }
 tile_visible = { #Sprite tiles are not visible
     0 : False,
@@ -152,7 +158,12 @@ tile_visible = { #Sprite tiles are not visible
     10 : True,
     11 : True,
     12 : True,
-    13 : False,
+    13 : True,
+    14 : True,
+    15 : False,
+    16 : True,
+    17 : True,
+    18 : True,
     }
 texture_type = { #air, wall, trigger, sprite
     0 : 'air',
@@ -168,7 +179,12 @@ texture_type = { #air, wall, trigger, sprite
     10 : 'hdoor',
     11 : 'wall',
     12 : 'wall',
-    13 : 'sprite',
+    13 : 'wall',
+    14 : 'wall',
+    15 : 'sprite',
+    16 : 'wall',
+    17 : 'wall',
+    18 : 'wall',
     }
 
 '''Sprite settings'''

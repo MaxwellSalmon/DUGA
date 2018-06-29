@@ -20,5 +20,10 @@ all_textures = [
     #-- Walls igen... --
     os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png'), #11
     os.path.join('graphics', 'tiles', 'walls', 'stone_vent.png'), #12
-    os.path.join('graphics', 'tiles', 'sprites', 'lysestage.png'), #13
+    os.path.join('graphics', 'tiles', 'walls', 'stone_wall_crack.png'), #13
+    os.path.join('graphics', 'tiles', 'walls', 'stone_vase.png'), #14
+    os.path.join('graphics', 'tiles', 'sprites', 'lysestage.png'), #15
+    os.path.join('graphics', 'tiles', 'walls', 'baroque.png'), #16
+    os.path.join('graphics', 'tiles', 'walls', 'baroque_lamps.png'), #17
+    os.path.join('graphics', 'tiles', 'walls', 'baroque_worn.png'), #18
      ]

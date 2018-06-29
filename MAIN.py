@@ -1,5 +1,5 @@
 #This is the MAIN script of DUGA. This is where the main loop is located and this is where all resources are loaded.
-#All the classes will be located at the bottom of this script.m 
+#All the classes will be located at the bottom of this script.
 
 # Husk at konverte alle teksturer. Dette kan du forsøge dig med og se, om det kører bedre.
 import pygame

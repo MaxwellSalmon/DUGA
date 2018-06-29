@@ -746,7 +746,7 @@ class Npc:
         elif drop == 'health':
             texture = 'firstaid.png'
         elif drop == 'armor':
-            texture = 'helmet.png'
+            texture = 'kevlar.png'
         elif drop == 'ferromag':
             texture = 'ferromag.png'
         else:

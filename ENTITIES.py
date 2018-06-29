@@ -365,7 +365,7 @@ def load_item_types():
                 },
             #Helmet
             {
-                'filepath' : ('graphics', 'items', 'helmet.png'),
+                'filepath' : ('graphics', 'items', 'kevlar.png'),
                 'type' : 'armor',
                 'effect': 15,
                 'id': 1,
