@@ -145,6 +145,7 @@ class Canvas:
         pygame.display.set_caption("DUGA Map Editor")
         self.stop = False
         self.items = []
+        self.showauthor = False
 
         self.tile_textures = []
         for i in range(len(TEXTURES.all_textures)):
@@ -154,7 +155,9 @@ class Canvas:
             if SETTINGS.texture_type[i] == 'vdoor':
                 t = pygame.transform.rotate(t, 90)
             self.tile_textures.append(t)
-            
+
+        #Author
+        self.authortext = TEXT.Text(self.width - 135, 5, 'Author: %s', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 11)
 
         #Export
         self.exporttext = TEXT.Text(20, self.height-32, 'EXPORT', SETTINGS.BLACK, 'DUGAFONT.ttf', 14)
@@ -315,6 +318,10 @@ class Canvas:
     def draw(self):
         global current_id, current_item, mode, current_npc
         self.canvas.fill(SETTINGS.BLACK)
+
+        #Author
+        if self.showauthor:
+            self.authortext.draw(self.canvas)
 
         #Export
         self.canvas.blit(self.exportbtn, self.exportrct)
@@ -588,7 +595,6 @@ class Map:
         self.width = width
         self.height = height
         self.window = pygame.Surface((width*32, height*32))
-       # self.player_pos = False
         self.player_pos_set = False
 
         self.renderitems = []
@@ -857,6 +863,7 @@ class SaveLoad:
             for npc in loadedmap['npcs']:
                 tile = [x for x in currentMap.tiles if tuple(x.map_pos) == npc[0]][0]
                 tile.npc = pygame.transform.scale(editorCanvas.npc_textures[npc[2]], (32,32))
+                tile.npc = pygame.transform.rotate(tile.npc, npc[1]-90)
                 tile.npc_id = npc[2]
                 tile.npc_face = npc[1]
 
@@ -865,6 +872,14 @@ class SaveLoad:
             start_tile = [x for x in currentMap.tiles if list(x.map_pos) == loadedmap['player_pos']][0]
             start_tile.player_pos = loadedmap['player_pos']
             currentMap.player_pos_set = True
+
+        #show author
+        try:
+            if loadedmap['author']:
+                editorCanvas.showauthor = True
+                editorCanvas.authortext.update_string('Author: %s' % loadedmap['author'])
+        except:
+            pass
 
     def del_map(self, index, mtype):
         try:
@@ -925,6 +940,12 @@ def main_loop():
             pygame.display.update()
             
     editor_exit = False
+
+def new():
+    main_loop()
+
+def start():
+    main_loop()
 
 if __name__ == '__main__':
     editorCanvas = Canvas(1,1)

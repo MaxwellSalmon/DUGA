@@ -256,6 +256,7 @@ def update_game():
             if not npc.dead:
                 npc.think()
 
+    SETTINGS.ground_weapon = None
     for item in SETTINGS.all_items:
         item.update()
 

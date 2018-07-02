@@ -99,10 +99,11 @@ current_gun = 0
 next_gun = None
 prev_gun = None
 gun_list = []
+ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = False
+ignore_player = True
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

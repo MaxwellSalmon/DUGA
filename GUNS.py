@@ -42,6 +42,7 @@ class Gun:
         self.ammo_type = stats['ammotype']
         self.guntype = stats['guntype']
         self.name = stats['name']
+        self.stats = stats
         
         if self.guntype != 'melee':
             self.range = stats['range']*SETTINGS.tile_size

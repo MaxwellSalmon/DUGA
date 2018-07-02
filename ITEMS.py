@@ -27,7 +27,6 @@ class Item:
                         SETTINGS.player_states['heal'] = True
                         remove = True
                     
-
                 elif self.item_type == 'armor':
                     if SETTINGS.player_armor < 100:
                         SETTINGS.player_armor += self.effect
@@ -51,6 +50,8 @@ class Item:
                         SETTINGS.next_gun = self.effect
                         SETTINGS.player_states['armor'] = True
                         remove = True
+                    else:
+                        SETTINGS.ground_weapon = self.effect
 
                 elif self.item_type == 'secondary':
                     if not SETTINGS.inventory['secondary']:
@@ -58,6 +59,8 @@ class Item:
                         SETTINGS.next_gun = self.effect
                         SETTINGS.player_states['armor'] = True
                         remove = True
+                    else:
+                        SETTINGS.ground_weapon = self.effect
 
                 elif self.item_type == 'melee':
                     if not SETTINGS.inventory['melee']:
@@ -65,6 +68,8 @@ class Item:
                         SETTINGS.next_gun = self.effect
                         SETTINGS.player_states['armor'] = True
                         remove = True
+                    else:
+                        SETTINGS.ground_weapon = self.effect
                             
                 #Remove sprite and rect
                 if self.sprite in SETTINGS.all_sprites and remove:
