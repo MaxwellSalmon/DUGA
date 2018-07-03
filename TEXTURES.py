@@ -26,4 +26,7 @@ all_textures = [
     os.path.join('graphics', 'tiles', 'walls', 'baroque.png'), #16
     os.path.join('graphics', 'tiles', 'walls', 'baroque_lamps.png'), #17
     os.path.join('graphics', 'tiles', 'walls', 'baroque_worn.png'), #18
-     ]
+    os.path.join('graphics', 'tiles', 'sprites', 'barrel.png'), #19
+    os.path.join('graphics', 'tiles', 'sprites', 'fern.png'), #20
+    os.path.join('graphics', 'tiles', 'sprites', 'stone_pillar.png') #21
+    ]

@@ -56,7 +56,7 @@ class Sprite:
         if angle > 270 and thetaTemp < 90:
             yTmp = angle + (fov/2) - thetaTemp - 360
 
-        xTmp = yTmp * SETTINGS.canvas_actual_width / fov        
+        xTmp = yTmp * SETTINGS.canvas_actual_width / fov
                                                     
         sprite_height = int((self.rect.height / dist) * (100 / math.tan(math.radians(fov * 0.8))))
         if sprite_height > 2500:

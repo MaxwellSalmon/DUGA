@@ -401,7 +401,8 @@ class Canvas:
                 'items' : [],
                 'player_pos' : None,
                 'array' : None,
-                'name' : None}
+                'name' : None,
+                'shade' : (False, (0,0,0,0), 0)}
         else:
             self.dict = {
                 'id' : None,
@@ -410,7 +411,8 @@ class Canvas:
                 'array' : None,
                 'doors' : doors,
                 'type' : str(segtypes[self.segtype]),
-                'name' : None}
+                'name' : None,
+                'shade' : (False, (0,0,0,0), 0)}
                 
         if not printit or (self.exportrct.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and not self.stop):
             for tile in currentMap.tiles:

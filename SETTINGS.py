@@ -144,6 +144,9 @@ tile_solid = {
     16 : True,
     17 : True,
     18 : True,
+    19 : True,
+    20 : True,
+    21 : True,
     }
 tile_visible = { #Sprite tiles are not visible
     0 : False,
@@ -165,6 +168,9 @@ tile_visible = { #Sprite tiles are not visible
     16 : True,
     17 : True,
     18 : True,
+    19 : False,
+    20 : False,
+    21 : False
     }
 texture_type = { #air, wall, trigger, sprite
     0 : 'air',
@@ -186,6 +192,9 @@ texture_type = { #air, wall, trigger, sprite
     16 : 'wall',
     17 : 'wall',
     18 : 'wall',
+    19 : 'sprite',
+    20 : 'sprite',
+    21 : 'sprite',
     }
 
 '''Sprite settings'''
