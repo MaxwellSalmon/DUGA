@@ -298,6 +298,24 @@ def load_npc_types():
             'name' : ' idle boss',
             'soundpack' : 'soldier',
             },
+
+        #random NPC
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0,
+            'dmg': 0,
+            'health': 0,
+            'speed': 0,
+            'mind': None,
+            'state': None,
+            'atcktype': None,
+            'atckrate': 0,
+            'id': 7,
+            'filepath' : ('graphics', 'npc', 'random_spritesheet.png'),
+            'name' : 'random',
+            'soundpack' : None,
+            },
         ]
 
     load_npc_sounds()
@@ -344,7 +362,12 @@ def load_npc_sounds():
 
 def spawn_npcs():
     for npc in SETTINGS.levels_list[SETTINGS.current_level].npcs:
-        stats = copy.deepcopy([x for x in SETTINGS.npc_types if x['id'] == npc[2]][0])
+        if [x for x in SETTINGS.npc_types if x['id'] == npc[2]][0]['name'] == 'random':
+            random.seed(SETTINGS.seed)
+            stats = copy.deepcopy(random.choice([x for x in SETTINGS.npc_types if x['name'] != 'random']))
+        else: 
+            stats = copy.deepcopy([x for x in SETTINGS.npc_types if x['id'] == npc[2]][0])
+            
         try:
             sounds = ([x for x in SETTINGS.npc_soundpacks if x['name'] == stats['soundpack']][0])
         except:
@@ -356,14 +379,14 @@ def spawn_npcs():
 
 def load_item_types():
     SETTINGS.item_types = [
-            #Health kit
+            #Health
             {
                 'filepath' : ('graphics', 'items', 'firstaid.png'),
                 'type' : 'health',
                 'effect' : 10,
                 'id' : 0,
                 },
-            #Helmet
+            #Armor
             {
                 'filepath' : ('graphics', 'items', 'kevlar.png'),
                 'type' : 'armor',
@@ -440,12 +463,42 @@ def load_item_types():
                 'effect': SETTINGS.gun_list[6],
                 'id': 11,
                 },
+
+            #Random any item
+            {
+                'filepath' : ('graphics', 'items', 'random.png'),
+                'type' : 'random',
+                'effect': ['health', 'armor', 'bullet', 'shell', 'ferromag', 'melee', 'secondary', 'primary'],
+                'id': 12,
+                },
+
+
+            #Random weapon
+            {
+                'filepath' : ('graphics', 'items', 'randomgun.png'),
+                'type' : 'random',
+                'effect': ['melee', 'secondary', 'primary'],
+                'id': 13,
+                },
+
+            #Random item
+            {
+                'filepath' : ('graphics', 'items', 'randomitem.png'),
+                'type' : 'random',
+                'effect': ['health', 'armor', 'bullet', 'shell', 'ferromag'],
+                'id': 14,
+                },
             ]
 
 def spawn_items():
     for item in SETTINGS.levels_list[SETTINGS.current_level].items:
-        stats = [x for x in SETTINGS.item_types if x['id'] == item[1]][0] #KAN godt, men hvis det kan kopieres nemt, ville det være godt.
-        if stats['type'] not in ('primary', 'secondary', 'melee'):
+        stats = [x for x in SETTINGS.item_types if x['id'] == item[1]][0]
+        if stats['type'] == 'random':
+            random.seed(SETTINGS.seed)
+            possible_items = [x for x in SETTINGS.item_types if x['type'] in stats['effect']]
+            stats = random.choice(possible_items)
+            
+        elif stats['type'] not in ('primary', 'secondary', 'melee'):
             stats = copy.deepcopy([x for x in SETTINGS.item_types if x['id'] == item[1]][0])
         
         SETTINGS.all_items.append(ITEMS.Item(item[0], path.join(*stats['filepath']), stats['type'], stats['effect']))

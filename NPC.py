@@ -56,6 +56,8 @@ class Npc:
         self.state = stats['state']
         self.OG_state = self.state
         self.atcktype = stats['atcktype']
+        self.name = stats['name']
+        
         if stats['dmg'] != 3.1415:
             self.dmg = stats['dmg']
         else:

@@ -54,10 +54,11 @@ class Generator:
 
     def create_seed(self, seed):
         if seed:
-            while type(seed) is not tuple:
-                self.seed = seed[0]
+            self.seed = seed[0]
         else:
             self.seed = random.random()
+
+        SETTINGS.seed = self.seed
 
         random.seed(self.seed)
         print("Seed: ", self.seed)

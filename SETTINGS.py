@@ -15,6 +15,7 @@ cfps = 0
 #These are non-configurable.
 levels_list = []
 segments_list = []
+seed = None
 
 
 '''Canvas settings'''
