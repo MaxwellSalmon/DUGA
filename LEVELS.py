@@ -18,13 +18,12 @@ class Level:
         self.shade_rgba = stats['shade'][1]
         self.shade_visibility = stats['shade'][2]
 
-
 SETTINGS.levels_list.append(Level({
     'lvl_number' : 0,
     'sky_color' : SETTINGS.GRAY,
     'ground_color': SETTINGS.LIGHTGRAY,
-    'npcs' : [([2,3], 270, 4), ([3,3], 270, 5)],#, ([3,3], 270, 3), ([4,3], 270, 3), ([1,3], 270, 3)],
-    'items' : [([1,1], 2), ([2,1], 3), ([3,1], 7), ([4, 1], 6), ([4,2], 8), ([3,2], 9), ([1,2], 11)],
+    'npcs' : [],#, ([3,3], 270, 3), ([4,3], 270, 3), ([1,3], 270, 3)],
+    'items' : [([3,1], 0)],
     'player_pos' : [2,2],
     'shade' : (False, (0,0,0,0), 0),
     'array' : [
@@ -36,6 +35,24 @@ SETTINGS.levels_list.append(Level({
         [1,0,0,0,0,1],
         [1,1,4,1,1,1]
         ]}))
+
+##SETTINGS.levels_list.append(Level({
+##    'lvl_number' : 0,
+##    'sky_color' : SETTINGS.GRAY,
+##    'ground_color': SETTINGS.LIGHTGRAY,
+##    'npcs' : [([2,3], 270, 4), ([3,3], 270, 5)],#, ([3,3], 270, 3), ([4,3], 270, 3), ([1,3], 270, 3)],
+##    'items' : [([1,1], 2), ([2,1], 3), ([3,1], 7), ([4, 1], 6), ([4,2], 8), ([3,2], 9), ([1,2], 11)],
+##    'player_pos' : [2,2],
+##    'shade' : (False, (0,0,0,0), 0),
+##    'array' : [
+##        #0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8
+##        [1,1,1,1,1,1],
+##        [1,0,0,0,0,1],
+##        [1,0,0,0,0,1],
+##        [1,0,0,0,0,1],
+##        [1,0,0,0,0,1],
+##        [1,1,4,1,1,1]
+##        ]}))
 
 SETTINGS.levels_list.append(Level({
     'lvl_number' : 1,

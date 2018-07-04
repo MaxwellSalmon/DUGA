@@ -2,6 +2,8 @@ import pygame
 import math
 import SETTINGS
 
+ # I noticed, that the sprites are not projected correctly. However, I do not have the guts to fix it. Feel free to take a look.
+
 class Sprite:
     '''== Create a sprite ==\ntexture -> loaded texture | ID -> unique\npos -> px coords          | texture_type -> sprite, npc'''
     def __init__(self, texture, ID, pos, texture_type, parent = None):
