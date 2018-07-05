@@ -106,18 +106,18 @@ def what_now():
                 print()
                 print("Wrong arguments. Try again!")
 
-    for i in gc+sc:
-        if i < 0 or i > 255:
+        for i in gc+sc:
+            if i < 0 or i > 255:
+                print()
+                print("Values in RGB colours must be from 0-255. Try again.")
+                what_now()
+                
+        if len(gc+sc) > 6:
             print()
-            print("Values in RGB colours must be from 0-255. Try again.")
-            what_now()
-            
-    if len(gc+sc) > 6:
-        print()
-        print("Wrong RGB values. Try again.")
+            print("Wrong RGB values. Try again.")
 
-    editorCanvas.dict['ground_color'] = gc
-    editorCanvas.dict['sky_color'] = sc
+        editorCanvas.dict['ground_color'] = gc
+        editorCanvas.dict['sky_color'] = sc
 
     print(editorCanvas.dict)
     print()
@@ -870,10 +870,13 @@ class SaveLoad:
                 tile.npc_face = npc[1]
 
         #add start pos
-        if loadedmap['player_pos']:
-            start_tile = [x for x in currentMap.tiles if list(x.map_pos) == loadedmap['player_pos']][0]
-            start_tile.player_pos = loadedmap['player_pos']
-            currentMap.player_pos_set = True
+        try:
+            if loadedmap['player_pos']:
+                start_tile = [x for x in currentMap.tiles if list(x.map_pos) == loadedmap['player_pos']][0]
+                start_tile.player_pos = loadedmap['player_pos']
+                currentMap.player_pos_set = True
+        except:
+            pass
 
         #show author
         try:

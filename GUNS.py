@@ -1,6 +1,7 @@
 #GUN CLASS - See self.stats structure in the bottom of script.
 
 import SETTINGS
+import SOUND
 import pygame
 import random
 import math
@@ -123,7 +124,8 @@ class Gun:
                     if self.current_img not in self.hipfire:
                         self.current_img = self.hipfire[random.randint(0,1)]
                         self.shoot_busy = True
-                        pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
+                        #pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
+                        SOUND.play_sound(random.choice(self.sounds['shot']), 0)
                         SETTINGS.screen_shake = self.dmg * 2
                         self.damage()
                         self.timer = 0
@@ -161,7 +163,8 @@ class Gun:
                     if self.current_img not in self.aimdown:
                         self.current_img = self.aimdown[random.randint(0,1)]
                         self.shoot_busy = True
-                        pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
+                        #pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
+                        SOUND.play_sound(random.choice(self.sounds['shot']), 512)
                         SETTINGS.screen_shake = self.dmg * 2
                         self.damage()
                         self.timer = 0
