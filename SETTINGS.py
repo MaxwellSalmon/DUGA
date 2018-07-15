@@ -95,7 +95,7 @@ texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = True
+unlimited_ammo = False
 current_gun = 0
 #Below this point are non-configurable variables.
 next_gun = None
@@ -105,7 +105,7 @@ ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = True
+ignore_player = False
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

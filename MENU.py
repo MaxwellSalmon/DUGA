@@ -1,0 +1,2 @@
+import pygame
+import SETTINGS

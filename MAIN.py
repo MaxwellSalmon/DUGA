@@ -335,31 +335,31 @@ def main_loop():
 
 #Probably temporary object init
 #SETTINGS.current_level = 5 #temporary
+if __name__ == '__main__':
+    gameLoad = Load()
+    gameLoad.load_resources()
+    gameLoad.load_entities()
 
-gameLoad = Load()
-gameLoad.load_resources()
-gameLoad.load_entities()
+    mapGenerator = GENERATION.Generator()
+    mapGenerator.generate_levels(5, 4)
 
-mapGenerator = GENERATION.Generator()
-mapGenerator.generate_levels(5, 4)
+    gameLoad.get_canvas_size()
 
-gameLoad.get_canvas_size()
+    #Setup and classes
 
-#Setup and classes
+    thanks = TEXT.Text(150,250,"THANKS  FOR  PLAYING  DUGA  TECH  DEMO", SETTINGS.WHITE, "DUGAFONT.ttf", 24)
 
-thanks = TEXT.Text(150,250,"THANKS  FOR  PLAYING  DUGA  TECH  DEMO", SETTINGS.WHITE, "DUGAFONT.ttf", 24)
+    #Classes for later use
+    gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)
+    gameCanvas = Canvas(SETTINGS.canvas_map_width, SETTINGS.canvas_map_height)
+    gamePlayer = PLAYER.Player(SETTINGS.player_pos)
+    gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
+    gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromag' : 50})
+    gameHUD = HUD.hud(path.join('graphics', 'hud.png'))
 
-#Classes for later use
-gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)
-gameCanvas = Canvas(SETTINGS.canvas_map_width, SETTINGS.canvas_map_height)
-gamePlayer = PLAYER.Player(SETTINGS.player_pos)
-gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
-gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromag' : 50})
-gameHUD = HUD.hud(path.join('graphics', 'hud.png'))
+    #More loading - Level specific
+    gameLoad.load_new_level()
 
-#More loading - Level specific
-gameLoad.load_new_level()
-
-#Run at last
-main_loop()
+    #Run at last
+    main_loop()
 

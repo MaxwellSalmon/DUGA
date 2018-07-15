@@ -62,6 +62,8 @@ class Map:
             possible_npc_positions.append(SETTINGS.levels_list[SETTINGS.current_level].npcs[index][0])
             print("to ", SETTINGS.levels_list[SETTINGS.current_level].npcs[index][0])
 
+        print("This level has %s items and %s NPC's" % (len(SETTINGS.levels_list[SETTINGS.current_level].items), len(SETTINGS.levels_list[SETTINGS.current_level].npcs)))
+
 class Tile:
     
     def __init__(self, ID, pos, map_pos):

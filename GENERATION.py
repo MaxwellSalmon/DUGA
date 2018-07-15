@@ -18,11 +18,11 @@ class Generator:
 
         #Constants
         #Item probability
-        self.max_item_amount = int(SETTINGS.current_level * 1.5 ) + 16
-        self.max_items_per_segment = 8
+        self.max_item_amount = int(SETTINGS.current_level+1 * 1.5 ) + 10 #Multiplied by amount of segments
+        self.max_items_per_segment = 6
         self.spawn_chance = 8
-        self.spawn_chance_high = 40 
-        self.ammo_spawn_chance = 35
+        self.spawn_chance_high = 40 #Also influenced
+        self.ammo_spawn_chance = 35 #Also influenced
         self.item_probability = [0,0,0,0,0,0,0,0,
                                  1,1,1,1,1,1,1,1,
                                  2,2,2,2,2,2,
@@ -36,9 +36,9 @@ class Generator:
                                  10,10,10,10,10]
 
         #NPC probability
-        self.max_npc_amount = SETTINGS.current_level*2
+        self.max_npc_amount = SETTINGS.current_level+1*2 #Will be multiplied by amount of segments
         self.max_npcs_per_segment = 3
-        self.npc_spawn_chance = 25 + SETTINGS.current_level*2
+        self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
         self.npc_probability = [0,
                                 1,1,
                                 2,
@@ -125,9 +125,8 @@ class Generator:
 
         #Find an end point on the bottom row.
         end_point = [random.randint(0,size-1), size-1]
-        print("End point ", end_point)
 
-        #Add coords to the path until it reaches the end.
+        #Add coordinates to the path until it reaches the end.
         while path[num][0] != end_point:
             if path[num][0] not in checklist:
                     checklist.append(path[num][0])
@@ -374,13 +373,13 @@ class Generator:
 
             #Find a suitable segment to replace with if necessary.
             if set(access) != set(seg.doors):
-                newseg = [x for x in self.all_segs if set(access) == set(x.doors)]
+                newseg = [x for x in self.all_segs if set(access) == set(x.doors) and seg.type == x.type]
                 if newseg:
                     newseg = copy.deepcopy(random.choice(newseg))
                     newseg.level_pos = seg.level_pos
                     changesegs.append((newseg, i)) #Gritty way of doing it...
                 else:
-                    print("WARNING: No segment with doors: ", access)
+                    print("WARNING: No segment with doors: ", access, " of type ", x.type)
             i += 1
 
         #Finally replace array and self.segpath segments with new segments.
@@ -390,7 +389,7 @@ class Generator:
 
             self.segpath[i] = newseg
             array[newseg.level_pos[1]][newseg.level_pos[0]] = newseg
-                        
+
         return array
 
     def translate_map(self, segs, size):
@@ -412,8 +411,6 @@ class Generator:
         for x in array:
             if x:
                 newarray.append(x)
-
-        #print(newarray)
 
         #Translate player pos
         calcstart = [0,0]
@@ -455,7 +452,7 @@ class Generator:
             for item in seg.items:
                 items += 1
 
-        if items >= self.max_item_amount:
+        if items >= self.max_item_amount * len(self.segpath):
             return
         
         #Higher chance of spawning items in dead ends.
@@ -493,14 +490,15 @@ class Generator:
             for npc in seg.npcs:
                 npcs += 1
 
-        if npcs >= self.max_npc_amount:
+        if npcs >= self.max_npc_amount * len(self.segpath):
+            print(self.max_npc_amount, len(self.segpath))
             return
 
         #Spawn NPCs randomly
         for i in range(len(self.segpath)):
             seg = self.segpath[i]
             for y in range(self.max_npcs_per_segment):
-                if self.npc_spawn_chance >= random.randint(0,100):
+                if self.npc_spawn_chance + len(self.segpath) >= random.randint(0,100):
                     is_good = False
                     while not is_good:
                         randomx = random.randint(0, len(seg.array)-1)
