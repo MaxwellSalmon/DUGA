@@ -25,6 +25,7 @@ import INVENTORY
 import ENTITIES
 import SEGMENTS
 import GENERATION
+import MENU
 
 
 pygame.init()
@@ -129,7 +130,10 @@ class Canvas:
             self.height = SETTINGS.canvas_target_height
             self.res_width = SETTINGS.canvas_actual_width
 
-        self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))))# ,pygame.FULLSCREEN)
+        if SETTINGS.fullscreen:
+            self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))) ,pygame.FULLSCREEN)
+        else:
+            self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))))
         self.canvas = pygame.Surface((self.width, self.height))
         
         pygame.display.set_caption("DUGA")
@@ -279,7 +283,7 @@ def main_loop():
     while not game_exit:
         SETTINGS.zbuffer = []
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or SETTINGS.quit_game:
                 game_exit = True
 
                 b = 0
@@ -291,38 +295,41 @@ def main_loop():
                 break
             #    quit()
 
-        #Update logic
-        gamePlayer.control(gameCanvas.canvas)
-        
-        if SETTINGS.fov >= 100:
-            SETTINGS.fov = 100
-        elif SETTINGS.fov <= 10:
-            SETTINGS.fov = 10
+        gameCanvas.window.fill(SETTINGS.WHITE)
+        menuController.control()        
 
-        if SETTINGS.switch_mode:
-            gameCanvas.change_mode()
-
-        #Render - Draw
-        gameRaycast.calculate()
-        gameCanvas.draw()
-        
-        
-        if SETTINGS.mode == 1:
-            render_screen(gameCanvas.canvas)
-        
-        elif SETTINGS.mode == 0:
-            gameMap.draw(gameCanvas.window)                
-            gamePlayer.draw(gameCanvas.window)
-
-            for x in SETTINGS.raylines:
-                pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
-            SETTINGS.raylines = []
-
-            for x in SETTINGS.npc_list:
-                if x.rect:
-                    pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
-
-        update_game()
+##        #Update logic
+##        gamePlayer.control(gameCanvas.canvas)
+##        
+##        if SETTINGS.fov >= 100:
+##            SETTINGS.fov = 100
+##        elif SETTINGS.fov <= 10:
+##            SETTINGS.fov = 10
+##
+##        if SETTINGS.switch_mode:
+##            gameCanvas.change_mode()
+##
+##        #Render - Draw
+##        gameRaycast.calculate()
+##        gameCanvas.draw()
+##        
+##        
+##        if SETTINGS.mode == 1:
+##            render_screen(gameCanvas.canvas)
+##        
+##        elif SETTINGS.mode == 0:
+##            gameMap.draw(gameCanvas.window)                
+##            gamePlayer.draw(gameCanvas.window)
+##
+##            for x in SETTINGS.raylines:
+##                pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
+##            SETTINGS.raylines = []
+##
+##            for x in SETTINGS.npc_list:
+##                if x.rect:
+##                    pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
+##
+##        update_game()
 
         #Update Game
         pygame.display.update()
@@ -359,6 +366,9 @@ if __name__ == '__main__':
 
     #More loading - Level specific
     gameLoad.load_new_level()
+
+    #Menu classes
+    menuController = MENU.Controller(gameCanvas.window)
 
     #Run at last
     main_loop()

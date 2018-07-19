@@ -26,7 +26,7 @@ class Player:
         SETTINGS.player_rect = self.rect
 
         self.mouse = pygame.mouse
-        self.mouse.set_visible(False)
+       # self.mouse.set_visible(False)
         self.sensitivity = SETTINGS.sensitivity
         self.gun = 0
         self.gunsprites_aim = []

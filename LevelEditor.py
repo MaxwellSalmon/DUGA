@@ -697,14 +697,14 @@ class SaveLoad:
 
     def __init__(self):
         #open customLevels.dat
-        with open(os.path.join('modding', 'customLevels.dat'), 'rb') as file:
+        with open(os.path.join('data', 'customLevels.dat'), 'rb') as file:
             try:
                 self.levels = pickle.load(file)
             except:
                 self.levels = []
 
         #open customSegments.dat
-        with open(os.path.join('modding', 'customSegments.dat'), 'rb') as file:
+        with open(os.path.join('data', 'customSegments.dat'), 'rb') as file:
             try:
                 self.segments = pickle.load(file)
             except:
@@ -776,10 +776,10 @@ class SaveLoad:
             else:
                 print("Invalid save location!")
 
-        with open(os.path.join('modding', 'customLevels.dat'), 'wb') as file:
+        with open(os.path.join('data', 'customLevels.dat'), 'wb') as file:
             pickle.dump(self.levels, file)
 
-        with open(os.path.join('modding', 'customSegments.dat'), 'wb') as file2:
+        with open(os.path.join('data', 'customSegments.dat'), 'wb') as file2:
             pickle.dump(self.segments, file2)
 
         self.__init__()
@@ -912,10 +912,10 @@ class SaveLoad:
         else:
             self.del_map(index, mtype)
 
-        with open(os.path.join('modding', 'customLevels.dat'), 'wb') as file:
+        with open(os.path.join('data', 'customLevels.dat'), 'wb') as file:
             pickle.dump(self.levels, file)
 
-        with open(os.path.join('modding', 'customSegments.dat'), 'wb') as file2:
+        with open(os.path.join('data', 'customSegments.dat'), 'wb') as file2:
             pickle.dump(self.segments, file2)
 
 def main_loop():

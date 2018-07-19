@@ -316,7 +316,7 @@ class Segment:
 
 def load_customs():
     segments = []
-    with open(os.path.join('modding', 'customSegments.dat'), 'rb') as file:
+    with open(os.path.join('data', 'customSegments.dat'), 'rb') as file:
         segments = pickle.load(file)
 
     for seg in segments:

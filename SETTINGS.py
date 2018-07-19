@@ -6,9 +6,11 @@ fps = 31
 caption = "DUGA v1.0 - %s"
 mode = 1
 volume = 1
+fullscreen = False
 #Below this point are the non-configurable game variables.
 current_level_size = None
 changing_level = False
+quit_game = False
 dt = 0
 cfps = 0
 
