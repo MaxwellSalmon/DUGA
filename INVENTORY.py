@@ -282,7 +282,7 @@ class inventory:
             self.text[5].update_string('MAG SIZE      : %s   %s' % (SETTINGS.ground_weapon.mag_size, self.compare_weapons('mag')))
             self.text[6].update_string('REL TIME      : %s   %s' % (SETTINGS.ground_weapon.rlspeed, self.compare_weapons('rel')))
             self.text[7].update_string('AMMO TYP  : %s' % SETTINGS.ground_weapon.ammo_type)
-            self.text[8].update_string('SWITCH')
+            self.text[8].update_string('SWAP')
 
             #Update text
             x = 0
