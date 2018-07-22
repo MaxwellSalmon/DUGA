@@ -295,41 +295,41 @@ def main_loop():
                 break
             #    quit()
 
-        gameCanvas.window.fill(SETTINGS.WHITE)
-        menuController.control()        
+    #    gameCanvas.window.fill(SETTINGS.WHITE)
+   #     menuController.control()        
 
-##        #Update logic
-##        gamePlayer.control(gameCanvas.canvas)
-##        
-##        if SETTINGS.fov >= 100:
-##            SETTINGS.fov = 100
-##        elif SETTINGS.fov <= 10:
-##            SETTINGS.fov = 10
-##
-##        if SETTINGS.switch_mode:
-##            gameCanvas.change_mode()
-##
-##        #Render - Draw
-##        gameRaycast.calculate()
-##        gameCanvas.draw()
-##        
-##        
-##        if SETTINGS.mode == 1:
-##            render_screen(gameCanvas.canvas)
-##        
-##        elif SETTINGS.mode == 0:
-##            gameMap.draw(gameCanvas.window)                
-##            gamePlayer.draw(gameCanvas.window)
-##
-##            for x in SETTINGS.raylines:
-##                pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
-##            SETTINGS.raylines = []
-##
-##            for x in SETTINGS.npc_list:
-##                if x.rect:
-##                    pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
-##
-##        update_game()
+        #Update logic
+        gamePlayer.control(gameCanvas.canvas)
+        
+        if SETTINGS.fov >= 100:
+            SETTINGS.fov = 100
+        elif SETTINGS.fov <= 10:
+            SETTINGS.fov = 10
+
+        if SETTINGS.switch_mode:
+            gameCanvas.change_mode()
+
+        #Render - Draw
+        gameRaycast.calculate()
+        gameCanvas.draw()
+        
+        
+        if SETTINGS.mode == 1:
+            render_screen(gameCanvas.canvas)
+        
+        elif SETTINGS.mode == 0:
+            gameMap.draw(gameCanvas.window)                
+            gamePlayer.draw(gameCanvas.window)
+
+            for x in SETTINGS.raylines:
+                pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
+            SETTINGS.raylines = []
+
+            for x in SETTINGS.npc_list:
+                if x.rect:
+                    pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
+
+        update_game()
 
         #Update Game
         pygame.display.update()
