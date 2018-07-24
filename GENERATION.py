@@ -36,7 +36,7 @@ class Generator:
                                  10,10,10,10,10]
 
         #NPC probability
-        self.max_npc_amount = SETTINGS.current_level+1*2 #Will be multiplied by amount of segments
+        self.max_npc_amount = SETTINGS.current_level+1 #Will be multiplied by amount of segments
         self.max_npcs_per_segment = 3
         self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
         self.npc_probability = [0,
@@ -66,6 +66,7 @@ class Generator:
     def generate_levels(self, amount, size, *seed):
         #Generate sequence of levels and append to SETTINGS.all_levels
         self.create_seed(seed)
+        SETTINGS.glevels_list = []
             
         for i in range(amount):
             self.generate_level(size, seed)
@@ -433,12 +434,12 @@ class Generator:
                 y = npc[0][1] + seg.height * seg.level_pos[1]
                 translated_npcs.append(((x,y), npc[1], npc[2]))
         
-        SETTINGS.levels_list.append(LEVELS.Level({
+        SETTINGS.glevels_list.append(LEVELS.Level({
             'items' : translated_items,
             'ground_color' : random.choice(self.ground_colors),
             'sky_color' : random.choice(self.sky_colors),
             'array' : newarray,
-            'lvl_number' : len(SETTINGS.levels_list),
+            'lvl_number' : len(SETTINGS.glevels_list),
             'npcs' : translated_npcs,
             'player_pos' : calcstart,
             'shade' : (bool(random.getrandbits(1)), random.choice(self.shade_colors), random.randint(150, 1000))
@@ -491,25 +492,25 @@ class Generator:
                 npcs += 1
 
         if npcs >= self.max_npc_amount * len(self.segpath):
-            print(self.max_npc_amount, len(self.segpath))
             return
 
         #Spawn NPCs randomly
         for i in range(len(self.segpath)):
             seg = self.segpath[i]
-            for y in range(self.max_npcs_per_segment):
-                if self.npc_spawn_chance + len(self.segpath) >= random.randint(0,100):
-                    is_good = False
-                    while not is_good:
-                        randomx = random.randint(0, len(seg.array)-1)
-                        randomy = random.randint(0, len(seg.array)-1)
-                        occupied = [x for x in seg.npcs if list(x[0]) == [randomx, randomy]]
+            if seg.type != 'start':
+                for y in range(self.max_npcs_per_segment):
+                    if self.npc_spawn_chance + len(self.segpath) >= random.randint(0,100):
+                        is_good = False
+                        while not is_good:
+                            randomx = random.randint(0, len(seg.array)-1)
+                            randomy = random.randint(0, len(seg.array)-1)
+                            occupied = [x for x in seg.npcs if list(x[0]) == [randomx, randomy]]
 
-                        if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
-                            npc = random.choice(self.npc_probability)
-                            self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
+                            if not SETTINGS.tile_solid[seg.array[randomy][randomx]] and not occupied:
+                                npc = random.choice(self.npc_probability)
+                                self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
 
-                            is_good = True
+                                is_good = True
         
 
 if __name__ == '__main__':

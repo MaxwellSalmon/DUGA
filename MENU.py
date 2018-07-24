@@ -3,8 +3,9 @@ import pickle
 import os
 import SETTINGS
 import TEXT
+import SOUND
 
-pygame.init()
+SETTINGS.menu_showing = True
 
 class Controller:
 
@@ -14,11 +15,14 @@ class Controller:
         self.canvas = canvas
 
         self.load_settings()
+        self.esc_pressed = False
+        self.new_pressed = False
 
         self.mainMenu = MainMenu()
         self.newMenu = NewMenu()
         self.optionsMenu = OptionsMenu(self.current_settings)
         self.creditsMenu = CreditsMenu()
+        self.gMainMenu = GMainMenu()
 
     def load_settings(self):
         #This script does not change the settings themselves, but only the settings.dat
@@ -26,7 +30,6 @@ class Controller:
             settings = pickle.load(file1)
 
         self.current_settings = settings
-        print(settings['fov'])
 
     def save_settings(self):
         with open(os.path.join('data', 'settings.dat'), 'wb') as file2:
@@ -49,6 +52,30 @@ class Controller:
                 self.newMenu.draw(self.canvas)
                 if self.newMenu.back_button.get_clicked():
                     self.current_menu = 'main'
+                
+                elif self.newMenu.new_button.get_clicked():
+                    self.newMenu.loading.draw(self.canvas)
+                    self.new_pressed = True
+                #Check if new levels have been loaded and loading string is showing
+                elif self.new_pressed:
+                    SETTINGS.playing_new = True
+                    self.new_pressed = False
+                elif SETTINGS.playing_new:
+                    self.current_type = 'game'
+                    self.current_menu = 'main'
+                    SETTINGS.menu_showing = False
+                    SETTINGS.playing_new = False
+
+                    
+                elif self.newMenu.custom_button.get_clicked():
+                    SETTINGS.playing_customs = True
+                #Check if custom levels have been loaded
+                elif SETTINGS.playing_customs:
+                    self.current_type = 'game'
+                    self.current_menu = 'main'
+                    SETTINGS.menu_showing = False
+                    SETTINGS.playing_customs = False
+                    
 
             elif self.current_menu == 'options':
                 self.optionsMenu.draw(self.canvas)
@@ -60,10 +87,21 @@ class Controller:
                 self.creditsMenu.draw(self.canvas)
                 if self.creditsMenu.back_button.get_clicked():
                     self.current_menu = 'main'
-                    
+
+        #Show menu in game 
         elif self.current_type == 'game':
-            pass
-            
+            key = pygame.key.get_pressed()
+            if self.current_menu == 'main':
+                self.gMainMenu.draw(self.canvas)
+                if self.gMainMenu.resume_button.get_clicked() or (self.esc_pressed and not key[pygame.K_ESCAPE]):
+                    SETTINGS.menu_showing = False
+                    self.esc_pressed = False
+                elif self.gMainMenu.exit_button.get_clicked():
+                    self.current_type = 'main'
+
+            if key[pygame.K_ESCAPE]:
+                self.esc_pressed = True
+                
 
 class Menu:
 
@@ -99,6 +137,9 @@ class NewMenu(Menu):
         self.custom_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "CUSTOM MAPS")
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
 
+        self.loading = TEXT.Text(0,0, "LOADING...", SETTINGS.BLACK, "DUGAFONT.ttf", 74)
+        self.loading.update_pos((SETTINGS.canvas_actual_width/2)-(self.loading.layout.get_width()/2)+8, (SETTINGS.canvas_target_height/2)-(self.loading.layout.get_height()/2))
+
     def draw(self, canvas):
         self.new_button.draw(canvas)
         self.custom_button.draw(canvas)
@@ -111,13 +152,13 @@ class OptionsMenu(Menu):
         Menu.__init__(self, 'OPTIONS')
 
         self.strings = ['LOW', 'MED', 'HIGH']
-        self.degrees = ['40', '60', '80']
+        self.degrees = ['50', '60', '70']
         self.onoff = ['ON', 'OFF']
         
         self.strings_to_data = {
             #'graphics' : [(resolution, render), (), ()]
             'graphics' : [(100, 10), (140, 12), (175, 14)],
-            'fov' : [40, 60, 80],
+            'fov' : [50, 60, 70],
             'sensitivity' : [0.15, 0.25, 0.35], #Tjek den her
             'volume' : [0.1, 0.5, 1],
             'fullscreen' : [True, False]}
@@ -231,11 +272,29 @@ class CreditsMenu(Menu):
         self.contributors.draw(canvas)
         self.maxwellsalmon.draw(canvas)
 
+#---------------------------------------- IN-GAME MENUS ----------------------------------------------------------------------------
+
+class GMainMenu(Menu):
+    
+    def __init__(self):
+        Menu.__init__(self, 'DUGA')
+        self.resume_button = Button((SETTINGS.canvas_actual_width/2, 200, 200, 60), "RESUME")
+        self.exit_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "EXIT GAME")
+
+        self.background = pygame.Surface((SETTINGS.canvas_actual_width, SETTINGS.canvas_target_height)).convert_alpha()
+        self.background.fill((100,100,100,10))
+        
+    def draw(self, canvas):
+        canvas.blit(self.background, (0,0))
+        self.resume_button.draw(canvas)
+        self.exit_button.draw(canvas)
+        self.title.draw(canvas)
 
 
 class Button:
 
     def __init__(self, xywh, text):
+        #ADD CLICK SOUND
         self.surface = pygame.Surface((xywh[2], xywh[3]))
         self.rect = self.surface.get_rect()
         self.rect.center = (xywh[0], xywh[1])
@@ -245,6 +304,8 @@ class Button:
         self.text.update_pos(xywh[0] - self.text.layout.get_width()/2, xywh[1] - (self.text.layout.get_height() / 2)+2)
 
         self.filling = SETTINGS.LIGHTGRAY
+        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'button.ogg'))
+        
 
     def draw(self, canvas):
         self.surface.fill(self.filling)
@@ -262,6 +323,7 @@ class Button:
                 self.clicked = True
             if not pygame.mouse.get_pressed()[0] and self.clicked:
                 self.clicked = False
+                SOUND.play_sound(self.sound, 0)
                 return True
             else:
                 return False

@@ -4,7 +4,8 @@
 # Husk at konverte alle teksturer. Dette kan du forsøge dig med og se, om det kører bedre.
 import pygame
 import math
-from os import *
+import os
+import pickle
 #-- Engine imports--
 import SETTINGS
 import PLAYER
@@ -38,6 +39,7 @@ class Load:
     def load_resources(self):
         ID = 0
         current_texture = 0
+        self.timer = 0
         for texture in TEXTURES.all_textures:
             if SETTINGS.texture_type[ID] == 'sprite':
                 SETTINGS.texture_list.append(pygame.image.load(texture))
@@ -51,6 +53,17 @@ class Load:
 
         #Mixer goes under here as well
         pygame.mixer.init()
+
+        #Load custom settings
+        with open(os.path.join('data', 'settings.dat'), 'rb') as settings_file:
+            settings = pickle.load(settings_file)
+            
+        SETTINGS.fov = settings['fov']
+        SETTINGS.sensitivity = settings['sensitivity']
+        SETTINGS.volume = settings['volume']
+        SETTINGS.resolution = settings['graphics'][0]
+        SETTINGS.render = settings['graphics'][1]
+        SETTINGS.fullscreen = settings['fullscreen']
 
     def get_canvas_size(self):
         SETTINGS.canvas_map_width = len(SETTINGS.levels_list[SETTINGS.current_level].array[0])*SETTINGS.tile_size
@@ -68,33 +81,43 @@ class Load:
         ENTITIES.load_npc_types()
         ENTITIES.load_item_types()
 
-    def load_new_level(self):
-        if SETTINGS.changing_level:
-            #Remove old level info
-            SETTINGS.npc_list = []
-            SETTINGS.all_items = []
-            SETTINGS.walkable_area = []
-            SETTINGS.all_tiles = []
-            SETTINGS.all_doors = []
-            SETTINGS.all_solid_tiles = []
-            SETTINGS.all_sprites = []
+    def load_custom_levels(self):
+        with open(os.path.join('data', 'customLevels.dat'), 'rb') as file:
+            custom_levels = pickle.load(file)
             
-            #Retrieve new level info
-            self.get_canvas_size()
-            gameMap.__init__(SETTINGS.levels_list[SETTINGS.current_level].array)
-            SETTINGS.player_rect.center = (SETTINGS.levels_list[SETTINGS.current_level].player_pos[0]*SETTINGS.tile_size, SETTINGS.levels_list[SETTINGS.current_level].player_pos[1]*SETTINGS.tile_size)
-            SETTINGS.player_rect.centerx += SETTINGS.tile_size/2
-            SETTINGS.player_rect.centery += SETTINGS.tile_size/2
-            gamePlayer.real_x = SETTINGS.player_rect.centerx
-            gamePlayer.real_y = SETTINGS.player_rect.centery
+        for level in custom_levels:
+            SETTINGS.clevels_list.append(LEVELS.Level(level))
 
-            if SETTINGS.shade and SETTINGS.levels_list[SETTINGS.current_level].shade:
-                SETTINGS.shade_rgba = SETTINGS.levels_list[SETTINGS.current_level].shade_rgba
-                SETTINGS.shade_visibility = SETTINGS.levels_list[SETTINGS.current_level].shade_visibility
-            
+    def load_new_level(self):    
+        #Remove old level info
+        SETTINGS.npc_list = []
+        SETTINGS.all_items = []
+        SETTINGS.walkable_area = []
+        SETTINGS.all_tiles = []
+        SETTINGS.all_doors = []
+        SETTINGS.all_solid_tiles = []
+        SETTINGS.all_sprites = []
+        
+        #Retrieve new level info
+        self.get_canvas_size()
+        gameMap.__init__(SETTINGS.levels_list[SETTINGS.current_level].array)
+        SETTINGS.player_rect.center = (SETTINGS.levels_list[SETTINGS.current_level].player_pos[0]*SETTINGS.tile_size, SETTINGS.levels_list[SETTINGS.current_level].player_pos[1]*SETTINGS.tile_size)
+        SETTINGS.player_rect.centerx += SETTINGS.tile_size/2
+        SETTINGS.player_rect.centery += SETTINGS.tile_size/2
+        gamePlayer.real_x = SETTINGS.player_rect.centerx
+        gamePlayer.real_y = SETTINGS.player_rect.centery
+
+        if SETTINGS.shade and SETTINGS.levels_list[SETTINGS.current_level].shade:
+            SETTINGS.shade_rgba = SETTINGS.levels_list[SETTINGS.current_level].shade_rgba
+            SETTINGS.shade_visibility = SETTINGS.levels_list[SETTINGS.current_level].shade_visibility
+
+        if SETTINGS.current_level > 0:
             SETTINGS.changing_level = False
             SETTINGS.player_states['fade'] = True
-            
+        else:
+            SETTINGS.player_states['fade'] = True
+            SETTINGS.player_states['black'] = True
+                
         SETTINGS.walkable_area = list(PATHFINDING.pathfind(SETTINGS.player_map_pos, SETTINGS.all_tiles[-1].map_pos))
         gameMap.move_inaccessible_entities()
         ENTITIES.spawn_npcs()
@@ -268,8 +291,22 @@ def update_game():
         if SETTINGS.current_level < len(SETTINGS.levels_list)-1:
             SETTINGS.current_level += 1
             gameLoad.load_new_level()
-        else:
+        
+        elif SETTINGS.current_level == len(SETTINGS.levels_list)-1 and gameLoad.timer < 4 and not SETTINGS.player_states['fade']:
             thanks.draw(gameCanvas.window)
+            if not SETTINGS.game_won:
+                gameLoad.timer = 0
+            SETTINGS.game_won = True
+            gameLoad.timer += SETTINGS.dt
+            
+        #Reset for future playthroughs
+        elif SETTINGS.game_won and gameLoad.timer >= 4:
+            gameLoad.timer = 0
+            SETTINGS.game_won = False
+            menuController.current_type = 'main'
+            SETTINGS.menu_showing = True
+            SETTINGS.current_level = 0
+        
         
 
 
@@ -294,42 +331,61 @@ def main_loop():
                 pygame.quit()
                 break
             #    quit()
+            
+        if SETTINGS.menu_showing and menuController.current_type == 'main':
+            gameCanvas.window.fill(SETTINGS.WHITE)
+            menuController.control()
 
-    #    gameCanvas.window.fill(SETTINGS.WHITE)
-   #     menuController.control()        
+            #Load custom maps
+            if SETTINGS.playing_customs:
+                SETTINGS.levels_list = SETTINGS.clevels_list
+                gameLoad.get_canvas_size()
+                gameLoad.load_new_level()
 
-        #Update logic
-        gamePlayer.control(gameCanvas.canvas)
-        
-        if SETTINGS.fov >= 100:
-            SETTINGS.fov = 100
-        elif SETTINGS.fov <= 10:
-            SETTINGS.fov = 10
+            #Load generated maps
+            elif SETTINGS.playing_new:
+                mapGenerator.__init__()
+                mapGenerator.generate_levels(SETTINGS.glevels_amount, SETTINGS.glevels_size)
+                SETTINGS.levels_list = SETTINGS.glevels_list
+                gameLoad.get_canvas_size()
+                gameLoad.load_new_level()
 
-        if SETTINGS.switch_mode:
-            gameCanvas.change_mode()
+        elif SETTINGS.menu_showing and menuController.current_type == 'game':
+            menuController.control()
+            
+        else:
+            #Update logic
+            gamePlayer.control(gameCanvas.canvas)
+            
+            if SETTINGS.fov >= 100:
+                SETTINGS.fov = 100
+            elif SETTINGS.fov <= 10:
+                SETTINGS.fov = 10
 
-        #Render - Draw
-        gameRaycast.calculate()
-        gameCanvas.draw()
-        
-        
-        if SETTINGS.mode == 1:
-            render_screen(gameCanvas.canvas)
-        
-        elif SETTINGS.mode == 0:
-            gameMap.draw(gameCanvas.window)                
-            gamePlayer.draw(gameCanvas.window)
+            if SETTINGS.switch_mode:
+                gameCanvas.change_mode()
 
-            for x in SETTINGS.raylines:
-                pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
-            SETTINGS.raylines = []
+            #Render - Draw
+            gameRaycast.calculate()
+            gameCanvas.draw()
+            
+            
+            if SETTINGS.mode == 1:
+                render_screen(gameCanvas.canvas)
+            
+            elif SETTINGS.mode == 0:
+                gameMap.draw(gameCanvas.window)                
+                gamePlayer.draw(gameCanvas.window)
 
-            for x in SETTINGS.npc_list:
-                if x.rect:
-                    pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
+                for x in SETTINGS.raylines:
+                    pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
+                SETTINGS.raylines = []
 
-        update_game()
+                for x in SETTINGS.npc_list:
+                    if x.rect:
+                        pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
+
+            update_game()
 
         #Update Game
         pygame.display.update()
@@ -346,15 +402,18 @@ if __name__ == '__main__':
     gameLoad = Load()
     gameLoad.load_resources()
     gameLoad.load_entities()
+    gameLoad.load_custom_levels()
 
     mapGenerator = GENERATION.Generator()
-    mapGenerator.generate_levels(5, 4)
+    mapGenerator.generate_levels(1,2)
+    SETTINGS.levels_list = SETTINGS.glevels_list
 
     gameLoad.get_canvas_size()
 
     #Setup and classes
 
-    thanks = TEXT.Text(150,250,"THANKS  FOR  PLAYING  DUGA  TECH  DEMO", SETTINGS.WHITE, "DUGAFONT.ttf", 24)
+    thanks = TEXT.Text(0,0,"YOU WON", SETTINGS.WHITE, "DUGAFONT.ttf", 48)
+    thanks.update_pos(SETTINGS.canvas_actual_width/2 - thanks.layout.get_width()/2, SETTINGS.canvas_target_height/2 - thanks.layout.get_height()/2)
 
     #Classes for later use
     gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)
@@ -362,7 +421,7 @@ if __name__ == '__main__':
     gamePlayer = PLAYER.Player(SETTINGS.player_pos)
     gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
     gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromag' : 50})
-    gameHUD = HUD.hud(path.join('graphics', 'hud.png'))
+    gameHUD = HUD.hud(os.path.join('graphics', 'hud.png'))
 
     #More loading - Level specific
     gameLoad.load_new_level()

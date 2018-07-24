@@ -2,6 +2,7 @@ import SETTINGS
 import SPRITES
 import PATHFINDING
 import ITEMS
+import SOUND
 import os
 import random
 import math
@@ -154,14 +155,14 @@ class Npc:
                         if self.player_in_view:
                             if self.detect_player():
                                 self.path = []
-                                pygame.mixer.Sound.play(self.sounds['spot'])
+                                SOUND.play_sound(self.sounds['spot'], self.dist)
                                 self.state = 'attacking'
                                 print("NPC %s is attacking you" % self.ID)
                 
                 elif self.state == 'patrouling':
                     if self.player_in_view and not SETTINGS.ignore_player and self.detect_player():
                         self.path = []
-                        pygame.mixer.Sound.play(self.sounds['spot'])
+                        SOUND.play_sound(self.sounds['spot'], self.dist)
                         self.state = 'attacking'
                         print("NPC %s is attacking you" % self.ID)
                     elif self.dist <= SETTINGS.tile_size / 2 and not SETTINGS.ignore_player:
@@ -181,7 +182,7 @@ class Npc:
                         if self.player_in_view:
                             if self.detect_player():
                                 self.path = []
-                                pygame.mixer.Sound.play(self.sounds['spot'])
+                                SOUND.play_sound(self.sounds['spot'], self.dist)
                                 self.state = 'fleeing'
                                 print("NPC %s is fleeing from you" % self.ID)
                         elif self.dist <= SETTINGS.tile_size / 2:
@@ -192,7 +193,7 @@ class Npc:
                         if not SETTINGS.ignore_player:
                             if self.detect_player():
                                 self.path = []
-                                pygame.mixer.Sound.play(self.sounds['spot'])
+                                SOUND.play_sound(self.sounds['spot'], self.dist)
                                 self.state = 'fleeing'
                                 print("NPC %s is fleeing from you" % self.ID)
                     elif self.dist <= SETTINGS.tile_size / 2:
@@ -210,7 +211,7 @@ class Npc:
             elif self.moving:
                 self.animate('walking')
 
-        if SETTINGS.player_states['dead']: #Få til at virke bedre
+        if SETTINGS.player_states['dead']:
             self.face += 10
             if self.face >= 360:
                 self.face -= 360
@@ -568,7 +569,7 @@ class Npc:
                                 self.animate('attacking')
                                 self.hurting = False
                                 if random.randint(0,2) == 2:
-                                    pygame.mixer.Sound.play(random.choice(self.sounds['damage']))
+                                    SOUND.play_sound(random.choice(self.sounds['damage']), self.dist)
                         else:
                             self.animate('attacking')
 
@@ -615,7 +616,7 @@ class Npc:
                                 self.animate('attacking')
                                 self.hurting = False
                                 if random.randint(0,2) == 2:
-                                    pygame.mixer.Sound.play(random.choice(self.sounds['damage']))
+                                    SOUND.play_sound(random.choice(self.sounds['damage']), self.dist)
                         else:
                             self.animate('attacking')
                             
@@ -687,7 +688,7 @@ class Npc:
             self.sprite.texture = self.die_texture[self.current_frame]
             if self.current_frame == 0 and not self.mein_leben:
                 self.mein_leben = True
-                pygame.mixer.Sound.play(random.choice(self.sounds['die']))
+                SOUND.play_sound(random.choice(self.sounds['die']), self.dist)
             if self.timer >= self.frame_interval and self.current_frame < len(self.die_texture)-1:
                 self.current_frame += 1
                 self.timer = 0
@@ -707,7 +708,7 @@ class Npc:
                 self.side = None
                 self.hurting = False
                 self.timer = 0
-                pygame.mixer.Sound.play(random.choice(self.sounds['damage']))
+                SOUND.play_sound(random.choice(self.sounds['damage']), self.dist)
                 if self.state == 'idle' or self.state == 'patrouling':
                     self.face = self.face + self.theta
                     if self.face >= 360:
@@ -722,7 +723,7 @@ class Npc:
                 self.current_frame += 1
                 self.timer = 0
                 if self.current_frame == len(self.hit_texture):
-                    pygame.mixer.Sound.play(self.sounds['attack'])
+                    SOUND.play_sound(self.sounds['attack'], self.dist)
                     self.sprite.texture = self.stand_texture[0]
                     self.current_frame = 0
                     self.attacking = False
@@ -738,9 +739,14 @@ class Npc:
 
     def drop_item(self):
         texture = 'none.png'
-        possible_drops = ['bullet', 'bullet', 'bullet', 'shell', 'shell', 'health', 'armor', 'ferromag']
+        possible_drops = ['bullet', 'bullet', 'bullet',
+                          'shell', 'shell',
+                          'health',
+                          'armor',
+                          'ferromag', 'ferromag',
+                          'gun']
         drop = random.choice(possible_drops)
-        effect = random.randint(2, 10)
+        effect = random.randint(4, 12)
         if drop == 'bullet':
             texture = 'bullet.png'
         elif drop == 'shell':
@@ -753,7 +759,6 @@ class Npc:
             texture = 'ferromag.png'
         else:
             print("Error: No texture with name ", drop)
-            texture 
         SETTINGS.all_items.append(ITEMS.Item(self.map_pos, os.path.join('graphics', 'items',  texture), drop, effect))
 
 #stats = {

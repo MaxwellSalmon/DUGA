@@ -7,18 +7,26 @@ caption = "DUGA v1.0 - %s"
 mode = 1
 volume = 1
 fullscreen = False
+menu_showing = True
 #Below this point are the non-configurable game variables.
 current_level_size = None
 changing_level = False
 quit_game = False
+game_won = False
 dt = 0
 cfps = 0
 
 '''Level settings'''
+glevels_size = 4
+glevels_amount = 2
 #These are non-configurable.
 levels_list = []
 segments_list = []
+clevels_list = []
+glevels_list = []
 seed = None
+playing_customs = False
+playing_new = False
 
 
 '''Canvas settings'''

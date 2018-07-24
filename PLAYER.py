@@ -42,6 +42,7 @@ class Player:
         #input variables
         self.mouse2 = 0
         self.inventory = 0
+        self.esc_pressed = False
         
 
     def direction(self, offset, distance):
@@ -175,6 +176,14 @@ class Player:
                 self.inventory += 1
             elif not key[pygame.K_i]:
                 self.inventory = 0
+
+        #Show menu
+            if key[pygame.K_ESCAPE]:
+                self.esc_pressed = True
+
+            elif self.esc_pressed:
+                SETTINGS.menu_showing = True
+                self.esc_pressed = False
                 
         #Is the player dead or taking damage?
         if self.health > SETTINGS.player_health:

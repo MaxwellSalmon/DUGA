@@ -124,7 +124,6 @@ class Gun:
                     if self.current_img not in self.hipfire:
                         self.current_img = self.hipfire[random.randint(0,1)]
                         self.shoot_busy = True
-                        #pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
                         SOUND.play_sound(random.choice(self.sounds['shot']), 0)
                         SETTINGS.screen_shake = self.dmg * 2
                         self.damage()
@@ -144,7 +143,7 @@ class Gun:
                     if self.current_img not in self.hipfire:
                         self.current_img = self.hipfire[0]
                         self.shoot_busy = True
-                        pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
+                        SOUND.play_sound(random.choice(self.sounds['shot']), 0)
                         self.damage()
                         self.timer = 0
                         
@@ -163,8 +162,7 @@ class Gun:
                     if self.current_img not in self.aimdown:
                         self.current_img = self.aimdown[random.randint(0,1)]
                         self.shoot_busy = True
-                        #pygame.mixer.Sound.play(random.choice(self.sounds['shot']))
-                        SOUND.play_sound(random.choice(self.sounds['shot']), 512)
+                        SOUND.play_sound(random.choice(self.sounds['shot']), 0)
                         SETTINGS.screen_shake = self.dmg * 2
                         self.damage()
                         self.timer = 0
@@ -179,7 +177,7 @@ class Gun:
                         self.firetimer = 0
         else:
             if self.firetimer >= self.firerate:
-                pygame.mixer.Sound.play(random.choice(self.sounds['click']))
+                SOUND.play_sound(random.choice(self.sounds['click']), 0)
                 self.firetimer = 0
                            
 
@@ -215,7 +213,7 @@ class Gun:
             #Change sprite list to reload.
             if self.current_img not in self.reload:
                 self.current_img = self.reload[0]
-                pygame.mixer.Sound.play(random.choice(self.sounds['magout']))
+                SOUND.play_sound(random.choice(self.sounds['magout']), 0)
                 
             self.reload_busy = True
             #Make sure the magazine is out of view for some time.
@@ -228,7 +226,7 @@ class Gun:
                 self.current_img = self.aim[0]
                 self.reload_busy = False
                 self.timer = 0
-                pygame.mixer.Sound.play(random.choice(self.sounds['magin']))
+                SOUND.play_sound(random.choice(self.sounds['magin']), 0)
                 #Change actual ammo
                 if not SETTINGS.unlimited_ammo:
                     taken_ammo = self.mag_size - self.current_mag
