@@ -114,22 +114,6 @@ class Npc:
         if self.state == 'attacking' or self.state == 'fleeing':
             self.speed = self.OG_speed * 2
 
-        if pygame.key.get_pressed()[pygame.K_o]:
-            print("=========")
-            print("ID: ", self.ID)
-            print("Mind: ", self.mind)
-            print("State: ", self.state)
-            print("Attack type: ", self.atcktype)
-            print("Hurting: ", self.hurting)
-            print("Moving: ", self.moving)
-            print("Attacking: ", self.attacking)
-            print("Dead: ", self.dead)
-            print("Player seen: ", self.player_in_view)
-            print("Health: ", self.health)
-            print("Path len: ", len(self.path))
-            print("Attack move: ", self.attack_move)
-            print("=========")
-
         if not self.dead:
             self.timer += SETTINGS.dt
             self.update_timer += SETTINGS.dt

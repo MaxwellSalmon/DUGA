@@ -287,13 +287,17 @@ def update_game():
     for item in SETTINGS.all_items:
         item.update()
 
-    if SETTINGS.changing_level and SETTINGS.player_states['black']:
-        if SETTINGS.current_level < len(SETTINGS.levels_list)-1:
+    if (SETTINGS.changing_level and SETTINGS.player_states['black']) or SETTINGS.player_states['dead']:
+        if SETTINGS.current_level < len(SETTINGS.levels_list)-1 and SETTINGS.changing_level:
             SETTINGS.current_level += 1
             gameLoad.load_new_level()
         
-        elif SETTINGS.current_level == len(SETTINGS.levels_list)-1 and gameLoad.timer < 4 and not SETTINGS.player_states['fade']:
-            thanks.draw(gameCanvas.window)
+        elif (SETTINGS.current_level == len(SETTINGS.levels_list)-1 or SETTINGS.player_states['dead']) and gameLoad.timer < 4 and not SETTINGS.player_states['fade']:
+            if SETTINGS.current_level == len(SETTINGS.levels_list)-1 and text.string != 'YOU  WON':
+                text.update_string('YOU  WON')
+            elif SETTINGS.player_states['dead'] and text.string != 'GAME  OVER':
+                text.update_string('GAME  OVER')
+            text.draw(gameCanvas.window)
             if not SETTINGS.game_won:
                 gameLoad.timer = 0
             SETTINGS.game_won = True
@@ -412,8 +416,8 @@ if __name__ == '__main__':
 
     #Setup and classes
 
-    thanks = TEXT.Text(0,0,"YOU WON", SETTINGS.WHITE, "DUGAFONT.ttf", 48)
-    thanks.update_pos(SETTINGS.canvas_actual_width/2 - thanks.layout.get_width()/2, SETTINGS.canvas_target_height/2 - thanks.layout.get_height()/2)
+    text = TEXT.Text(0,0,"YOU  WON", SETTINGS.WHITE, "DUGAFONT.ttf", 48)
+    text.update_pos(SETTINGS.canvas_actual_width/2 - text.layout.get_width()/2, SETTINGS.canvas_target_height/2 - text.layout.get_height()/2)
 
     #Classes for later use
     gameMap = MAP.Map(SETTINGS.levels_list[SETTINGS.current_level].array)

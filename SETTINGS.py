@@ -3,7 +3,7 @@
 '''Game settings'''
 current_level = 0
 fps = 31
-caption = "DUGA v1.0 - %s"
+caption = "DUGA v1.1 - %s"
 mode = 1
 volume = 1
 fullscreen = False
@@ -18,7 +18,7 @@ cfps = 0
 
 '''Level settings'''
 glevels_size = 4
-glevels_amount = 2
+glevels_amount = 5
 #These are non-configurable.
 levels_list = []
 segments_list = []

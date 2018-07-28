@@ -26,7 +26,6 @@ class Player:
         SETTINGS.player_rect = self.rect
 
         self.mouse = pygame.mouse
-       # self.mouse.set_visible(False)
         self.sensitivity = SETTINGS.sensitivity
         self.gun = 0
         self.gunsprites_aim = []
@@ -196,19 +195,15 @@ class Player:
             SETTINGS.player_health = 0
 
 
-    #========================================================
-
-        #Lock mouse. (DEV)     Husk at inventory skal bruge mus. (playerstates[4])
-        if not key[pygame.K_q]:
-        #    pygame.event.set_grab(True)
-        #    self.mouse.set_visible(False)
+        if SETTINGS.menu_showing or SETTINGS.player_states['invopen']:
             pygame.event.set_grab(False)
             self.mouse.set_visible(True)
-        else:
-        #    pygame.event.set_grab(False)
-        #    self.mouse.set_visible(True)
+        elif key[pygame.K_q]:
             pygame.event.set_grab(True)
             self.mouse.set_visible(False)
+        else: #DEV REMOVE
+            pygame.event.set_grab(False)
+            self.mouse.set_visible(True)
 
         #Change to map view (DEV)
         if key[pygame.K_m]:

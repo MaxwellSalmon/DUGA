@@ -1,6 +1,7 @@
 import pygame
 import pickle
 import os
+import random
 import SETTINGS
 import TEXT
 import SOUND
@@ -115,18 +116,73 @@ class Menu:
 class MainMenu(Menu):
     
     def __init__(self):
-        Menu.__init__(self, 'DUGA')
+        Menu.__init__(self, '')
         self.new_button = Button((SETTINGS.canvas_actual_width/2, 200, 200, 60), "NEW GAME")
         self.options_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "OPTIONS")
         self.credits_button = Button((SETTINGS.canvas_actual_width/2, 400, 200, 60), "CREDITS")
         self.quit_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "QUIT")
 
+        self.logo = pygame.image.load(os.path.join('graphics', 'logo_cutout.png')).convert_alpha()
+        self.logo_rect = self.logo.get_rect()
+
+        self.logo_surface = pygame.Surface(self.logo.get_size()).convert()
+        self.logo_surface_rect = self.logo_surface.get_rect()
+        self.logo_surface_rect.center = (SETTINGS.canvas_actual_width/2, 90)
+        
+        #(image, x-position)
+        self.stone_tiles = [[pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall_crack.png')).convert(), self.logo_surface_rect.left + 160],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left + (2*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left + (3*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_vent.png')).convert(), self.logo_surface_rect.left + (4*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left + (5*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_vase.png')).convert(), self.logo_surface_rect.left + (6*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left + (7*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'stone_wall.png')).convert(), self.logo_surface_rect.left + (8*160)]]
+
+        self.baroque_tiles = [[pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque.png')).convert(), self.logo_surface_rect.left],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque.png')).convert(), self.logo_surface_rect.left + 160],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque_lamps.png')).convert(), self.logo_surface_rect.left + (2*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque.png')).convert(), self.logo_surface_rect.left + (3*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque.png')).convert(), self.logo_surface_rect.left + (4*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque_worn.png')).convert(), self.logo_surface_rect.left + (5*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'baroque.png')).convert(), self.logo_surface_rect.left + (6*160)]]
+        
+        self.wood_tiles = [[pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_painting.png')).convert(), self.logo_surface_rect.left + 160],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (2*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (3*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_books.png')).convert(), self.logo_surface_rect.left + (4*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_fireplace.png')).convert(), self.logo_surface_rect.left + (5*160)],
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (5*160)]]
+
+        self.tiles = random.choice((self.stone_tiles, self.baroque_tiles, self.wood_tiles))
+                    
+        
+        for i in range(len(self.tiles)):
+            self.tiles[i][0] = pygame.transform.scale(self.tiles[i][0], (160,160)) #??
+
     def draw(self, canvas):
+        self.logo_animation(canvas)
+        
         self.new_button.draw(canvas)
         self.options_button.draw(canvas)
         self.credits_button.draw(canvas)
         self.quit_button.draw(canvas)
-        self.title.draw(canvas)
+
+    def logo_animation(self, canvas):
+        for tile in self.tiles:
+            self.logo_surface.blit(tile[0], (tile[1], self.logo_rect.top))
+            tile[1] -= 1
+
+            if tile[1] < self.logo_surface_rect.left - 160:
+                tile[1] += (160 * len(self.tiles))
+                
+
+        self.logo_surface.blit(self.logo, (0,0))
+
+        canvas.blit(self.logo_surface, self.logo_surface_rect)
+        
         
 
 class NewMenu(Menu):
