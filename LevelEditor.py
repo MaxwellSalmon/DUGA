@@ -77,75 +77,89 @@ def determine_size():
 
 def what_now():
     global ltype
+    isgood = False
     print()
     if ltype == 'level':
-        print("What sky colour should your level have? Leave blank for white.")
-        sc = input("R,G,B > ")
-        if sc:
-            try:
-                sc = sc.replace(' ', '')
-                sc = sc.split(',')
-                for i in range(3):
-                    sc[i] = int(sc[i])
-                sc = tuple(sc)
-            except:
-                print()
-                print("Wrong arguments. Try again!")
-            
-        print()
-        print("What ground colour should your level have? Leave blank for white.")
-        gc = input("R,G,B > ")
-        if gc:
-            try:
-                gc = gc.replace(' ', '')
-                gc = gc.split(',')
-                for i in range(3):
-                    gc[i] = int(gc[i])
-                gc = tuple(gc)
-            except:
-                print()
-                print("Wrong arguments. Try again!")
-
-        for i in gc+sc:
-            if i < 0 or i > 255:
-                print()
-                print("Values in RGB colours must be from 0-255. Try again.")
-                what_now()
+        while not isgood:
+            isgood = True
+            print("What sky colour should your level have? Leave blank for white.")
+            sc = input("R,G,B > ")
+            if sc:
+                try:
+                    sc = sc.replace(' ', '')
+                    sc = sc.split(',')
+                    for i in range(3):
+                        sc[i] = int(sc[i])
+                    sc = tuple(sc)
+                except:
+                    print("Error")
+                    isgood = False
+                    sc = (0,0,0)
+            else:
+                sc = (255,255,255)
+                    
                 
-        if len(gc+sc) > 6:
             print()
-            print("Wrong RGB values. Try again.")
+            print("What ground colour should your level have? Leave blank for white.")
+            gc = input("R,G,B > ")
+            if gc:
+                try:
+                    gc = gc.replace(' ', '')
+                    gc = gc.split(',')
+                    for i in range(3):
+                        gc[i] = int(gc[i])
+                    gc = tuple(gc)
+                except:
+                    print("Error")
+                    isgood = False
+                    gc = (0,0,0)
+            else:
+                gc = (255,255,255)
 
-        editorCanvas.dict['ground_color'] = gc
-        editorCanvas.dict['sky_color'] = sc
+            for i in gc+sc:
+                if i < 0 or i > 255:
+                    isgood = False
+                    
+            if len(gc+sc) > 6:
+                isgood = False
 
-    print(editorCanvas.dict)
-    print()
-    print("Would you like to save the map?")
-    yn = input("Y/N > ").lower()
-    if yn == 'y' or yn == 'yes':
-        loader.save_map()
-        print()
-        print("Map saved!")
-    elif yn == 'n' or yn == 'no':
-        sys.exit(1)
-    else:
-        print("Invalid argument!")
-        what_now()
-        
+            editorCanvas.dict['ground_color'] = gc
+            editorCanvas.dict['sky_color'] = sc
+            
+            print()
+            print("Would you like to save the map?")
+            yn = input("Y/N > ").lower()
+            if yn == 'y' or yn == 'yes':
+                if isgood:
+                    loader.save_map()
+                    print()
+                    print("Map saved!")
+            elif yn == 'n' or yn == 'no':
+                sys.exit(1)
+            else:
+                isgood = False
+
+            if not isgood:
+                print("You made an error somewhere. Let's try again. R,G,B must be three values between 0-255 seperated by commas.")
+                print()
 
 class Canvas:
 
     def __init__(self, width, height):
         global mode, ltype, segtypes
-        self.width = max(width, 438)
-        self.height = max(height, 438)
+        if width > 0 and height > 0:
+            self.width = max(width, 438)
+            self.height = max(height, 438)
+        else:
+            self.width = 1
+            self.height = 1
         self.canvas = pygame.display.set_mode((self.width, self.height))
         self.segtype = 0
         pygame.display.set_caption("DUGA Map Editor")
         self.stop = False
         self.items = []
         self.showauthor = False
+        self.exit = False
 
         self.tile_textures = []
         for i in range(len(TEXTURES.all_textures)):
@@ -426,13 +440,7 @@ class Canvas:
             self.dict['array'] = currentMap.array
 
             if printit:
-                print("{")
-                for x in self.dict:
-                    if x == 'type':
-                        print("'%s' : '%s'," % (x, self.dict[x]))
-                    else:
-                        print("'%s' : %s," % (x, self.dict[x]))
-                print("}")
+                self.exit = True
                 
             self.stop = True
         elif not pygame.mouse.get_pressed()[0]:
@@ -845,6 +853,7 @@ class SaveLoad:
 
         #add tiles
         currentMap.array = loadedmap['array']
+        currentMap.tiles = []
         y = 0
         for row in loadedmap['array']:
             x = 0
@@ -925,7 +934,7 @@ def main_loop():
 
     while not editor_exit:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or editorCanvas.exit:
                 editor_exit = True
                 pygame.quit()
                 break
@@ -955,7 +964,7 @@ def start():
     main_loop()
 
 if __name__ == '__main__':
-    editorCanvas = Canvas(1,1)
+    editorCanvas = Canvas(0,0)
     currentMap = Map(1, 1)
     loader = SaveLoad()
 
@@ -981,5 +990,5 @@ start pos for the player and end must have an exit. Also remember to specify whe
 4) When everything is done, hit export and add to LEVELS.py - This last step should be temporary and is made for developers.
 
 Note:
-There are two kinds of doors: horizontal and verticla (hdoor, vdoor) Place them respectively.
+There are two kinds of doors: horizontal and vertical (hdoor, vdoor) Place them respectively.
 NPC's have a direction they are facing when spawning. Specify that under NPC area.'''
