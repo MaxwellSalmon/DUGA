@@ -6,6 +6,7 @@ import pygame
 import math
 import os
 import pickle
+import profile
 #-- Engine imports--
 import SETTINGS
 import PLAYER
@@ -27,6 +28,7 @@ import ENTITIES
 import SEGMENTS
 import GENERATION
 import MENU
+import MUSIC
 
 
 pygame.init()
@@ -335,7 +337,9 @@ def main_loop():
                 pygame.quit()
                 break
             #    quit()
-            
+        #Music
+        musicController.control_music()
+        
         if SETTINGS.menu_showing and menuController.current_type == 'main':
             gameCanvas.window.fill(SETTINGS.WHITE)
             menuController.control()
@@ -432,6 +436,8 @@ if __name__ == '__main__':
 
     #Menu classes
     menuController = MENU.Controller(gameCanvas.window)
+
+    musicController = MUSIC.Music()
 
     #Run at last
     main_loop()

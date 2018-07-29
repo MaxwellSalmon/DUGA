@@ -1,6 +1,8 @@
 import SETTINGS
 import SPRITES
+import SOUND
 import pygame
+import os
 
 
 class Item:
@@ -14,6 +16,7 @@ class Item:
         self.rect.center = (self.pos[0] + SETTINGS.tile_size/2, self.pos[1] + SETTINGS.tile_size/2)
         self.sprite = SPRITES.Sprite(pygame.image.load(sprite), hash(item_type), self.rect.center, 'sprite')
         self.effect = effect
+        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'blub.ogg'))
         
     def update(self):
         remove = False
@@ -73,6 +76,7 @@ class Item:
                             
                 #Remove sprite and rect
                 if self.sprite in SETTINGS.all_sprites and remove:
+                    SOUND.play_sound(self.sound, 0)
                     SETTINGS.all_sprites.remove(self.sprite)
                     self.rect = None
                 

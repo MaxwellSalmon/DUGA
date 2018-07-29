@@ -511,6 +511,8 @@ class Generator:
                                 self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
 
                                 is_good = True
+            else:
+                print("No NPC in spawn!!")
         
 
 if __name__ == '__main__':

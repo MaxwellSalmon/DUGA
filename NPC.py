@@ -727,8 +727,7 @@ class Npc:
                           'shell', 'shell',
                           'health',
                           'armor',
-                          'ferromag', 'ferromag',
-                          'gun']
+                          'ferromag', 'ferromag',]
         drop = random.choice(possible_drops)
         effect = random.randint(4, 12)
         if drop == 'bullet':
