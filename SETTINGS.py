@@ -74,10 +74,12 @@ all_doors = []
 player_speed = 256
 sensitivity = 0.25
 player_angle = 270
-player_health = 25
-player_armor = 0
+og_player_health = 25
+og_player_armor = 5
 godmode = False
 #Below this point are the non-configurable player variables.
+player_health = og_player_health
+player_armor = og_player_armor
 player_pos = [0,0]
 player_map_pos = []
 player_rect = None
@@ -106,8 +108,8 @@ texture_list = []
 '''Weapon settings'''
 #Settings for guns and ammo go here.
 unlimited_ammo = False
-current_gun = 0
 #Below this point are non-configurable variables.
+current_gun = None
 next_gun = None
 prev_gun = None
 gun_list = []

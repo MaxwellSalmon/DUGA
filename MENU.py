@@ -55,6 +55,7 @@ class Controller:
                     self.current_menu = 'main'
                 
                 elif self.newMenu.new_button.get_clicked():
+                    self.newMenu.reset_inventory()
                     self.newMenu.loading.draw(self.canvas)
                     self.new_pressed = True
                 #Check if new levels have been loaded and loading string is showing
@@ -69,6 +70,7 @@ class Controller:
 
                     
                 elif self.newMenu.custom_button.get_clicked():
+                    self.newMenu.reset_inventory()
                     SETTINGS.playing_customs = True
                 #Check if custom levels have been loaded
                 elif SETTINGS.playing_customs:
@@ -201,6 +203,28 @@ class NewMenu(Menu):
         self.custom_button.draw(canvas)
         self.back_button.draw(canvas)
         self.title.draw(canvas)
+
+    def reset_inventory(self):
+        for i in SETTINGS.inventory:
+            SETTINGS.inventory[i] = None
+
+        for i in SETTINGS.held_ammo:
+            SETTINGS.held_ammo[i] = 0
+
+        for i in SETTINGS.gun_list:
+            i.current_mag = 0
+
+        
+        SETTINGS.current_gun = None
+        SETTINGS.next_gun = None
+        SETTINGS.player_health = SETTINGS.og_player_health
+        SETTINGS.player_armor = SETTINGS.og_player_armor
+
+        SETTINGS.player_states['dead'] = False
+        SETTINGS.player_states['invopen'] = False
+        SETTINGS.player_states['heal'] = False
+        SETTINGS.player_states['armor'] = False
+        SETTINGS.player_states['cspeed'] = 0
         
 
 class OptionsMenu(Menu):

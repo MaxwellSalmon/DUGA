@@ -62,7 +62,7 @@ class Player:
         key = pygame.key.get_pressed()
 
         #Movement controls (WASD)
-        if not self.dead:
+        if not SETTINGS.player_states['dead']:
             #Inventory open
             if not SETTINGS.player_states['invopen']:
 

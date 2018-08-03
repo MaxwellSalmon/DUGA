@@ -30,7 +30,6 @@ import GENERATION
 import MENU
 import MUSIC
 
-
 pygame.init()
 pygame.font.init()
 pygame.display.set_mode((1,1))

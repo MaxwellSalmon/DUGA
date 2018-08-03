@@ -31,7 +31,6 @@ def load_customs():
 
     #If any custom segments, load those too
     if os.stat(os.path.join('data', 'customSegments.dat')).st_size != 0:
-        print("jee")
         custom_segs = []
         with open(os.path.join('data', 'customSegments.dat'), 'rb') as file1:
             custom_segs = pickle.load(file1)

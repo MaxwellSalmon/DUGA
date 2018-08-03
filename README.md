@@ -7,9 +7,8 @@ The trailer for the Tech Demo
 
 ## My goal
 
-The goal of DUGA is to create a first-person-shooter with roguelike elements and local multiplayer. At the moment I am working on the roguelike elements.
-The local multiplayer will most likely not be added, as I want to work on other projects.
-
+Inititally, my goal was to make a first person shooter with roguelike elements and local multiplayer. However, I discarded the multiplayer and kept the other parts.
+Now I just want the game to be good and I hope people will enjoy playing it!
 
 
 ## License

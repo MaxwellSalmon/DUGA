@@ -23,17 +23,43 @@ class Generator:
         self.spawn_chance = 8
         self.spawn_chance_high = 40 #Also influenced
         self.ammo_spawn_chance = 35 #Also influenced
-        self.item_probability = [0,0,0,0,0,0,0,0,
-                                 1,1,1,1,1,1,1,1,
-                                 2,2,2,2,2,2,
-                                 3,3,3,3,3,
-                                 4,4,4,
-                                 5,5,5,5,
-                                 6,6,
-                                 7,7,
-                                 8,8,8,8,8,
-                                 9,
-                                 10,10,10,10,10]
+        
+        self.item_probability = []
+        self.item_spawns = {
+            0 : 28, #health
+            1 : 30, #Kevlar
+            2 : 25, #bullet
+            3 : 22, #shell
+            4 : 15, #knife
+            5 : 16, #pistol
+            6 : 13, #ak47
+            7 : 10, #shotgun
+            8 : 11, #knuckles
+            9 : 7, #gauss
+            10 : 20, #ferromag
+            11 : 14, #sg pistol  --¤¤¤¤--
+            12 : 8, #light knuckles
+            13 : 1, #blood knuckles
+            14 : 8, #shiny knife
+            15 : 10, #desert knife
+            16 : 6, #modded shotgun
+            17 : 6, #impossible shotgun
+            18 : 8, #ak74
+            19 : 10, #ak47 ext mag
+            20 : 12, #camo ak47
+            21 : 12, #light ak47
+            22 : 1, #gauss pistol
+            23 : 8, #hp pistol
+            24 : 4, #modded gauss
+            25 : 3, #bump gauss
+            26 : 5, #black sg pistol
+            27 : 1, # wtf pistol
+            28 : 8, #hp pistol
+            }
+        
+        for i in self.item_spawns:
+            for x in range(self.item_spawns[i]):
+                self.item_probability.append(i)
 
         #NPC probability
         self.max_npc_amount = SETTINGS.current_level+1 #Will be multiplied by amount of segments

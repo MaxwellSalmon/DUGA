@@ -126,7 +126,7 @@ def load_guns():
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
                 }, (37,10)))
     
-    #Gauss - 5
+   # Gauss - 5
     SETTINGS.gun_list.append(GUNS.Gun(
         {'spritesheet': path.join('graphics', 'weapon', 'gauss_spritesheet.png'),
          'item': path.join('graphics', 'items', 'gaussitem.png')
@@ -171,6 +171,402 @@ def load_guns():
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
                 }, (37,6)))
+    
+    # ------ SPECIAL WEAPONS ----------
+    #Fast Brass Knuckles - 7
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'brass_brass_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'brassbrassitem.png')
+         },{
+             'dmg' : 1,
+             'spread': 30, 
+             'hitchance': 100,
+             'firerate': 0,
+             'range': 2,
+             'magsize': 0,
+             'rlspeed': 0,
+             'zoom': 0,
+             'ammotype': None,
+             'guntype': 'melee',
+             'name': 'Light Knuckles'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                }, (37,10)))
+
+    #Bloody Brass Knuckles - 8
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'brass_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'brassitem.png')
+         },{
+             'dmg' : 20,
+             'spread': 60, 
+             'hitchance': 100,
+             'firerate': 2,
+             'range': 1,
+             'magsize': 0,
+             'rlspeed': 0,
+             'zoom': 0,
+             'ammotype': None,
+             'guntype': 'melee',
+             'name': 'Rampage Knuckles'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                }, (37,10)))
+    
+    #Sharp Knife - 9
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'shiny_knife_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'shinyknifeitem.png')
+         },{
+             'dmg' : 3,
+             'spread': 40, 
+             'hitchance': 100,
+             'firerate': 0.3,
+             'range': 1.5,
+             'magsize': 0,
+             'rlspeed': 0,
+             'zoom': 0,
+             'ammotype': None,
+             'guntype': 'melee',
+             'name': 'Sharp Knife'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                }, (37,10)))
+
+    #Fast Knife - 10
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'desert_knife_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'desertknifeitem.png')
+         },{
+             'dmg' : 2,
+             'spread': 30, 
+             'hitchance': 100,
+             'firerate': 0.1,
+             'range': 1.8,
+             'magsize': 0,
+             'rlspeed': 0,
+             'zoom': 0,
+             'ammotype': None,
+             'guntype': 'melee',
+             'name': 'Light Knife'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                }, (37,10)))
+    
+    #Modded Double Barrel Shotgun - 11
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'modded_shotgun_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'moddedshotgun.png')
+         },{
+            'dmg' : 18,
+            'spread' : 220,
+            'hitchance': 65,
+            'firerate': 0.3,
+            'range': 8,
+            'magsize': 1,
+            'rlspeed': 1.4,
+            'zoom': 8,
+            'ammotype': 'shell',
+            'guntype': 'primary',
+            'name': 'Modified Shotgun'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                }, (34,10)))
+
+    #Impossible Double Barrel Shotgun - 12
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'shotgun_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'weirdshotgun.png')
+         },{
+            'dmg' : 10,
+            'spread' : 200,
+            'hitchance': 65,
+            'firerate': 0.3,
+            'range': 8,
+            'magsize': 3,
+            'rlspeed': 1.4,
+            'zoom': 8,
+            'ammotype': 'shell',
+            'guntype': 'primary',
+            'name': 'Weird Shotgun'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                }, (34,10)))
+
+    #AK 74 - 13
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'ak74_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'ak74item.png')
+         },{
+            'dmg' : 4,
+            'spread' : 30,
+            'hitchance': 80,
+            'firerate': 0.08,
+            'range': 10,
+            'magsize': 30,
+            'rlspeed': 1,
+            'zoom': 8,
+            'ammotype': 'bullet',
+            'guntype': 'primary',
+            'name': 'AK-74'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #Extended mag AK - 14
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'ak_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'akitem.png')
+         },{
+            'dmg' : 3,
+            'spread' : 50,
+            'hitchance': 80,
+            'firerate': 0.08,
+            'range': 10,
+            'magsize': 40,
+            'rlspeed': 1.2,
+            'zoom': 6,
+            'ammotype': 'bullet',
+            'guntype': 'primary',
+            'name': 'Ext Mag AK-47'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #Camo AK-47 - 15
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'camo_ak_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'camoakitem.png')
+         },{
+            'dmg' : 3,
+            'spread' : 50,
+            'hitchance': 90,
+            'firerate': 0.04,
+            'range': 10,
+            'magsize': 30,
+            'rlspeed': 0.8,
+            'zoom': 6,
+            'ammotype': 'bullet',
+            'guntype': 'primary',
+            'name': 'Camo AK-47'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #Light AK-47 - 16
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'ak_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'lightakitem.png')
+         },{
+            'dmg' : 3,
+            'spread' : 60,
+            'hitchance': 80,
+            'firerate': 0.08,
+            'range': 10,
+            'magsize': 20,
+            'rlspeed': 0.1,
+            'zoom': 4,
+            'ammotype': 'bullet',
+            'guntype': 'primary',
+            'name': 'Light AK-47'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #Gauss Hand gun - 17
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'gauss_pistol_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'gaussgun.png')
+         },{
+             'dmg' : 9,
+             'spread': 30,
+             'hitchance': 98,
+             'firerate': 0.25,
+             'range': 12,
+             'magsize': 10,
+             'rlspeed': 0.8,
+             'zoom': 8,
+             'ammotype': 'ferromag',
+             'guntype': 'secondary',
+             'name': 'Anomaly Pistol'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                }, (37,6)))
+
+    #High power Hand gun - 18
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'pistol_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'hpgun.png')
+         },{
+             'dmg' : 3,
+             'spread': 40,
+             'hitchance': 85,
+             'firerate': 0.25,
+             'range': 8,
+             'magsize': 10,
+             'rlspeed': 0.8,
+             'zoom': 2,
+             'ammotype': 'bullet',
+             'guntype': 'secondary',
+             'name': 'HP Pistol'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                }, (37,6)))
+
+    #Modded Gauss - 19
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'modded_gauss_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'moddedgaussitem.png')
+         },{
+            'dmg' : 9,
+            'spread' : 10,
+            'hitchance': 85,
+            'firerate': 0.5,
+            'range': 15,
+            'magsize': 12,
+            'rlspeed': 1,
+            'zoom': 9,
+            'ammotype': 'ferromag',
+            'guntype': 'primary',
+            'name': 'Gauss rifle'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #bump Gauss - 20
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet': path.join('graphics', 'weapon', 'bump_gauss_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'bumpgaussitem.png')
+         },{
+            'dmg' : 6,
+            'spread' : 20,
+            'hitchance': 70,
+            'firerate': 0.15,
+            'range': 15,
+            'magsize': 8,
+            'rlspeed': 1,
+            'zoom': 7,
+            'ammotype': 'ferromag',
+            'guntype': 'primary',
+            'name': 'Gauss rifle'
+            },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                },(38,7)))
+
+    #Black Shotgun pistol - 21
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'black_sgp_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'blackshotpistol.png')
+         },{
+             'dmg' : 8,
+             'spread': 100,
+             'hitchance': 60,
+             'firerate': 0.2,
+             'range': 6,
+             'magsize': 1,
+             'rlspeed': 0.4,
+             'zoom': 1,
+             'ammotype': 'shell',
+             'guntype': 'secondary',
+             'name': 'Modded SGP'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                }, (37,6)))
+
+    #TWO Shotgun pistol - 22
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'wtf_sgp_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'wtfshotpistol.png')
+         },{
+             'dmg' : 12,
+             'spread': 150,
+             'hitchance': 60,
+             'firerate': 0.2,
+             'range': 6,
+             'magsize': 1,
+             'rlspeed': 0.8,
+             'zoom': 1,
+             'ammotype': 'shell',
+             'guntype': 'secondary',
+             'name': 'What??'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                }, (37,6)))
+
+    #Auto Hand gun - 23
+    SETTINGS.gun_list.append(GUNS.Gun(
+        {'spritesheet' : path.join('graphics', 'weapon', 'auto_pistol_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'autogun.png')
+         },{
+             'dmg' : 2,
+             'spread': 40,
+             'hitchance': 90,
+             'firerate': 0.05,
+             'range': 8,
+             'magsize': 12,
+             'rlspeed': 0.9,
+             'zoom': 2,
+             'ammotype': 'bullet',
+             'guntype': 'secondary',
+             'name': 'Pistol'
+             },{
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                }, (37,6)))
+
+    
+
+    
 
 def load_npc_types():
     SETTINGS.npc_types = [
@@ -186,7 +582,7 @@ def load_npc_types():
             'atcktype': 'hitscan',
             'atckrate': 1,
             'id': 0,
-            'filepath' : ('graphics', 'npc', 'soldat_spritesheet.png'),
+            'filepath' : ('graphics', 'npc', 'soldier_spritesheet.png'),
             'name' : 'idle soldier',
             'soundpack' : 'soldier',
             },
@@ -204,7 +600,7 @@ def load_npc_types():
             'atcktype': 'hitscan',
             'atckrate': 1,
             'id': 1,
-            'filepath' : ('graphics', 'npc', 'soldat_spritesheet.png'),
+            'filepath' : ('graphics', 'npc', 'soldier_spritesheet.png'),
             'name' : 'patroul soldier',
             'soundpack' : 'soldier',
             },
@@ -316,6 +712,8 @@ def load_npc_types():
             'name' : 'random',
             'soundpack' : None,
             },
+
+        
         ]
 
     load_npc_sounds()
@@ -487,6 +885,142 @@ def load_item_types():
                 'type' : 'random',
                 'effect': ['health', 'armor', 'bullet', 'shell', 'ferromag'],
                 'id': 14,
+                },
+
+            #Light Brass Knuckles
+            {
+                'filepath' : tuple(SETTINGS.gun_list[7].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[7].guntype,
+                'effect': SETTINGS.gun_list[7],
+                'id': 15
+                },
+
+            #Bloody Brass Knuckles
+            {
+                'filepath' : tuple(SETTINGS.gun_list[8].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[8].guntype,
+                'effect': SETTINGS.gun_list[8],
+                'id': 16
+                },
+
+            #shiny knife
+            {
+                'filepath' : tuple(SETTINGS.gun_list[9].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[9].guntype,
+                'effect': SETTINGS.gun_list[9],
+                'id': 17
+                },
+
+            #desert knife
+            {
+                'filepath' : tuple(SETTINGS.gun_list[10].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[10].guntype,
+                'effect': SETTINGS.gun_list[10],
+                'id': 18
+                },
+
+            #modded shotgun
+            {
+                'filepath' : tuple(SETTINGS.gun_list[11].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[11].guntype,
+                'effect': SETTINGS.gun_list[11],
+                'id': 19
+                },
+
+            #Impossible Shotgun
+            {
+                'filepath' : tuple(SETTINGS.gun_list[12].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[12].guntype,
+                'effect': SETTINGS.gun_list[12],
+                'id': 20
+                },
+
+            #AK 74
+            {
+                'filepath' : tuple(SETTINGS.gun_list[13].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[13].guntype,
+                'effect': SETTINGS.gun_list[13],
+                'id': 21
+                },
+
+            #AK 47 extended magazine
+            {
+                'filepath' : tuple(SETTINGS.gun_list[14].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[14].guntype,
+                'effect': SETTINGS.gun_list[14],
+                'id': 22
+                },
+
+            #Camo AK-47
+            {
+                'filepath' : tuple(SETTINGS.gun_list[15].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[15].guntype,
+                'effect': SETTINGS.gun_list[15],
+                'id': 23
+                },
+
+            #Light AK-47
+            {
+                'filepath' : tuple(SETTINGS.gun_list[16].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[16].guntype,
+                'effect': SETTINGS.gun_list[16],
+                'id': 24
+                },
+
+            #Gauss pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[17].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[17].guntype,
+                'effect': SETTINGS.gun_list[17],
+                'id': 25
+                },
+
+            #HP Pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[18].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[18].guntype,
+                'effect': SETTINGS.gun_list[18],
+                'id': 26
+                },
+
+            #Modded Gauss
+            {
+                'filepath' : tuple(SETTINGS.gun_list[19].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[19].guntype,
+                'effect': SETTINGS.gun_list[19],
+                'id': 27
+                },
+
+            #Bump Gauss
+            {
+                'filepath' : tuple(SETTINGS.gun_list[20].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[20].guntype,
+                'effect': SETTINGS.gun_list[20],
+                'id': 28
+                },
+
+            #Black Shotgun Pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[21].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[21].guntype,
+                'effect': SETTINGS.gun_list[21],
+                'id': 29
+                },
+
+            #wtf shotgun pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[22].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[22].guntype,
+                'effect': SETTINGS.gun_list[22],
+                'id': 30
+                },
+
+            #auto pistol
+            {
+                'filepath' : tuple(SETTINGS.gun_list[23].itemtexture.split('\\')),
+                'type' : SETTINGS.gun_list[23].guntype,
+                'effect': SETTINGS.gun_list[23],
+                'id': 31
                 },
             ]
 
