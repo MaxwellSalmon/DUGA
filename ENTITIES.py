@@ -28,10 +28,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'AK-47'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
     
     #Double Barrel Shotgun - 1
@@ -51,10 +51,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'DB Shotgun'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (34,10)))
 
     #Hand gun - 2
@@ -74,10 +74,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'Pistol'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin2.ogg'))]
                 }, (37,6)))
 
     #Knife - 3
@@ -97,10 +97,10 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Knife'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
 
     #Brass Knuckles - 4
@@ -120,10 +120,10 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Brass Knuckles'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
     
    # Gauss - 5
@@ -143,10 +143,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'Gauss rifle'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Shotgun pistol - 6
@@ -166,10 +166,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'SG Pistol'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (37,6)))
     
     # ------ SPECIAL WEAPONS ----------
@@ -190,16 +190,16 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Light Knuckles'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
 
     #Bloody Brass Knuckles - 8
     SETTINGS.gun_list.append(GUNS.Gun(
-        {'spritesheet' : path.join('graphics', 'weapon', 'brass_spritesheet.png'),
-         'item' : path.join('graphics', 'items', 'brassitem.png')
+        {'spritesheet' : path.join('graphics', 'weapon', 'blood_brass_spritesheet.png'),
+         'item' : path.join('graphics', 'items', 'bloodbrassitem.png')
          },{
              'dmg' : 20,
              'spread': 60, 
@@ -213,10 +213,10 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Rampage Knuckles'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
     
     #Sharp Knife - 9
@@ -236,10 +236,10 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Sharp Knife'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
 
     #Fast Knife - 10
@@ -259,10 +259,10 @@ def load_guns():
              'guntype': 'melee',
              'name': 'Light Knife'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'KN_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'none.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'knife_swing3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg'))]
                 }, (37,10)))
     
     #Modded Double Barrel Shotgun - 11
@@ -282,10 +282,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'Modified Shotgun'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (34,10)))
 
     #Impossible Double Barrel Shotgun - 12
@@ -303,12 +303,12 @@ def load_guns():
             'zoom': 8,
             'ammotype': 'shell',
             'guntype': 'primary',
-            'name': 'Weird Shotgun'
+            'name': 'TB Shotgun'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_shot4.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (34,10)))
 
     #AK 74 - 13
@@ -328,10 +328,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'AK-74'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Extended mag AK - 14
@@ -351,10 +351,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'Ext Mag AK-47'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Camo AK-47 - 15
@@ -374,10 +374,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'Camo AK-47'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Light AK-47 - 16
@@ -397,10 +397,10 @@ def load_guns():
             'guntype': 'primary',
             'name': 'Light AK-47'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot5.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot4.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_shot5.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Gauss Hand gun - 17
@@ -420,10 +420,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'Anomaly Pistol'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 }, (37,6)))
 
     #High power Hand gun - 18
@@ -443,10 +443,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'HP Pistol'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'hpp_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'hpp_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'hpp_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin2.ogg'))]
                 }, (37,6)))
 
     #Modded Gauss - 19
@@ -464,12 +464,12 @@ def load_guns():
             'zoom': 9,
             'ammotype': 'ferromag',
             'guntype': 'primary',
-            'name': 'Gauss rifle'
+            'name': 'Modded gauss'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #bump Gauss - 20
@@ -487,12 +487,12 @@ def load_guns():
             'zoom': 7,
             'ammotype': 'ferromag',
             'guntype': 'primary',
-            'name': 'Gauss rifle'
+            'name': 'Bump gauss'
             },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'gauss_shot3.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_click2.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'gauss_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
                 },(38,7)))
 
     #Black Shotgun pistol - 21
@@ -512,10 +512,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'Modded SGP'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (37,6)))
 
     #TWO Shotgun pistol - 22
@@ -535,10 +535,10 @@ def load_guns():
              'guntype': 'secondary',
              'name': 'What??'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'SH_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot3.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_shot4.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'SH_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magout2.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'SH_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'SH_magin2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'sgp_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'shotgun_magin2.ogg'))]
                 }, (37,6)))
 
     #Auto Hand gun - 23
@@ -556,17 +556,13 @@ def load_guns():
              'zoom': 2,
              'ammotype': 'bullet',
              'guntype': 'secondary',
-             'name': 'Pistol'
+             'name': 'Auto pistol'
              },{
-                'shot': [pygame.mixer.Sound(path.join('sounds', 'AK_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'AK_shot2.ogg'))],
-                'click': [pygame.mixer.Sound(path.join('sounds', 'gunempty.ogg'))],
-                'magout': [pygame.mixer.Sound(path.join('sounds', 'gunreload1.ogg'))],
-                'magin': [pygame.mixer.Sound(path.join('sounds', 'gunreload2.ogg'))]
+                'shot': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot2.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_shot3.ogg'))],
+                'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'universal_click.ogg'))],
+                'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magout2.ogg'))],
+                'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'pistol_magin2.ogg'))]
                 }, (37,6)))
-
-    
-
-    
 
 def load_npc_types():
     SETTINGS.npc_types = [
@@ -641,7 +637,7 @@ def load_npc_types():
             'soundpack' : 'ninja',
             },
 
-        #Zombie patroling hostile no dmg
+        #Zombie patroling hostile (no dmg?)
         {
             'pos' : [0,0],
             'face' : 0,
@@ -677,24 +673,6 @@ def load_npc_types():
             'soundpack' : 'zombie shy',
             },
 
-        #Boss idle
-        {
-            'pos' : [0,0],
-            'face' : 0,
-            'spf': 0.12,
-            'dmg': 5,
-            'health': 62,
-            'speed': 20,
-            'mind': 'hostile',
-            'state': 'idle',
-            'atcktype': 'hitscan',
-            'atckrate': 3,
-            'id': 6,
-            'filepath' : ('graphics', 'npc', 'boss_spritesheet.png'),
-            'name' : ' idle boss',
-            'soundpack' : 'soldier',
-            },
-
         #random NPC
         {
             'pos' : [0,0],
@@ -707,13 +685,210 @@ def load_npc_types():
             'state': None,
             'atcktype': None,
             'atckrate': 0,
-            'id': 7,
+            'id': 6,
             'filepath' : ('graphics', 'npc', 'random_spritesheet.png'),
             'name' : 'random',
             'soundpack' : None,
             },
 
+        #SPECIAL NPCS --------
+        #Boss idle
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.12,
+            'dmg': 5,
+            'health': 30,
+            'speed': 20,
+            'mind': 'hostile',
+            'state': 'idle',
+            'atcktype': 'hitscan',
+            'atckrate': 3,
+            'id': 7,
+            'filepath' : ('graphics', 'npc', 'red_soldier_spritesheet.png'),
+            'name' : 'idle red',
+            'soundpack' : 'red soldier',
+            },
         
+        #black soldier idle
+        {
+            'pos': [0,0],
+            'face': 0,
+            'spf': 0.8,
+            'dmg': 2,
+            'health': random.randint(15,20),
+            'speed': 30,
+            'mind': 'hostile',
+            'state': 'idle',
+            'atcktype': 'hitscan',
+            'atckrate': 1.5,
+            'id': 8,
+            'filepath' : ('graphics', 'npc', 'black_soldier_spritesheet.png'),
+            'name' : 'black idle',
+            'soundpack' : 'soldier',
+            },
+
+        #black soldier patroul
+        {
+            'pos': [0,0],
+            'face': 0,
+            'spf': 0.8,
+            'dmg': 2,
+            'health': random.randint(15,20),
+            'speed': 30,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'hitscan',
+            'atckrate': 1.5,
+            'id': 9,
+            'filepath' : ('graphics', 'npc', 'black_soldier_spritesheet.png'),
+            'name' : 'black patroul',
+            'soundpack' : 'soldier',
+            },
+
+        #green ninja idle
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.8,
+            'dmg': 2,
+            'health': random.randint(8, 11),
+            'speed': 80,
+            'mind': 'hostile',
+            'state': 'idle',
+            'atcktype': 'melee',
+            'atckrate': 0.5,
+            'id': 10,
+            'filepath' : ('graphics', 'npc', 'green_ninja_spritesheet.png'),
+            'name' : 'idle green',
+            'soundpack' : 'ninja',
+            },
+
+        #green ninja patrouling
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.8,
+            'dmg': 2,
+            'health': random.randint(8, 11),
+            'speed': 80,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'melee',
+            'atckrate': 0.5,
+            'id': 10,
+            'filepath' : ('graphics', 'npc', 'green_ninja_spritesheet.png'),
+            'name' : 'idle green',
+            'soundpack' : 'ninja',
+            },
+
+        #blue ninja idle
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.12,
+            'dmg': 4,
+            'health': 14,
+            'speed': 35,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'melee',
+            'atckrate': 1.1,
+            'id': 12,
+            'filepath' : ('graphics', 'npc', 'blue_ninja_spritesheet.png'),
+            'name' : 'idle blue',
+            'soundpack' : 'ninja',
+            },
+
+        #Zombie yellow patrouling
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.18,
+            'dmg': 5, 
+            'health': 10,
+            'speed': 20,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'melee',
+            'atckrate': 1,
+            'id': 13,
+            'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
+            'name' : 'patroul sick',
+            'soundpack' : 'zombie hostile',
+            },
+
+        #zombie yellow idle
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.18,
+            'dmg': 6,
+            'health': 11,
+            'speed': 20,
+            'mind': 'hostile',
+            'state': 'idle',
+            'atcktype': 'melee',
+            'atckrate': 1,
+            'id': 13,
+            'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
+            'name' : 'idle sick',
+            'soundpack' : 'zombie hostile',
+            },
+
+        #zombie yellow idle shy
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.18,
+            'dmg': 0,
+            'health': 30,
+            'speed': 20,
+            'mind': 'shy',
+            'state': 'idle',
+            'atcktype': 'melee',
+            'atckrate': 1,
+            'id': 13,
+            'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
+            'name' : 'shy sick',
+            'soundpack' : 'zombie hostile',
+            },
+
+        #blurry zombie hostile
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.9,
+            'dmg': 1,
+            'health': 5,
+            'speed': 45,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'melee',
+            'atckrate': 0.4,
+            'id': 4,
+            'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
+            'name' : 'hostile blurry',
+            'soundpack' : 'blurry zombie',
+            },
+
+        #blurry zombie hostile hitscan??
+        {
+            'pos' : [0,0],
+            'face' : 0,
+            'spf': 0.9,
+            'dmg': 1,
+            'health': 4,
+            'speed': 45,
+            'mind': 'hostile',
+            'state': 'patrouling',
+            'atcktype': 'hitscan',
+            'atckrate': 0.4,
+            'id': 4,
+            'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
+            'name' : 'hostile blurry',
+            'soundpack' : 'blurry zombie',
+            },
         ]
 
     load_npc_sounds()
@@ -723,37 +898,55 @@ def load_npc_sounds():
         #Soldier soundpack
         {
             'name' : 'soldier',
-            'attack' : pygame.mixer.Sound(path.join('sounds', 'gunshot.ogg')),
-            'spot' : pygame.mixer.Sound(path.join('sounds', 'soldier_spot.ogg')),
-            'damage' : [pygame.mixer.Sound(path.join('sounds', 'std_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'std_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'std_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'std_hurt4.ogg'))],
-            'die' : [pygame.mixer.Sound(path.join('sounds', 'soldier_die1.ogg')),],
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_shoot.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_spot.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt4.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_die.ogg')),],
+            },
+        
+        #boss soldier soundpack
+        {
+            'name' : 'red soldier',
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_shoot_heavy.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_spot.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_hurt4.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'soldier_die.ogg')),],
             },
         
         #Ninja Soundpack
         {
             'name' : 'ninja',
-            'attack' : pygame.mixer.Sound(path.join('sounds', 'KN_shot1.ogg')),
-            'spot' : pygame.mixer.Sound(path.join('sounds', 'none.ogg')),
-            'damage' : [pygame.mixer.Sound(path.join('sounds', 'ninja_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_hurt4.ogg'))],
-            'die' : [pygame.mixer.Sound(path.join('sounds', 'ninja_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'ninja_die2.ogg'))],
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_attack.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_hurt3.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_hurt4.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'ninja_die2.ogg'))],
             },
 
         #Zombie shy soundpack
         {
             'name' : 'zombie shy',
-            'attack' : pygame.mixer.Sound(path.join('sounds', 'none.ogg')),
-            'spot' : pygame.mixer.Sound(path.join('sounds', 'zombie_spot2.ogg')),
-            'damage' : [pygame.mixer.Sound(path.join('sounds', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt3.ogg'))],
-            'die' : [pygame.mixer.Sound(path.join('sounds', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_die2.ogg'))],
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'other', 'none.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_spot2.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt3.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_die2.ogg'))],
             },
 
         #Zombie hostile soundpack
         {
             'name' : 'zombie hostile',
-            'attack' : pygame.mixer.Sound(path.join('sounds', 'zombie_attack.ogg')),
-            'spot' : pygame.mixer.Sound(path.join('sounds', 'zombie_spot1.ogg')),
-            'damage' : [pygame.mixer.Sound(path.join('sounds', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_hurt3.ogg'))],
-            'die' : [pygame.mixer.Sound(path.join('sounds', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'zombie_die2.ogg'))],
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_attack.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_spot1.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_hurt3.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'zombie_die2.ogg'))],
+            },
+
+        #Zombie blurry soundpack
+        {
+            'name' : 'blurry zombie',
+            'attack' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_attack.ogg')),
+            'spot' : pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_spot.ogg')),
+            'damage' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_hurt1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_hurt2.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_hurt3.ogg'))],
+            'die' : [pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_die1.ogg')), pygame.mixer.Sound(path.join('sounds', 'npcs', 'blurry_zombie_die2.ogg'))],
             },
         ]
 

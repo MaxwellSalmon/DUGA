@@ -2,9 +2,11 @@
 
 import SETTINGS
 import SPRITES
+import SOUND
 import pygame
 import math
 import random
+import os
 
 class Map:
     '''== Create the map ==\narray -> Level to be loaded'''
@@ -98,6 +100,9 @@ class Tile:
                 self.state = 'closed'
                 #states: closed, opening, open, closing
 
+                self.open_sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'door_open.ogg'))
+                self.close_sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'door_close.ogg'))
+
                 SETTINGS.all_doors.append(self)
 
     def draw(self, canvas):
@@ -115,10 +120,18 @@ class Tile:
             return self.distance
 
     def sesam_luk_dig_op(self):
+        if self.open > SETTINGS.tile_size:
+            self.open = SETTINGS.tile_size
+        elif self.open < 0:
+            self.open = 0
+            
         if self.state == 'closed':
             self.state = 'opening'
             
         elif self.state == 'opening':
+            if self.open == 0:
+                SOUND.play_sound(self.open_sound, self.distance)
+                
             if self.open < SETTINGS.tile_size:
                 self.open += SETTINGS.tile_size * SETTINGS.dt
             else:
@@ -139,6 +152,8 @@ class Tile:
                     self.timer = 0
 
         elif self.state == 'closing':
+            if self.open >= SETTINGS.tile_size:
+                SOUND.play_sound(self.close_sound, self.distance)
             if self.open > 0:
                 self.open -= SETTINGS.tile_size * SETTINGS.dt
             else:

@@ -31,6 +31,7 @@ class Controller:
             settings = pickle.load(file1)
 
         self.current_settings = settings
+ #       self.current_settings = {'fov': 60, 'fullscreen': False, 'sensitivity': 0.25, 'graphics': (140, 12), 'volume': 1, 'music volume' : 1}
 
     def save_settings(self):
         with open(os.path.join('data', 'settings.dat'), 'wb') as file2:
@@ -232,6 +233,7 @@ class OptionsMenu(Menu):
         Menu.__init__(self, 'OPTIONS')
 
         self.strings = ['LOW', 'MED', 'HIGH']
+        self.music_strings = ['OFF', 'MED', 'HIGH']
         self.degrees = ['50', '60', '70']
         self.onoff = ['ON', 'OFF']
         
@@ -241,12 +243,14 @@ class OptionsMenu(Menu):
             'fov' : [50, 60, 70],
             'sensitivity' : [0.15, 0.25, 0.35], #Tjek den her
             'volume' : [0.1, 0.5, 1],
+            'music volume' : [0, 0.5, 1],
             'fullscreen' : [True, False]}
 
         self.graphics_index = self.strings_to_data['graphics'].index(settings['graphics'])
         self.fov_index = self.strings_to_data['fov'].index(settings['fov'])
         self.sens_index = self.strings_to_data['sensitivity'].index(settings['sensitivity'])
         self.vol_index = self.strings_to_data['volume'].index(settings['volume'])
+        self.music_index = self.strings_to_data['music volume'].index(settings['music volume'])
         self.fs_index = self.strings_to_data['fullscreen'].index(settings['fullscreen'])
 
         self.update_strings()
@@ -254,10 +258,11 @@ class OptionsMenu(Menu):
 
     def update_strings(self):
         
-        self.graphics_button = Button((SETTINGS.canvas_actual_width/2, 200, 300, 30), "GRAPHICS: %s" % self.strings[self.graphics_index])
-        self.fov_button = Button((SETTINGS.canvas_actual_width/2, 250, 300, 30), "FOV: %s" % self.degrees[self.fov_index])
-        self.sensitivity_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "SENSITIVITY: %s" % self.strings[self.sens_index])
-        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 350, 300, 30), "VOLUME: %s" % self.strings[self.vol_index])
+        self.graphics_button = Button((SETTINGS.canvas_actual_width/2, 150, 300, 30), "GRAPHICS: %s" % self.strings[self.graphics_index])
+        self.fov_button = Button((SETTINGS.canvas_actual_width/2, 200, 300, 30), "FOV: %s" % self.degrees[self.fov_index])
+        self.sensitivity_button = Button((SETTINGS.canvas_actual_width/2, 250, 300, 30), "SENSITIVITY: %s" % self.strings[self.sens_index])
+        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "VOLUME: %s" % self.strings[self.vol_index])
+        self.music_button = Button((SETTINGS.canvas_actual_width/2, 350, 300, 30), "MUSIC VOLUME: %s" % self.music_strings[self.music_index])
         self.fullscreen_button = Button((SETTINGS.canvas_actual_width/2, 400, 300, 30), "FULLSCREEN: %s" % self.onoff[self.fs_index])
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
 
@@ -269,6 +274,7 @@ class OptionsMenu(Menu):
             'fov' : self.strings_to_data['fov'][self.fov_index],
             'sensitivity' : self.strings_to_data['sensitivity'][self.sens_index],
             'volume' : self.strings_to_data['volume'][self.vol_index],
+            'music volume' : self.strings_to_data['music volume'][self.music_index],
             'fullscreen' : self.strings_to_data['fullscreen'][self.fs_index]}
 
     def control_options(self):
@@ -296,6 +302,12 @@ class OptionsMenu(Menu):
                 self.vol_index = 0
             self.update_strings()
 
+        elif self.music_button.get_clicked():
+            self.music_index += 1
+            if self.music_index >= len(self.music_strings):
+                self.music_index = 0
+            self.update_strings()
+
         elif self.fullscreen_button.get_clicked():
             self.fs_index += 1
             if self.fs_index >= len(self.onoff):
@@ -308,6 +320,7 @@ class OptionsMenu(Menu):
         self.fov_button.draw(canvas)
         self.sensitivity_button.draw(canvas)
         self.volume_button.draw(canvas)
+        self.music_button.draw(canvas)
         self.fullscreen_button.draw(canvas)
         self.back_button.draw(canvas)
         self.title.draw(canvas)
@@ -332,7 +345,7 @@ class CreditsMenu(Menu):
         self.musicby = TEXT.Text(0,0, 'MUSIC  BY', SETTINGS.LIGHTGRAY, "DUGAFONT.ttf", 20)
         self.musicby.update_pos((SETTINGS.canvas_actual_width/2)-(self.musicby.layout.get_width()/2)+8, 210)
         
-        self.eli = TEXT.Text(0,0, 'EIK  SOELBERG', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 30)
+        self.eli = TEXT.Text(0,0, 'HUDLUM  @  SOUNDCLOUD', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 30)
         self.eli.update_pos((SETTINGS.canvas_actual_width/2)-(self.eli.layout.get_width()/2)+8, 240)
 
         #Maps
@@ -384,7 +397,7 @@ class Button:
         self.text.update_pos(xywh[0] - self.text.layout.get_width()/2, xywh[1] - (self.text.layout.get_height() / 2)+2)
 
         self.filling = SETTINGS.LIGHTGRAY
-        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'button.ogg'))
+        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'button.ogg'))
         
 
     def draw(self, canvas):

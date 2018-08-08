@@ -3,8 +3,10 @@
 import SETTINGS
 import EFFECTS
 import INVENTORY
+import SOUND
 import pygame
 import math
+import os
 
 class Player:
 
@@ -37,6 +39,8 @@ class Player:
         self.dead = False
         self.last_call = 0
         self.type = 'player'
+        self.hurt_sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'damage.ogg'))
+        self.change_level = pygame.mixer.Sound(os.path.join('sounds', 'other', 'next_level.ogg'))
 
         #input variables
         self.mouse2 = 0
@@ -151,9 +155,11 @@ class Player:
                     if SETTINGS.middle_slice:
                         if SETTINGS.middle_slice_len <= SETTINGS.tile_size*1.5 and (SETTINGS.middle_slice.type == 'vdoor' or SETTINGS.middle_slice.type == 'hdoor'):
                             SETTINGS.middle_slice.sesam_luk_dig_op()
-                        elif SETTINGS.middle_slice_len <= SETTINGS.tile_size and SETTINGS.middle_slice.type == 'end':
+                        elif SETTINGS.middle_slice_len <= SETTINGS.tile_size and SETTINGS.middle_slice.type == 'end' and not SETTINGS.player_states['fade']:
                             SETTINGS.player_states['fade'] = True
                             SETTINGS.changing_level = True
+                            SOUNDS.play_sound(self.change_level, 0)
+                            
                             
 
                 madd = self.mouse.get_rel()[0] * self.sensitivity
@@ -188,6 +194,7 @@ class Player:
         if self.health > SETTINGS.player_health:
             self.health = SETTINGS.player_health
             SETTINGS.player_states['hurt'] = True
+            SOUND.play_sound(self.hurt_sound, 0)
         if SETTINGS.player_health <= 0 and not SETTINGS.godmode:
             self.dead = True
             SETTINGS.player_states['dead'] = True

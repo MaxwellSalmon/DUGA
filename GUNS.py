@@ -5,6 +5,7 @@ import SOUND
 import pygame
 import random
 import math
+import os
 
 class Gun:
     '''== Create a weapon ==\nspritesheet -> .png | stats -> explained in GUNS.py\nsounds -> explained in GUNS.py | aim_pos = Sight pos in px'''
@@ -24,6 +25,7 @@ class Gun:
         self.reload =  [self.spritesheet.subsurface(0,0,420,360).convert_alpha(), self.spritesheet.subsurface(1260,0,420,360).convert_alpha(), self.spritesheet.subsurface(1260,360,420,360).convert_alpha(), self.spritesheet.subsurface(1260,720,420,360).convert_alpha(), self.spritesheet.subsurface(1260,1080,420,360).convert_alpha(), self.spritesheet.subsurface(1260,1440,420,360).convert_alpha()]
 
         self.sounds = sounds
+        self.hit_marker = pygame.mixer.Sound(os.path.join('sounds', 'other', 'hitmarker.ogg'))
         
         #Weapon stats
         self.dmg = stats['dmg']
@@ -198,6 +200,7 @@ class Gun:
                     cap = (self.hit_percent * 0.96 ** (npc.dist*((100-self.hit_percent)/100)))
                         
                 if cap >= random.randint(0,int(npc.dist*(1/self.range))):
+                    SOUND.play_sound(self.hit_marker, 0)
                     #Critical hit
                     if (npc.state == 'idle' or npc.state == 'patrouling') and not npc.player_in_view:
                         npc.health -= self.dmg * 2

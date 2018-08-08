@@ -16,7 +16,7 @@ class Item:
         self.rect.center = (self.pos[0] + SETTINGS.tile_size/2, self.pos[1] + SETTINGS.tile_size/2)
         self.sprite = SPRITES.Sprite(pygame.image.load(sprite), hash(item_type), self.rect.center, 'sprite')
         self.effect = effect
-        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'blub.ogg'))
+        self.sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'blub.ogg'))
         
     def update(self):
         remove = False

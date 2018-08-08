@@ -2,10 +2,11 @@
 
 '''Game settings'''
 current_level = 0
-fps = 31
+fps = 20
 caption = "DUGA v1.1 - %s"
 mode = 1
 volume = 1
+music_volume = 1
 fullscreen = False
 menu_showing = True
 #Below this point are the non-configurable game variables.
@@ -107,7 +108,7 @@ texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = False
+unlimited_ammo = True
 #Below this point are non-configurable variables.
 current_gun = None
 next_gun = None

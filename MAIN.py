@@ -62,6 +62,7 @@ class Load:
         SETTINGS.fov = settings['fov']
         SETTINGS.sensitivity = settings['sensitivity']
         SETTINGS.volume = settings['volume']
+        SETTINGS.music_volume = settings['music volume']
         SETTINGS.resolution = settings['graphics'][0]
         SETTINGS.render = settings['graphics'][1]
         SETTINGS.fullscreen = settings['fullscreen']
