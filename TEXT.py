@@ -1,5 +1,7 @@
 import pygame
 
+pygame.font.init()
+
 class Text:
 
     def __init__(self, posx, posy, string, color, font, size):

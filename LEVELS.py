@@ -17,6 +17,10 @@ class Level:
         self.shade = stats['shade'][0]
         self.shade_rgba = stats['shade'][1]
         self.shade_visibility = stats['shade'][2]
+        if 'name' in stats:
+            self.name = stats['name']
+        if 'author' in stats:
+            self.author = stats['author']
 
 ##SETTINGS.levels_list.append(Level({
 ##'ground_color' : (255, 255, 255),

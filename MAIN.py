@@ -119,6 +119,8 @@ class Load:
         else:
             SETTINGS.player_states['fade'] = True
             SETTINGS.player_states['black'] = True
+
+        SETTINGS.player_states['title'] = True
                 
         SETTINGS.walkable_area = list(PATHFINDING.pathfind(SETTINGS.player_map_pos, SETTINGS.all_tiles[-1].map_pos))
         gameMap.move_inaccessible_entities()

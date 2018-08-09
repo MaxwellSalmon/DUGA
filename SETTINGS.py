@@ -96,6 +96,7 @@ player_states = {
     'invopen' : False,
     'fade' : False,
     'black' : False,
+    'title' : False,
     'cspeed' : 0,
     }
 player = None

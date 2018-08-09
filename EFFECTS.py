@@ -1,13 +1,36 @@
 import pygame
 import SETTINGS
 import ITEMS
+import TEXT
 import random
+
+title = TEXT.Text(0,0, "None :-)", SETTINGS.BLACK, "DUGAFONT.ttf", 60)
+author = TEXT.Text(0,0, "None :-)", SETTINGS.BLACK, "DUGAFONT.ttf", 40)
 
 hurt_intensity = 128
 dead_intensity = 0
 heal_intensity = 85
 armor_intensity = 85
 fade_value = 0
+title_timer = 0
+
+int_to_string = {
+    0 : 'FIRST',
+    1 : 'SECOND',
+    2 : 'THIRD',
+    3 : 'FOURTH',
+    4 : 'FIFTH',
+    5 : 'SIXTH',
+    6 : 'SEVENTH',
+    7 : 'EIGHTH',
+    8 : 'NINTH',
+    9 : 'TENTH',
+    10 : 'ELEVENTH',
+    11 : 'TWELVTH',
+    12 : 'THIRTEENTH',
+    13 : 'FOURTEENTH',
+    14 : 'FIFTEENTH',    
+    }
 
 def render(canvas):
     if SETTINGS.screen_shake > 0:
@@ -20,6 +43,8 @@ def render(canvas):
         player_armor(canvas)
     if SETTINGS.player_states['fade'] or SETTINGS.player_states['black']:
         fade_black(canvas)
+    if SETTINGS.player_states['title']:
+        show_title(canvas)
         
 
 def screen_shake():
@@ -96,6 +121,48 @@ def fade_black(canvas):
             SETTINGS.player_states['fade'] = False
             
     canvas.blit(black, (0,0))
+
+def show_title(canvas):
+    global title_timer, title, author, white_titles, white_authors, int_to_string
+
+    if SETTINGS.levels_list == SETTINGS.clevels_list:
+        title.update_string(SETTINGS.levels_list[SETTINGS.current_level].name)
+        title.update_pos((SETTINGS.canvas_actual_width/2)-(title.layout.get_width()/2)+8, 200)
+
+        white_box = pygame.Surface((title.layout.get_width()+5, title.layout.get_height()+5)).convert_alpha()
+        white_box.fill((255,255,255,180))
+
+        author.update_string("BY  %s" % SETTINGS.levels_list[SETTINGS.current_level].author)
+        author.update_pos((SETTINGS.canvas_actual_width/2)-(author.layout.get_width()/2)+8, 260)
+
+        white_box2 = pygame.Surface((author.layout.get_width()+5, author.layout.get_height()-16)).convert_alpha()
+        white_box2.fill((255,255,255,180))
+
+        if title_timer <= 3.5:
+            canvas.blit(white_box2, (author.posx-7, author.posy+5))
+            author.draw(canvas)
+
+    elif SETTINGS.levels_list == SETTINGS.glevels_list:
+        title.update_pos((SETTINGS.canvas_actual_width/2)-(title.layout.get_width()/2)+8, 200)
+        if SETTINGS.current_level in int_to_string:
+            title.update_string("%s  LEVEL" % int_to_string[SETTINGS.current_level])
+        else:
+            title.update_string("%s.  LEVEL" % SETTINGS.current_level)
+        white_box = pygame.Surface((title.layout.get_width()+5, title.layout.get_height()+5)).convert_alpha()
+        white_box.fill((255,255,255,180))
+
+    if title_timer <= 3.5:
+        canvas.blit(white_box, (title.posx-7, title.posy-8))
+        title.draw(canvas)
+        title_timer += SETTINGS.dt
+    else:
+        SETTINGS.player_states['title'] = False
+        title_timer = 0
+        
+
+    
+
+    
             
 
 

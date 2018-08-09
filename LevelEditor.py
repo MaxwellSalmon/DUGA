@@ -53,7 +53,6 @@ def determine_type():
         ltype = "level"
     elif pick == "segment" or pick == 's':
         ltype = "segment"
-        print("Segments must be square")
     else:
         print("Invalid argument!")
         determine_type()
@@ -61,12 +60,12 @@ def determine_type():
 
 def determine_size():
     global ltype
-    if ltype == 'segment':
-        size = input("Segment size in tiles: ")
-        width, height = size, size
-    else:
+    if ltype == 'level':
         width = input("Map width in tiles: ")
         height = input("Map height in tiles: ")
+    else:
+        width = 9
+        height = 9
     try:
         editorCanvas.__init__(int(width)*32 + 170, int(height)*32 + 170)
         currentMap.__init__(int(width), int(height))
