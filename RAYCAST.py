@@ -88,8 +88,7 @@ class Raycast:
         ray_number = 0
 
         for tile in SETTINGS.all_solid_tiles:
-            tile.get_dist(SETTINGS.player_rect.center, 'raycast')
-
+            tile.distance = tile.get_dist(SETTINGS.player_rect.center)
 
         while ray < fov:
             degree = angle - ray
@@ -320,7 +319,7 @@ class Raycast:
             SETTINGS.zbuffer.append(None)
             
         #Middle ray info
-        if ray_number == (self.res/2):
+        if ray_number == int(self.res/2):
                 SETTINGS.middle_slice_len = wall_dist
                 SETTINGS.middle_slice = current_tile
                 SETTINGS.middle_ray_pos = end_pos

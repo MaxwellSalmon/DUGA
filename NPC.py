@@ -387,7 +387,6 @@ class Npc:
         
         for tile in tile_hit_list:
             if tile.solid:
-                        
                 if x > 0:
                     self.rect.right = tile.rect.left
                     self.real_x = self.rect.x
@@ -404,6 +403,7 @@ class Npc:
         for door in SETTINGS.all_doors:
             if door.get_dist(self.rect.center, 'npc') <= 50:
                 door.sesam_luk_dig_op()
+                break
 
     def move(self):
         #Make the NPC move according to current state.

@@ -79,9 +79,9 @@ def what_now():
     global ltype
     isgood = False
     print()
-    if ltype == 'level':
-        while not isgood:
-            isgood = True
+    while not isgood:
+        isgood = True
+        if ltype == 'level':
             print("What sky colour should your level have? Leave blank for white.")
             sc = input("R,G,B > ")
             if sc:
@@ -125,23 +125,26 @@ def what_now():
 
             editorCanvas.dict['ground_color'] = gc
             editorCanvas.dict['sky_color'] = sc
-            
-            print()
-            print("Would you like to save the map?")
-            yn = input("Y/N > ").lower()
-            if yn == 'y' or yn == 'yes':
-                if isgood:
-                    loader.save_map()
-                    print()
-                    print("Map saved!")
-            elif yn == 'n' or yn == 'no':
-                sys.exit(1)
-            else:
-                isgood = False
-
-            if not isgood:
-                print("You made an error somewhere. Let's try again. R,G,B must be three values between 0-255 seperated by commas.")
+        
+        print()
+        print("Would you like to save the map?")
+        yn = input("Y/N > ").lower()
+        if yn == 'y' or yn == 'yes':
+            if isgood:
+                loader.save_map()
                 print()
+                print("Map saved!")
+        elif yn == 'n' or yn == 'no':
+            sys.exit(1)
+        else:
+            isgood = False
+
+        if not isgood:
+            if ltype == 'level':
+                print("You made an error somewhere. Let's try again. R,G,B must be three values between 0-255 seperated by commas.")
+            else:
+                print("You made an error somewhere. Please try again.")
+            print()
 
 class Canvas:
 

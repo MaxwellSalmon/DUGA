@@ -2,7 +2,7 @@
 
 '''Game settings'''
 current_level = 0
-fps = 20
+fps = 31
 caption = "DUGA v1.1 - %s"
 mode = 1
 volume = 1
@@ -31,7 +31,7 @@ playing_new = False
 
 
 '''Canvas settings'''
-canvas_target_width = 800    #700
+canvas_target_width = 700    #700
 canvas_target_height = 550    #600
 #Below this point are the non-configurable canvas variables.
 canvas_actual_width = 0
@@ -118,7 +118,7 @@ ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = False
+ignore_player = True
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

@@ -261,7 +261,7 @@ class OptionsMenu(Menu):
         self.graphics_button = Button((SETTINGS.canvas_actual_width/2, 150, 300, 30), "GRAPHICS: %s" % self.strings[self.graphics_index])
         self.fov_button = Button((SETTINGS.canvas_actual_width/2, 200, 300, 30), "FOV: %s" % self.degrees[self.fov_index])
         self.sensitivity_button = Button((SETTINGS.canvas_actual_width/2, 250, 300, 30), "SENSITIVITY: %s" % self.strings[self.sens_index])
-        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "VOLUME: %s" % self.strings[self.vol_index])
+        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "MASTER iVOLUME: %s" % self.strings[self.vol_index])
         self.music_button = Button((SETTINGS.canvas_actual_width/2, 350, 300, 30), "MUSIC VOLUME: %s" % self.music_strings[self.music_index])
         self.fullscreen_button = Button((SETTINGS.canvas_actual_width/2, 400, 300, 30), "FULLSCREEN: %s" % self.onoff[self.fs_index])
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")

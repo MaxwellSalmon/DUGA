@@ -108,16 +108,15 @@ class Tile:
     def draw(self, canvas):
         canvas.blit(self.texture, self.rect)
 
-    def get_dist(self, pos, called):
+    def get_dist(self, pos, *called):
         xpos = self.rect.center[0] - pos[0]
         ypos = pos[1] - self.rect.center[1]
         self.distance = math.sqrt(xpos*xpos + ypos*ypos)
 
-        if self.state and self.state != 'closed':
+        if (self.state and self.state != 'closed') and called != ('npc',): #lol
             self.sesam_luk_dig_op()
-
-        if called == 'npc':
-            return self.distance
+            
+        return self.distance
 
     def sesam_luk_dig_op(self):
         if self.open > SETTINGS.tile_size:

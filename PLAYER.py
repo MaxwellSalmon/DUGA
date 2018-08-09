@@ -158,7 +158,7 @@ class Player:
                         elif SETTINGS.middle_slice_len <= SETTINGS.tile_size and SETTINGS.middle_slice.type == 'end' and not SETTINGS.player_states['fade']:
                             SETTINGS.player_states['fade'] = True
                             SETTINGS.changing_level = True
-                            SOUNDS.play_sound(self.change_level, 0)
+                            SOUND.play_sound(self.change_level, 0)
                             
                             
 
