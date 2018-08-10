@@ -1059,7 +1059,9 @@ def load_item_types():
             {
                 'filepath' : ('graphics', 'items', 'random.png'),
                 'type' : 'random',
-                'effect': ['health', 'armor', 'bullet', 'shell', 'ferromag', 'melee', 'secondary', 'primary'],
+                'effect': ['health', 'armor', 'bullet', 'shell', 'ferromag',
+                           'health', 'armor', 'bullet', 'shell', 'ferromag',
+                           'melee', 'secondary', 'primary'],
                 'id': 12,
                 },
 
@@ -1218,12 +1220,14 @@ def load_item_types():
             ]
 
 def spawn_items():
+    seed = SETTINGS.seed
     for item in SETTINGS.levels_list[SETTINGS.current_level].items:
         stats = [x for x in SETTINGS.item_types if x['id'] == item[1]][0]
         if stats['type'] == 'random':
-            random.seed(SETTINGS.seed)
+            random.seed(seed)
             possible_items = [x for x in SETTINGS.item_types if x['type'] in stats['effect']]
             stats = random.choice(possible_items)
+            seed += 0.001
             
         elif stats['type'] not in ('primary', 'secondary', 'melee'):
             stats = copy.deepcopy([x for x in SETTINGS.item_types if x['id'] == item[1]][0])

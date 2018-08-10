@@ -55,7 +55,7 @@ class Map:
             x = abs(SETTINGS.player_map_pos[0] - pos[0])
             y = abs(SETTINGS.player_map_pos[1] - pos[1])
             
-            if math.sqrt(x**2 + y**2) >= 8:
+            if math.sqrt(x**2 + y**2) >= 8: #Length of vector between player and NPC
                 possible_npc_positions.append(pos)            
         
         for i in range(len(move_items)):

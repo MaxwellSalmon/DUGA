@@ -157,7 +157,7 @@ class MainMenu(Menu):
                       [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (3*160)],
                       [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_books.png')).convert(), self.logo_surface_rect.left + (4*160)],
                       [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_fireplace.png')).convert(), self.logo_surface_rect.left + (5*160)],
-                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (5*160)]]
+                      [pygame.image.load(os.path.join('graphics', 'tiles', 'walls', 'wood_wall.png')).convert(), self.logo_surface_rect.left + (6*160)]]
 
         self.tiles = random.choice((self.stone_tiles, self.baroque_tiles, self.wood_tiles))
                     
