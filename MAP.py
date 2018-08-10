@@ -38,7 +38,8 @@ class Map:
     def move_inaccessible_entities(self):      
         wa = []
         for i in SETTINGS.walkable_area:
-            wa.append(i.map_pos)
+            if i.type != 'hdoor' and i.type != 'vdoor':
+                wa.append(i.map_pos)
             
         move_items = [x for x in SETTINGS.levels_list[SETTINGS.current_level].items if list(x[0]) not in wa]
         move_npcs = [x for x in SETTINGS.levels_list[SETTINGS.current_level].npcs if list(x[0]) not in wa]
@@ -47,21 +48,28 @@ class Map:
         npc_positions = [x[0] for x in SETTINGS.levels_list[SETTINGS.current_level].npcs if list(x[0]) in wa]
 
         possible_item_positions = [x for x in wa if tuple(wa) not in item_positions]
-        possible_npc_positions = [x for x in wa if tuple(wa) not in npc_positions]
+        temp_possible_npc_positions = [x for x in wa if tuple(wa) not in npc_positions]
+        possible_npc_positions = []
+        #Remove npc positions too close to the player
+        for pos in temp_possible_npc_positions:
+            x = abs(SETTINGS.player_map_pos[0] - pos[0])
+            y = abs(SETTINGS.player_map_pos[1] - pos[1])
+            
+            if math.sqrt(x**2 + y**2) >= 8:
+                possible_npc_positions.append(pos)            
         
         for i in range(len(move_items)):
             print("Moved item from ", move_items[i][0])
-            index = SETTINGS.levels_list[SETTINGS.current_level].items.index(move_items[i])
-            SETTINGS.levels_list[SETTINGS.current_level].items[index] = ((random.choice(possible_item_positions)), move_items[i][1])
-            possible_item_positions.append(SETTINGS.levels_list[SETTINGS.current_level].items[index][0])
+            index = SETTINGS.levels_list[SETTINGS.current_level].items.index(move_items[i]) #Get item index
+            SETTINGS.levels_list[SETTINGS.current_level].items[index] = ((random.choice(possible_item_positions)), move_items[i][1]) #Choose new location for item
+            possible_item_positions.remove(list(SETTINGS.levels_list[SETTINGS.current_level].items[index][0])) #Remove possible location
             print("to ", SETTINGS.levels_list[SETTINGS.current_level].items[index][0])
-            
 
         for i in range(len(move_npcs)):
             print("Moved NPC from ", move_npcs[i][0])
             index = SETTINGS.levels_list[SETTINGS.current_level].npcs.index(move_npcs[i])
             SETTINGS.levels_list[SETTINGS.current_level].npcs[index] = ((random.choice(possible_npc_positions)), move_npcs[i][1], move_npcs[i][2])
-            possible_npc_positions.append(SETTINGS.levels_list[SETTINGS.current_level].npcs[index][0])
+            possible_npc_positions.remove(list(SETTINGS.levels_list[SETTINGS.current_level].npcs[index][0]))
             print("to ", SETTINGS.levels_list[SETTINGS.current_level].npcs[index][0])
 
         print("This level has %s items and %s NPC's" % (len(SETTINGS.levels_list[SETTINGS.current_level].items), len(SETTINGS.levels_list[SETTINGS.current_level].npcs)))

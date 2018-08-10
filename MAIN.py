@@ -6,7 +6,6 @@ import pygame
 import math
 import os
 import pickle
-import profile
 #-- Engine imports--
 import SETTINGS
 import PLAYER
