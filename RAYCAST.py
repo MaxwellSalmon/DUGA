@@ -14,17 +14,17 @@ class Slice:
         self.rect = self.slice.get_rect(center = (0, SETTINGS.canvas_target_height/2))
         self.distance = None
         self.type = 'slice'
-        self.darkslice = pygame.Surface(self.slice.get_size()).convert_alpha()
-        self.shade_slice = pygame.Surface(self.slice.get_size()).convert_alpha()
         self.vh = vh
         self.xpos = 0
 
-        sv = SETTINGS.shade_visibility / 10
-        self.shade_intensity = [sv*1, sv*2, sv*3, sv*4, sv*5, sv*6, sv*7, sv*8, sv*9, sv*10]
+        if SETTINGS.shade:
+            self.shade_slice = pygame.Surface(self.slice.get_size()).convert_alpha()
+            sv = SETTINGS.shade_visibility / 10
+            self.shade_intensity = [sv*1, sv*2, sv*3, sv*4, sv*5, sv*6, sv*7, sv*8, sv*9, sv*10]
         
     def update_rect(self, new_slice):            
         self.tempslice = new_slice
-        self.rect = new_slice.get_rect(center = (self.xpos, SETTINGS.canvas_target_height/2))
+        self.rect = new_slice.get_rect(center = (self.xpos, int(SETTINGS.canvas_target_height/2)))
 
         if self.vh == 'v':
             self.darkslice = pygame.Surface(self.tempslice.get_size()).convert_alpha()
@@ -75,7 +75,7 @@ class Raycast:
 
         self.current_vtile = None
         self.current_htile = None
-
+        
 
     def calculate(self):
         self.res = SETTINGS.resolution
@@ -123,7 +123,20 @@ class Raycast:
         if offset >= SETTINGS.tile_size:
             offset = SETTINGS.tile_size - 1
         return(offset)
-        
+
+    def check_hit(self, V_hit, H_hit, H_distance, V_distance, full_check):
+        #Break loop if any ray has hit a wall            
+        if H_hit and V_hit:
+            return True
+
+        elif full_check:
+            if H_hit:
+                if H_distance < V_distance:
+                    return True
+
+            elif V_hit:
+                if V_distance < H_distance:
+                    return True
             
 
     def cast(self, player_rect, angle, ray_number):
@@ -131,7 +144,7 @@ class Raycast:
         V_hit = False
         H_offset = V_offset = 0
         end_pos = (0, 0)
-        angle = angle - 0.001
+        angle -= 0.001
 
         #Horizontal
         if angle < 180:
@@ -154,79 +167,81 @@ class Raycast:
             
             H_distance = abs((player_rect.center[0] - H_x) / math.cos(math.radians(angle)))
             V_distance = abs((player_rect.center[0] - V_x) / math.cos(math.radians(angle)))
-            
-            if H_hit and V_hit:
+
+            if self.check_hit(V_hit, H_hit, H_distance, V_distance, True):
                 break
-            elif H_hit:
-                if H_distance < V_distance:
-                    break
-            elif V_hit:
-                if V_distance < H_distance:
-                    break
                 
             for tile in SETTINGS.rendered_tiles:
-                if SETTINGS.tile_visible[tile.ID]:
-                    if H_hit and V_hit:
-                        break
-                    if not H_hit:
-                        if (H_y == tile.rect.bottom and H_x >= tile.rect.bottomleft[0] and H_x <= tile.rect.bottomright[0]) and player_rect.centery > tile.rect.bottom:
-                            H_hit = True
-                            H_texture = SETTINGS.tile_texture[tile.ID]
-                            self.current_htile = tile
+                
+                if self.check_hit(V_hit, H_hit, H_distance, V_distance, False):
+                    break
+                
+                if not H_hit:
+                    if (H_y == tile.rect.bottom and H_x >= tile.rect.bottomleft[0] and H_x <= tile.rect.bottomright[0]) and player_rect.centery > tile.rect.bottom:
+                        H_hit = True
+                        H_texture = SETTINGS.tile_texture[tile.ID]
+                        self.current_htile = tile
+                        if tile.type == 'hdoor':
+                            H_y -= self.door_size
+                            H_x += self.door_size / math.tan(math.radians(angle))
                             H_offset = offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
-                            if tile.type == 'hdoor':
-                                H_y -= self.door_size
-                                H_x += self.door_size / math.tan(math.radians(angle))
-                                H_offset = offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
-                                if H_offset < 0:
-                                    H_hit = False
-                                    H_y += self.door_size
-                                    H_x -= self.door_size / math.tan(math.radians(angle))
-                                
-                        elif (H_y == tile.rect.top and H_x >= tile.rect.topleft[0] and H_x <= tile.rect.topright[0]) and player_rect.centery < tile.rect.top:
-                            H_hit = True
-                            H_texture = SETTINGS.tile_texture[tile.ID]
-                            self.current_htile = tile
-                            H_offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
-                            if tile.type == 'hdoor':
+                            if H_offset < 0:
+                                H_hit = False
                                 H_y += self.door_size
                                 H_x -= self.door_size / math.tan(math.radians(angle))
-                                H_offset = offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
-                                if H_offset < 0:
-                                    H_hit = False
-                                    H_y -= self.door_size
-                                    H_x += self.door_size / math.tan(math.radians(angle))
+                        else:
+                            H_offset = offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
                             
-                            
-                    if not V_hit:
-                        if (V_x == tile.rect.left and V_y >= tile.rect.topleft[1] and V_y <= tile.rect.bottomleft[1]) and player_rect.centerx < tile.rect.left:
-                            V_hit = True
-                            V_texture = SETTINGS.tile_texture[tile.ID]
-                            self.current_vtile = tile
-                            V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
-                            if tile.type == 'vdoor':
-                                V_x += self.door_size
-                                V_y -= self.door_size * math.tan(math.radians(angle))
-                                V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
-                                if V_offset < 0:
-                                   V_hit = False
-                                   V_x -= self.door_size
-                                   V_y += self.door_size * math.tan(math.radians(angle))
+                    elif (H_y == tile.rect.top and H_x >= tile.rect.topleft[0] and H_x <= tile.rect.topright[0]) and player_rect.centery < tile.rect.top:
+                        H_hit = True
+                        H_texture = SETTINGS.tile_texture[tile.ID]
+                        self.current_htile = tile
+                        if tile.type == 'hdoor':
+                            H_y += self.door_size
+                            H_x -= self.door_size / math.tan(math.radians(angle))
+                            H_offset = offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
+                            if H_offset < 0:
+                                H_hit = False
+                                H_y -= self.door_size
+                                H_x += self.door_size / math.tan(math.radians(angle))
+                        else:
+                            H_offset = self.find_offset(H_x, ray_number, angle, tile, 'h')
                                 
-                        elif (V_x == tile.rect.right and V_y >= tile.rect.topright[1] and V_y <= tile.rect.bottomright[1]) and player_rect.centerx > tile.rect.right:
-                            V_hit = True
-                            V_texture = SETTINGS.tile_texture[tile.ID]
-                            self.current_vtile = tile
+                if self.check_hit(V_hit, H_hit, H_distance, V_distance, False):
+                    break      
+                        
+                if not V_hit:
+                    if (V_x == tile.rect.left and V_y >= tile.rect.topleft[1] and V_y <= tile.rect.bottomleft[1]) and player_rect.centerx < tile.rect.left:
+                        V_hit = True
+                        V_texture = SETTINGS.tile_texture[tile.ID]
+                        self.current_vtile = tile
+                        if tile.type == 'vdoor':
+                            V_x += self.door_size
+                            V_y -= self.door_size * math.tan(math.radians(angle))
                             V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
-                            if tile.type == 'vdoor':
-                                V_x -= self.door_size
-                                V_y += self.door_size * math.tan(math.radians(angle))
-                                V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
-                                if V_offset < 0:
-                                   V_hit = False
-                                   V_x += self.door_size
-                                   V_y -= self.door_size * math.tan(math.radians(angle))                        
-
+                            if V_offset < 0:
+                               V_hit = False
+                               V_x -= self.door_size
+                               V_y += self.door_size * math.tan(math.radians(angle))
+                        else:
+                            V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
+                            
+                    elif (V_x == tile.rect.right and V_y >= tile.rect.topright[1] and V_y <= tile.rect.bottomright[1]) and player_rect.centerx > tile.rect.right:
+                        V_hit = True
+                        V_texture = SETTINGS.tile_texture[tile.ID]
+                        self.current_vtile = tile
+                        if tile.type == 'vdoor':
+                            V_x -= self.door_size
+                            V_y += self.door_size * math.tan(math.radians(angle))
+                            V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
+                            if V_offset < 0:
+                               V_hit = False
+                               V_x += self.door_size
+                               V_y -= self.door_size * math.tan(math.radians(angle))
+                        else:
+                            V_offset = self.find_offset(V_y, ray_number, angle, tile, 'v')
+                               
+            #Extend actual ray
             if not H_hit:
                 if angle < 180:
                     H_y -= self.tile_size
@@ -296,14 +311,16 @@ class Raycast:
         
 
     def control(self, end_pos, ray_number, tile_len, player_rect, texture, offset, current_tile, vh):
-        if SETTINGS.mode == 0:
-            self.draw_line(player_rect, end_pos)
-        else:
+        if SETTINGS.mode == 1:
             if tile_len:
                 wall_dist = tile_len * math.cos(math.radians(self.beta))
             else:
                 wall_dist = None
             self.render_screen(ray_number, wall_dist, texture, int(offset), current_tile, vh, end_pos)
+            
+        else:
+            self.draw_line(player_rect, end_pos)
+            
             
 
     def render_screen(self, ray_number, wall_dist, texture, offset, current_tile, vh, end_pos):
@@ -320,9 +337,9 @@ class Raycast:
             
         #Middle ray info
         if ray_number == int(self.res/2):
-                SETTINGS.middle_slice_len = wall_dist
-                SETTINGS.middle_slice = current_tile
-                SETTINGS.middle_ray_pos = end_pos
+            SETTINGS.middle_slice_len = wall_dist
+            SETTINGS.middle_slice = current_tile
+            SETTINGS.middle_ray_pos = end_pos
             
 
     def draw_line(self, player_rect, end_pos):

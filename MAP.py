@@ -98,6 +98,7 @@ class Tile:
 
         else:
             self.texture = SETTINGS.tile_texture[self.ID].texture
+            self.icon = pygame.transform.scale(self.texture, (16,16)).convert()
             self.texture = pygame.transform.scale(self.texture, (SETTINGS.tile_size, SETTINGS.tile_size)).convert()
             self.rect = self.texture.get_rect()
             self.rect.x = pos[0]
@@ -113,8 +114,9 @@ class Tile:
 
                 SETTINGS.all_doors.append(self)
 
+
     def draw(self, canvas):
-        canvas.blit(self.texture, self.rect)
+        canvas.blit(self.icon, (self.rect.x/4, self.rect.y/4))
 
     def get_dist(self, pos, *called):
         xpos = self.rect.center[0] - pos[0]

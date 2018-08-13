@@ -54,7 +54,8 @@ class Controller:
                 self.newMenu.draw(self.canvas)
                 if self.newMenu.back_button.get_clicked():
                     self.current_menu = 'main'
-                
+
+                #Play generated maps
                 elif self.newMenu.new_button.get_clicked():
                     self.newMenu.reset_inventory()
                     self.newMenu.loading.draw(self.canvas)
@@ -66,20 +67,32 @@ class Controller:
                 elif SETTINGS.playing_new:
                     self.current_type = 'game'
                     self.current_menu = 'main'
+                    SETTINGS.current_level = 0
                     SETTINGS.menu_showing = False
                     SETTINGS.playing_new = False
 
-                    
-                elif self.newMenu.custom_button.get_clicked():
+                #Play custom maps
+                elif self.newMenu.custom_button.get_clicked() and SETTINGS.clevels_list != []:
                     self.newMenu.reset_inventory()
                     SETTINGS.playing_customs = True
                 #Check if custom levels have been loaded
                 elif SETTINGS.playing_customs:
                     self.current_type = 'game'
                     self.current_menu = 'main'
+                    SETTINGS.current_level = 0
                     SETTINGS.menu_showing = False
                     SETTINGS.playing_customs = False
-                    
+
+                #Play tutorial
+                elif self.newMenu.tutorial_button.get_clicked():
+                    self.newMenu.reset_inventory()
+                    SETTINGS.playing_tutorial = True
+                elif SETTINGS.playing_tutorial:
+                    self.current_type = 'game'
+                    self.current_menu = 'main'
+                    SETTINGS.current_level = 0
+                    SETTINGS.menu_showing = False
+                    SETTINGS.playing_tutorial = False                    
 
             elif self.current_menu == 'options':
                 self.optionsMenu.draw(self.canvas)
@@ -193,7 +206,8 @@ class NewMenu(Menu):
     def __init__(self):
         Menu.__init__(self, 'NEW GAME')
         self.new_button = Button((SETTINGS.canvas_actual_width/2, 200, 200, 60), "NEW GAME")
-        self.custom_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "CUSTOM MAPS")
+        self.custom_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "CUSTOM  MAPS")
+        self.tutorial_button = Button((SETTINGS.canvas_actual_width/2, 360, 200, 30), "TUTORIAL")
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
 
         self.loading = TEXT.Text(0,0, "LOADING...", SETTINGS.BLACK, "DUGAFONT.ttf", 74)
@@ -202,6 +216,7 @@ class NewMenu(Menu):
     def draw(self, canvas):
         self.new_button.draw(canvas)
         self.custom_button.draw(canvas)
+        self.tutorial_button.draw(canvas)
         self.back_button.draw(canvas)
         self.title.draw(canvas)
 

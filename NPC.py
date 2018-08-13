@@ -123,71 +123,73 @@ class Npc:
         if not self.dead and self.health > 0 and not SETTINGS.player_states['dead']:
             self.render()
 
-            #PASSIVE
-            if self.mind == 'passive':
-                if self.state == 'idle':
-                    self.idle()
-                    
-                elif self.state == 'patrouling':
-                    self.move()
+            if self.dist and self.dist <= SETTINGS.render * SETTINGS.tile_size * 1.2:
 
-            #HOSTILE
-            elif self.mind == 'hostile':
-                if self.state == 'idle':
-                    self.idle()
-                    if not SETTINGS.ignore_player:
-                        if self.player_in_view:
-                            if self.detect_player():
-                                self.path = []
-                                SOUND.play_sound(self.sounds['spot'], self.dist)
-                                self.state = 'attacking'
-                                print("NPC %s is attacking you" % self.ID)
-                
-                elif self.state == 'patrouling':
-                    if self.player_in_view and not SETTINGS.ignore_player and self.detect_player():
-                        self.path = []
-                        SOUND.play_sound(self.sounds['spot'], self.dist)
-                        self.state = 'attacking'
-                        print("NPC %s is attacking you" % self.ID)
-                    elif self.dist <= SETTINGS.tile_size / 2 and not SETTINGS.ignore_player:
-                        state = 'attacking'
-                    else:
+                #PASSIVE
+                if self.mind == 'passive':
+                    if self.state == 'idle':
+                        self.idle()
+                        
+                    elif self.state == 'patrouling':
                         self.move()
 
-                elif self.state == 'attacking':
-                    self.attack()
+                #HOSTILE
+                elif self.mind == 'hostile':
+                    if self.state == 'idle':
+                        self.idle()
+                        if not SETTINGS.ignore_player:
+                            if self.player_in_view:
+                                if self.detect_player():
+                                    self.path = []
+                                    SOUND.play_sound(self.sounds['spot'], self.dist)
+                                    self.state = 'attacking'
+                                    print("NPC %s is attacking you" % self.ID)
+                    
+                    elif self.state == 'patrouling':
+                        if self.player_in_view and not SETTINGS.ignore_player and self.detect_player():
+                            self.path = []
+                            SOUND.play_sound(self.sounds['spot'], self.dist)
+                            self.state = 'attacking'
+                            print("NPC %s is attacking you" % self.ID)
+                        elif self.dist <= SETTINGS.tile_size / 2 and not SETTINGS.ignore_player:
+                            state = 'attacking'
+                        else:
+                            self.move()
+
+                    elif self.state == 'attacking':
+                        self.attack()
 
 
-            #SHY
-            elif self.mind == 'shy':
-                if self.state == 'idle':
-                    self.idle()
-                    if not SETTINGS.ignore_player:
+                #SHY
+                elif self.mind == 'shy':
+                    if self.state == 'idle':
+                        self.idle()
+                        if not SETTINGS.ignore_player:
+                            if self.player_in_view:
+                                if self.detect_player():
+                                    self.path = []
+                                    SOUND.play_sound(self.sounds['spot'], self.dist)
+                                    self.state = 'fleeing'
+                                    print("NPC %s is fleeing from you" % self.ID)
+                            elif self.dist <= SETTINGS.tile_size / 2:
+                                state = 'attacking'
+                        
+                    elif self.state == 'patrouling':
                         if self.player_in_view:
-                            if self.detect_player():
-                                self.path = []
-                                SOUND.play_sound(self.sounds['spot'], self.dist)
-                                self.state = 'fleeing'
-                                print("NPC %s is fleeing from you" % self.ID)
+                            if not SETTINGS.ignore_player:
+                                if self.detect_player():
+                                    self.path = []
+                                    SOUND.play_sound(self.sounds['spot'], self.dist)
+                                    self.state = 'fleeing'
+                                    print("NPC %s is fleeing from you" % self.ID)
                         elif self.dist <= SETTINGS.tile_size / 2:
-                            state = 'attacking'
+                            if not SETTINGS.ignore_player:
+                                state = 'attacking'
+                        else:
+                            self.move()
                     
-                elif self.state == 'patrouling':
-                    if self.player_in_view:
-                        if not SETTINGS.ignore_player:
-                            if self.detect_player():
-                                self.path = []
-                                SOUND.play_sound(self.sounds['spot'], self.dist)
-                                self.state = 'fleeing'
-                                print("NPC %s is fleeing from you" % self.ID)
-                    elif self.dist <= SETTINGS.tile_size / 2:
-                        if not SETTINGS.ignore_player:
-                            state = 'attacking'
-                    else:
+                    elif self.state == 'fleeing':
                         self.move()
-                
-                elif self.state == 'fleeing':
-                    self.move()
 
             #Run animations
             if self.hurting:
@@ -565,8 +567,12 @@ class Npc:
                     elif self.path != []:
                         try:
                             if self.path[-1].map_pos != SETTINGS.player_map_pos:
-                                self.path_progress = 0
-                                self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)
+                                if self.dist <= (SETTINGS.render/2) * SETTINGS.tile_size and random.randint(0, 5) == 5:
+                                    self.path_progress = 0
+                                    self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)
+                                elif random.randint(0,10) >= 8:
+                                    self.path_progress = 0
+                                    self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)                                    
                             else:
                                 self.move()
                         except:
@@ -580,7 +586,7 @@ class Npc:
                     if not self.attacking:
                         if random.randint(0, self.atckchance) == 5 and self.detect_player():
                                 self.attacking = True
-                                self.atckchance += self.atckrate
+                                self.atckchance += int(self.atckrate)
                                 self.movechance = 10
                         else:
                             if random.randint(0, self.movechance) == 10:
@@ -629,8 +635,12 @@ class Npc:
                         elif self.path != []:
                             try:
                                 if self.path[-1].map_pos != SETTINGS.player_map_pos:
-                                    self.path_progress = 0
-                                    self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)
+                                    if self.dist <= (SETTINGS.render/2) * SETTINGS.tile_size and random.randint(0, 5) == 5:
+                                        self.path_progress = 0
+                                        self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)
+                                    elif random.randint(0,10) == 10:
+                                        self.path_progress = 0
+                                        self.path = PATHFINDING.pathfind(self.map_pos, SETTINGS.player_map_pos)
                                 else:
                                     self.move()
                             except:

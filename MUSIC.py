@@ -22,7 +22,6 @@ class Music:
 
     def control_music(self):
         if SETTINGS.music_volume > 0:
-            print((self.settings_volume - self.menu_volume) * SETTINGS.music_volume)
             if [x for x in SETTINGS.npc_list if x.state == 'attacking' and not x.dead] and not SETTINGS.menu_showing or SETTINGS.player_states['dead']:
                 if self.hard_volume < self.settings_volume:
                     self.hard_volume += 0.05

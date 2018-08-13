@@ -55,6 +55,9 @@ class Generator:
             26 : 5, #black sg pistol
             27 : 1, # wtf pistol
             28 : 8, #hp pistol
+            29 : 6, #black sgp
+            30 : 2, #wtf sgp
+            31 : 8, #auto pistol
             }
         
         for i in self.item_spawns:
@@ -65,12 +68,21 @@ class Generator:
         self.max_npc_amount = SETTINGS.current_level+1 #Will be multiplied by amount of segments
         self.max_npcs_per_segment = 3
         self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
-        self.npc_probability = [0,
-                                1,1,
-                                2,
-                                3,3,
-                                4,4,
-                                5,]
+        self.npc_probability = [0,0,
+                                1,1,1,
+                                2,2,
+                                3,3,3,
+                                4,4,4,
+                                5,5,
+                                7,
+                                8,
+                                9,
+                                10,
+                                11,
+                                12,
+                                13,
+                                15,
+                                ]
 
         #Color list
         self.ground_colors = [SETTINGS.GRAY, SETTINGS.LIGHTGRAY, SETTINGS.DARKGRAY, SETTINGS.DARKRED, SETTINGS.DARKGREEN]

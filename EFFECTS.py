@@ -125,7 +125,7 @@ def fade_black(canvas):
 def show_title(canvas):
     global title_timer, title, author, white_titles, white_authors, int_to_string
 
-    if SETTINGS.levels_list == SETTINGS.clevels_list:
+    if SETTINGS.levels_list == SETTINGS.clevels_list or SETTINGS.levels_list == SETTINGS.tlevels_list:
         title.update_string(SETTINGS.levels_list[SETTINGS.current_level].name)
         title.update_pos((SETTINGS.canvas_actual_width/2)-(title.layout.get_width()/2)+8, 200)
 
@@ -133,13 +133,13 @@ def show_title(canvas):
         white_box.fill((255,255,255,180))
 
         author.update_string("BY  %s" % SETTINGS.levels_list[SETTINGS.current_level].author)
-        author.update_pos((SETTINGS.canvas_actual_width/2)-(author.layout.get_width()/2)+8, 260)
+        author.update_pos((SETTINGS.canvas_actual_width/2)-(author.layout.get_width()/2)+8, 262)
 
         white_box2 = pygame.Surface((author.layout.get_width()+5, author.layout.get_height()-16)).convert_alpha()
         white_box2.fill((255,255,255,180))
 
-        if title_timer <= 3.5:
-            canvas.blit(white_box2, (author.posx-7, author.posy+5))
+        if title_timer <= 3:
+            canvas.blit(white_box2, (author.posx-7, author.posy+3))
             author.draw(canvas)
 
     elif SETTINGS.levels_list == SETTINGS.glevels_list:
@@ -151,7 +151,7 @@ def show_title(canvas):
         white_box = pygame.Surface((title.layout.get_width()+5, title.layout.get_height()+5)).convert_alpha()
         white_box.fill((255,255,255,180))
 
-    if title_timer <= 3.5:
+    if title_timer <= 3:
         canvas.blit(white_box, (title.posx-7, title.posy-8))
         title.draw(canvas)
         title_timer += SETTINGS.dt

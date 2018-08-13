@@ -77,6 +77,7 @@ def determine_size():
 def what_now():
     global ltype
     isgood = False
+    sc = gc = (SETTINGS.WHITE)
     print()
     while not isgood:
         isgood = True
@@ -130,7 +131,7 @@ def what_now():
         yn = input("Y/N > ").lower()
         if yn == 'y' or yn == 'yes':
             if isgood:
-                loader.save_map()
+                loader.save_map(gc, sc)
                 print()
                 print("Map saved!")
         elif yn == 'n' or yn == 'no':
@@ -406,13 +407,13 @@ class Canvas:
             self.startpostxt.draw(self.canvas)
             self.startpostxt2.draw(self.canvas)
 
-    def export(self, printit):
+    def export(self, gc, sc, printit):
         global ltype, doors, segtypes
         if ltype == 'level':
             self.dict = {
                 'lvl_number' : None,
-                'sky_color' : SETTINGS.WHITE,
-                'ground_color' : SETTINGS.WHITE,
+                'sky_color' : sc,
+                'ground_color' : gc,
                 'npcs' : [],
                 'items' : [],
                 'player_pos' : None,
@@ -733,9 +734,9 @@ class SaveLoad:
         else:
             print("No occupied slots")
 
-    def save_map(self):
+    def save_map(self, gc, sc):
         global ltype
-        editorCanvas.export(False)
+        editorCanvas.export(gc, sc, False)
         print()
         self.done = False
         print("In which slot do you want to save?")
@@ -942,7 +943,7 @@ def main_loop():
                 break
         if not editor_exit:
             editorCanvas.draw()
-            editorCanvas.export(True)
+            editorCanvas.export((0,0,0), (0,0,0,), True)
             editorCanvas.change_id()
             editorCanvas.change_item()
             editorCanvas.change_npc()

@@ -41,6 +41,8 @@ class Gun:
         self.OG_aim_pos = [SETTINGS.canvas_actual_width/2 - aim_pos[0] * 6, SETTINGS.canvas_target_height/2 - aim_pos[1] * 6]
         self.raw_aim_pos = aim_pos
         self.mag_size = stats['magsize']
+        if stats['magsize'] == 3.1415:
+            self.mag_size = 2
         self.zoom = stats['zoom']
         self.ammo_type = stats['ammotype']
         self.guntype = stats['guntype']
@@ -138,6 +140,8 @@ class Gun:
                         self.current_img = self.aim[0]
                         self.shoot_busy = False
                         self.current_mag -= 1
+                        if self.stats['magsize'] == 3.1415:
+                            self.current_mag -= 1
                         self.firetimer = 0
 
                 #Melee weapon animation
@@ -176,6 +180,8 @@ class Gun:
                         self.current_img = self.aim[-1]
                         self.shoot_busy = False
                         self.current_mag -= 1
+                        if self.stats['magsize'] == 3.1415:
+                            self.current_mag -= 1
                         self.firetimer = 0
         else:
             if self.firetimer >= self.firerate:

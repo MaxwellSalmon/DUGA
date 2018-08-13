@@ -1,11 +1,12 @@
 #This is the MAIN script of DUGA. This is where the main loop is located and this is where all resources are loaded.
 #All the classes will be located at the bottom of this script.
 
-# Husk at konverte alle teksturer. Dette kan du forsøge dig med og se, om det kører bedre.
 import pygame
 import math
 import os
 import pickle
+import logging
+import sys
 #-- Engine imports--
 import SETTINGS
 import PLAYER
@@ -28,6 +29,7 @@ import SEGMENTS
 import GENERATION
 import MENU
 import MUSIC
+import TUTORIAL
 
 pygame.init()
 pygame.font.init()
@@ -83,11 +85,18 @@ class Load:
         ENTITIES.load_item_types()
 
     def load_custom_levels(self):
-        with open(os.path.join('data', 'customLevels.dat'), 'rb') as file:
-            custom_levels = pickle.load(file)
-            
-        for level in custom_levels:
-            SETTINGS.clevels_list.append(LEVELS.Level(level))
+        if not os.stat(os.path.join('data', 'customLevels.dat')).st_size == 0:
+            with open(os.path.join('data', 'customLevels.dat'), 'rb') as file:
+                custom_levels = pickle.load(file)
+                
+            for level in custom_levels:
+                SETTINGS.clevels_list.append(LEVELS.Level(level))
+
+        with open(os.path.join('data', 'tutorialLevels.dat'), 'rb') as file:
+            tutorial_levels = pickle.load(file)
+
+        for level in tutorial_levels:
+            SETTINGS.tlevels_list.append(LEVELS.Level(level))
 
     def load_new_level(self):    
         #Remove old level info
@@ -175,7 +184,7 @@ class Canvas:
     def change_mode(self):
         if SETTINGS.mode == 1: #1 - 3D / 0 - 2D
             SETTINGS.mode = 0
-            self.__init__(SETTINGS.canvas_map_width, SETTINGS.canvas_map_height)
+            self.__init__(SETTINGS.canvas_actual_width, SETTINGS.canvas_target_height)
         else:
             SETTINGS.mode = 1
             self.__init__(self.res_width, SETTINGS.canvas_target_height)
@@ -238,7 +247,7 @@ def render_screen(canvas):
 
     #Calculate which tiles are visible
     for tile in SETTINGS.all_solid_tiles:
-        if tile.distance:
+        if tile.distance and SETTINGS.tile_visible[tile.ID]:
             if sort_atan(tile) <= SETTINGS.fov:
                 if tile.distance < SETTINGS.render * SETTINGS.tile_size:
                     SETTINGS.rendered_tiles.append(tile)
@@ -280,6 +289,10 @@ def render_screen(canvas):
     gameCanvas.window.blit(canvas, (SETTINGS.axes))
     gameHUD.render(gameCanvas.window)
 
+    #Draw tutorial strings
+    if SETTINGS.levels_list == SETTINGS.tlevels_list:
+            tutorialController.control(gameCanvas.window)
+
 def update_game():
     if SETTINGS.npc_list:
         for npc in SETTINGS.npc_list:
@@ -313,6 +326,7 @@ def update_game():
             menuController.current_type = 'main'
             SETTINGS.menu_showing = True
             SETTINGS.current_level = 0
+    
         
         
 
@@ -321,8 +335,9 @@ def update_game():
 def main_loop():
     game_exit = False
     clock = pygame.time.Clock()
+    logging.basicConfig(filename = os.path.join('data', 'CrashReport.log'), level=logging.WARNING)
 
-    allfps = []
+#    allfps = []
     
     while not game_exit:
         SETTINGS.zbuffer = []
@@ -330,80 +345,98 @@ def main_loop():
             if event.type == pygame.QUIT or SETTINGS.quit_game:
                 game_exit = True
 
-                b = 0
-                for x in allfps:
-                    b += x
-                print(b/len(allfps))
+##                b = 0
+##                for x in allfps:
+##                    b += x
+##                print(b/len(allfps))
                 
                 pygame.quit()
-                break
-            #    quit()
-        #Music
-        musicController.control_music()
-        
-        if SETTINGS.menu_showing and menuController.current_type == 'main':
-            gameCanvas.window.fill(SETTINGS.WHITE)
-            menuController.control()
+                sys.exit(0)
 
-            #Load custom maps
-            if SETTINGS.playing_customs:
-                SETTINGS.levels_list = SETTINGS.clevels_list
-                gameLoad.get_canvas_size()
-                gameLoad.load_new_level()
-
-            #Load generated maps
-            elif SETTINGS.playing_new:
-                mapGenerator.__init__()
-                mapGenerator.generate_levels(SETTINGS.glevels_amount, SETTINGS.glevels_size)
-                SETTINGS.levels_list = SETTINGS.glevels_list
-                gameLoad.get_canvas_size()
-                gameLoad.load_new_level()
-
-        elif SETTINGS.menu_showing and menuController.current_type == 'game':
-            menuController.control()
+        try:
+            #Music
+            musicController.control_music()
             
-        else:
-            #Update logic
-            gamePlayer.control(gameCanvas.canvas)
-            
-            if SETTINGS.fov >= 100:
-                SETTINGS.fov = 100
-            elif SETTINGS.fov <= 10:
-                SETTINGS.fov = 10
+            if SETTINGS.menu_showing and menuController.current_type == 'main':
+                gameCanvas.window.fill(SETTINGS.WHITE)
+                menuController.control()
 
-            if SETTINGS.switch_mode:
-                gameCanvas.change_mode()
+                #Load custom maps
+                if SETTINGS.playing_customs:
+                    SETTINGS.levels_list = SETTINGS.clevels_list
+                    gameLoad.get_canvas_size()
+                    gameLoad.load_new_level()
 
-            #Render - Draw
-            gameRaycast.calculate()
-            gameCanvas.draw()
-            
-            
-            if SETTINGS.mode == 1:
-                render_screen(gameCanvas.canvas)
-            
-            elif SETTINGS.mode == 0:
-                gameMap.draw(gameCanvas.window)                
-                gamePlayer.draw(gameCanvas.window)
+                #Load generated maps
+                elif SETTINGS.playing_new:
+                    mapGenerator.__init__()
+                    mapGenerator.generate_levels(SETTINGS.glevels_amount, SETTINGS.glevels_size)
+                    SETTINGS.levels_list = SETTINGS.glevels_list
+                    gameLoad.get_canvas_size()
+                    gameLoad.load_new_level()
 
-                for x in SETTINGS.raylines:
-                    pygame.draw.line(gameCanvas.window, SETTINGS.RED, x[0], x[1])
-                SETTINGS.raylines = []
+                #Or.. If they are playing the tutorial
+                elif SETTINGS.playing_tutorial:
+                    SETTINGS.levels_list = SETTINGS.tlevels_list
+                    gameLoad.get_canvas_size()
+                    gameLoad.load_new_level()
 
-                for x in SETTINGS.npc_list:
-                    if x.rect:
-                        pygame.draw.rect(gameCanvas.window, SETTINGS.RED, x.rect)
+            elif SETTINGS.menu_showing and menuController.current_type == 'game':
+                menuController.control()
+                
+            else:
+                #Update logic
+                gamePlayer.control(gameCanvas.canvas)
+                
+                if SETTINGS.fov >= 100:
+                    SETTINGS.fov = 100
+                elif SETTINGS.fov <= 10:
+                    SETTINGS.fov = 10
 
-            update_game()
+                if SETTINGS.switch_mode:
+                    gameCanvas.change_mode()
+
+                #Render - Draw
+                gameRaycast.calculate()
+                gameCanvas.draw()
+                
+                
+                if SETTINGS.mode == 1:
+                    render_screen(gameCanvas.canvas)
+
+                    #BETA
+                    beta.draw(gameCanvas.window)
+                
+                elif SETTINGS.mode == 0:
+                    gameMap.draw(gameCanvas.window)                
+                    gamePlayer.draw(gameCanvas.window)
+
+                    for x in SETTINGS.raylines:
+                        pygame.draw.line(gameCanvas.window, SETTINGS.RED, (x[0][0]/4, x[0][1]/4), (x[1][0]/4, x[1][1]/4))
+                    SETTINGS.raylines = []
+
+                    for i in SETTINGS.npc_list:
+                        if i.rect and i.dist <= SETTINGS.render * SETTINGS.tile_size * 1.2:
+                            pygame.draw.rect(gameCanvas.window, SETTINGS.RED, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
+                        elif i.rect:
+                            pygame.draw.rect(gameCanvas.window, SETTINGS.DARKGREEN, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
+
+                update_game()
+
+        except Exception as e:
+            logging.warning("DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.")
+            logging.exception("Error message: ")
+            pygame.quit()
+            sys.exit(0)
 
         #Update Game
         pygame.display.update()
         delta_time = clock.tick(SETTINGS.fps)
         SETTINGS.dt = delta_time / 1000.0
         SETTINGS.cfps = int(clock.get_fps())
-        pygame.display.set_caption(SETTINGS.caption % SETTINGS.cfps)
+        #pygame.display.set_caption(SETTINGS.caption % SETTINGS.cfps)
 
-        allfps.append(clock.get_fps())
+       # allfps.append(clock.get_fps())
 
 #Probably temporary object init
 #SETTINGS.current_level = 5 #temporary
@@ -422,6 +455,7 @@ if __name__ == '__main__':
     #Setup and classes
 
     text = TEXT.Text(0,0,"YOU  WON", SETTINGS.WHITE, "DUGAFONT.ttf", 48)
+    beta = TEXT.Text(5,5,"DUGA  BETA  BUILD  V. 1.3", SETTINGS.WHITE, "DUGAFONT.ttf", 20)
     text.update_pos(SETTINGS.canvas_actual_width/2 - text.layout.get_width()/2, SETTINGS.canvas_target_height/2 - text.layout.get_height()/2)
 
     #Classes for later use
@@ -435,10 +469,10 @@ if __name__ == '__main__':
     #More loading - Level specific
     gameLoad.load_new_level()
 
-    #Menu classes
+    #Controller classes
     menuController = MENU.Controller(gameCanvas.window)
-
     musicController = MUSIC.Music()
+    tutorialController = TUTORIAL.Controller()
 
     #Run at last
     main_loop()

@@ -22,7 +22,7 @@ class inventory:
         SETTINGS.max_ammo = ammo_dict
 
         #Menu
-        self.menu = pygame.Surface((160, 200)).convert()
+        self.menu = pygame.Surface((160, 220)).convert()
         self.menu_rect = self.menu.get_rect()
         self.menudraw = False
         self.selected = None
@@ -30,8 +30,8 @@ class inventory:
         self.submenus = []
         self.submenu_rects = []
 
-        for i in range(0, 9):
-            if i == 0 or i == 8:
+        for i in range(0, 10):
+            if i == 0 or i == 9:
                 self.submenus.append(self.menu.subsurface(0, 0, self.menu_rect.width, 30).convert())
                 self.submenu_rects.append(self.submenus[i].get_rect())
             else:
@@ -112,6 +112,7 @@ class inventory:
                      TEXT.Text(0, 0, 'RANGE: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'MAGAZINE SIZE: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'RELOAD TIME: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
+                     TEXT.Text(0, 0, 'FIRE RATE: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'AMMO TYPE: --', SETTINGS.LIGHTGRAY, 'DUGAFONT.ttf', 15),
                      TEXT.Text(0, 0, 'DROP', SETTINGS.WHITE, 'DUGAFONT.ttf', 18)]
         
@@ -167,7 +168,7 @@ class inventory:
                 self.mousepos = pygame.mouse.get_pos()
 
         #Mouse on ground weapon slot
-        elif self.groundslot_rect.collidepoint(pygame.mouse.get_pos()) and (not self.menudraw or self.selected == 'ground') and not self.submenu_rects[-1].collidepoint(pygame.mouse.get_pos()):
+        elif self.groundslot_rect.collidepoint(pygame.mouse.get_pos()) and (not self.menudraw or self.selected == 'ground') and not (self.submenu_rects[-1].collidepoint(pygame.mouse.get_pos()) and self.menudraw):
             canvas.blit(self.groundslot, self.groundslot_rect)
             self.selected = 'ground'
             if pygame.mouse.get_pressed()[0] and SETTINGS.ground_weapon:
@@ -246,15 +247,16 @@ class inventory:
             self.text[4].update_string('RANGE                 : %s' % SETTINGS.inventory[self.selected].range)
             self.text[5].update_string('MAG SIZE      : %s' % SETTINGS.inventory[self.selected].mag_size)
             self.text[6].update_string('REL TIME      : %s' % SETTINGS.inventory[self.selected].rlspeed)
-            self.text[7].update_string('AMMO TYP  : %s' % SETTINGS.inventory[self.selected].ammo_type)
-            self.text[8].update_string('DROP')            
+            self.text[7].update_string('FIR RATE      : %s' % SETTINGS.inventory[self.selected].firerate)
+            self.text[8].update_string('AMMO TYP  : %s' % SETTINGS.inventory[self.selected].ammo_type)
+            self.text[9].update_string('DROP')            
 
             #Update text
             x = 0
             for string in self.text:
                 if x == 0:
                     string.update_pos(self.mousepos[0]+5, self.mousepos[1]+8)
-                elif x == 8:
+                elif x == 9:
                     string.update_pos(self.mousepos[0]+55, self.mousepos[1]+x*20+15)
                 else:
                     string.update_pos(self.mousepos[0]+5, self.mousepos[1]+x*20+12)
@@ -281,15 +283,16 @@ class inventory:
             self.text[4].update_string('RANGE                 : %s   %s' % (SETTINGS.ground_weapon.range, self.compare_weapons('ran')))
             self.text[5].update_string('MAG SIZE      : %s   %s' % (SETTINGS.ground_weapon.mag_size, self.compare_weapons('mag')))
             self.text[6].update_string('REL TIME      : %s   %s' % (SETTINGS.ground_weapon.rlspeed, self.compare_weapons('rel')))
-            self.text[7].update_string('AMMO TYP  : %s' % SETTINGS.ground_weapon.ammo_type)
-            self.text[8].update_string('SWAP')
+            self.text[7].update_string('FIR RATE      : %s   %s' % (SETTINGS.ground_weapon.firerate, self.compare_weapons('fir')))
+            self.text[8].update_string('AMMO TYP  : %s' % SETTINGS.ground_weapon.ammo_type)
+            self.text[9].update_string('SWAP')
 
             #Update text
             x = 0
             for string in self.text:
                 if x == 0:
                     string.update_pos(self.mousepos[0]+5, self.mousepos[1]+8 - self.menu_rect.height)
-                elif x == 8:
+                elif x == 9:
                     string.update_pos(self.mousepos[0]+55, self.mousepos[1]+x*20+15 - self.menu_rect.height)
                 else:
                     string.update_pos(self.mousepos[0]+5, self.mousepos[1]+x*20+12 - self.menu_rect.height)
@@ -327,7 +330,7 @@ class inventory:
                 SETTINGS.inv_strings_updated = False
 
         else:
-            self.submenus[-1].fill((65,65,65))
+            self.submenus[-1].fill((55,55,55))
 
 
     def ammo_selection(self, slot, canvas):
@@ -382,14 +385,16 @@ class inventory:
             stat = 'magsize'
         elif comp == 'rel':
             stat = 'rlspeed'
+        elif comp == 'fir':
+            stat = 'firerate'
 
         if SETTINGS.ground_weapon.stats[stat] > SETTINGS.inventory[SETTINGS.ground_weapon.guntype].stats[stat]:
-            if stat != 'rlspeed':
+            if stat != 'rlspeed' and stat != 'firerate':
                 return '+'
             else:
                 return '-'
         elif SETTINGS.ground_weapon.stats[stat] < SETTINGS.inventory[SETTINGS.ground_weapon.guntype].stats[stat]:
-            if stat != 'rlspeed':
+            if stat != 'rlspeed' and stat != 'firerate':
                 return '-'
             else:
                 return '+'

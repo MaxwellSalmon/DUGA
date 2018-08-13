@@ -275,7 +275,7 @@ def load_guns():
             'hitchance': 65,
             'firerate': 0.3,
             'range': 8,
-            'magsize': 1,
+            'magsize': 3.1415, #lol bad code.
             'rlspeed': 1.4,
             'zoom': 8,
             'ammotype': 'shell',
@@ -566,6 +566,7 @@ def load_guns():
 
 def load_npc_types():
     SETTINGS.npc_types = [
+        #soldier idle
         {
             'pos': [0,0],
             'face': 0,
@@ -696,7 +697,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.12,
+            'spf': 0.10,
             'dmg': 5,
             'health': 30,
             'speed': 20,
@@ -714,25 +715,26 @@ def load_npc_types():
         {
             'pos': [0,0],
             'face': 0,
-            'spf': 0.8,
+            'spf': 0.2,
             'dmg': 2,
             'health': random.randint(15,20),
             'speed': 30,
             'mind': 'hostile',
             'state': 'idle',
             'atcktype': 'hitscan',
-            'atckrate': 1.5,
+            'atckrate': 0.5,
             'id': 8,
             'filepath' : ('graphics', 'npc', 'black_soldier_spritesheet.png'),
             'name' : 'black idle',
             'soundpack' : 'soldier',
             },
+        
 
         #black soldier patroul
         {
             'pos': [0,0],
             'face': 0,
-            'spf': 0.8,
+            'spf': 0.2,
             'dmg': 2,
             'health': random.randint(15,20),
             'speed': 30,
@@ -750,7 +752,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.8,
+            'spf': 0.2,
             'dmg': 2,
             'health': random.randint(8, 11),
             'speed': 80,
@@ -768,7 +770,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.8,
+            'spf': 0.2,
             'dmg': 2,
             'health': random.randint(8, 11),
             'speed': 80,
@@ -776,7 +778,7 @@ def load_npc_types():
             'state': 'patrouling',
             'atcktype': 'melee',
             'atckrate': 0.5,
-            'id': 10,
+            'id': 11,
             'filepath' : ('graphics', 'npc', 'green_ninja_spritesheet.png'),
             'name' : 'idle green',
             'soundpack' : 'ninja',
@@ -786,7 +788,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.12,
+            'spf': 0.1,
             'dmg': 4,
             'health': 14,
             'speed': 35,
@@ -830,7 +832,7 @@ def load_npc_types():
             'state': 'idle',
             'atcktype': 'melee',
             'atckrate': 1,
-            'id': 13,
+            'id': 14,
             'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
             'name' : 'idle sick',
             'soundpack' : 'zombie hostile',
@@ -858,7 +860,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.9,
+            'spf': 0.25,
             'dmg': 1,
             'health': 5,
             'speed': 45,
@@ -866,7 +868,7 @@ def load_npc_types():
             'state': 'patrouling',
             'atcktype': 'melee',
             'atckrate': 0.4,
-            'id': 4,
+            'id': 14,
             'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
             'name' : 'hostile blurry',
             'soundpack' : 'blurry zombie',
@@ -876,7 +878,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.9,
+            'spf': 0.25,
             'dmg': 1,
             'health': 4,
             'speed': 45,
@@ -884,7 +886,7 @@ def load_npc_types():
             'state': 'patrouling',
             'atcktype': 'hitscan',
             'atckrate': 0.4,
-            'id': 4,
+            'id': 15,
             'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
             'name' : 'hostile blurry',
             'soundpack' : 'blurry zombie',
@@ -952,9 +954,11 @@ def load_npc_sounds():
 
 
 def spawn_npcs():
+    seed = SETTINGS.seed
     for npc in SETTINGS.levels_list[SETTINGS.current_level].npcs:
         if [x for x in SETTINGS.npc_types if x['id'] == npc[2]][0]['name'] == 'random':
-            random.seed(SETTINGS.seed)
+            random.seed(seed)
+            seed += 0.001
             stats = copy.deepcopy(random.choice([x for x in SETTINGS.npc_types if x['name'] != 'random']))
         else: 
             stats = copy.deepcopy([x for x in SETTINGS.npc_types if x['id'] == npc[2]][0])

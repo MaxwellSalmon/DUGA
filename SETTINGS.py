@@ -3,7 +3,7 @@
 '''Game settings'''
 current_level = 0
 fps = 31
-caption = "DUGA v1.1 - %s"
+caption = "DUGA Beta v1.3"
 mode = 1
 volume = 1
 music_volume = 1
@@ -25,9 +25,11 @@ levels_list = []
 segments_list = []
 clevels_list = []
 glevels_list = []
+tlevels_list = []
 seed = None
 playing_customs = False
 playing_new = False
+playing_tutorial = False
 
 
 '''Canvas settings'''
@@ -109,7 +111,7 @@ texture_list = []
 
 '''Weapon settings'''
 #Settings for guns and ammo go here.
-unlimited_ammo = True
+unlimited_ammo = False
 #Below this point are non-configurable variables.
 current_gun = None
 next_gun = None
@@ -119,7 +121,7 @@ ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = True
+ignore_player = False
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

@@ -1,0 +1,8 @@
+WARNING:root:DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.
+ERROR:root:Error message: 
+Traceback (most recent call last):
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 366, in main_loop
+    gameLoad.get_canvas_size()
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 71, in get_canvas_size
+    SETTINGS.canvas_map_width = len(SETTINGS.levels_list[SETTINGS.current_level].array[0])*SETTINGS.tile_size
+IndexError: list index out of range

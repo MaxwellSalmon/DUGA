@@ -20,7 +20,7 @@ class Player:
         self.real_y = pos[1]
 
         self.color = SETTINGS.BLUE
-        self.sprite = pygame.Surface([SETTINGS.tile_size / 5, SETTINGS.tile_size / 5])
+        self.sprite = pygame.Surface([SETTINGS.tile_size / 12, SETTINGS.tile_size / 12])
         self.sprite.fill(self.color)
         self.rect = self.sprite.get_rect()
         self.rect.x = self.real_x
@@ -205,28 +205,28 @@ class Player:
         if SETTINGS.menu_showing or SETTINGS.player_states['invopen']:
             pygame.event.set_grab(False)
             self.mouse.set_visible(True)
-        elif key[pygame.K_q]:
+   #     elif key[pygame.K_q]:
+   #         pygame.event.set_grab(True)
+   #         self.mouse.set_visible(False)
+        else: #DEV REMOVE
             pygame.event.set_grab(True)
             self.mouse.set_visible(False)
-        else: #DEV REMOVE
-            pygame.event.set_grab(False)
-            self.mouse.set_visible(True)
 
-        #Change to map view (DEV)
+##        #Change to map view (DEV)
         if key[pygame.K_m]:
             SETTINGS.switch_mode = True
-
-
-        #Change FOV (DEV)
-        if key[pygame.K_UP]:
-            SETTINGS.fov += 2
-        elif key[pygame.K_DOWN]:
-            SETTINGS.fov -= 2
-            
-        #Screen shake (DEV)
-        if key[pygame.K_p]:
-            SETTINGS.screen_shake = 20
-            SETTINGS.player_hurt = True
+##
+##
+##        #Change FOV (DEV)
+##        if key[pygame.K_UP]:
+##            SETTINGS.fov += 2
+##        elif key[pygame.K_DOWN]:
+##            SETTINGS.fov -= 2
+##            
+##        #Screen shake (DEV)
+##        if key[pygame.K_p]:
+##            SETTINGS.screen_shake = 20
+##            SETTINGS.player_hurt = True
 
     #======================================================
             
@@ -267,8 +267,8 @@ class Player:
         pointer = self.direction(0, 10)
         p1 = pointer[0] + self.rect.center[0]
         p2 = pointer[1] + self.rect.center[1]
-        canvas.blit(self.sprite, self.rect)
-        pygame.draw.line(canvas, self.color, self.rect.center, (p1, p2))
+        canvas.blit(self.sprite, (self.rect.x/4, self.rect.y/4))
+        pygame.draw.line(canvas, self.color, (self.rect.center[0]/4, self.rect.center[1]/4), (p1/4, p2/4))
 
         
         
