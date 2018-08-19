@@ -645,7 +645,7 @@ def load_npc_types():
             'spf': 0.12,
             'dmg': 3.1415, #lol this is used to randomize dmg.
             'health': 6,
-            'speed': 30,
+            'speed': 70,
             'mind': 'hostile',
             'state': 'patrouling',
             'atcktype': 'melee',
@@ -663,7 +663,7 @@ def load_npc_types():
             'spf': 0.12,
             'dmg': 0,
             'health': 6,
-            'speed': 30,
+            'speed': 50,
             'mind': 'shy',
             'state': 'idle',
             'atcktype': 'melee',
@@ -808,7 +808,7 @@ def load_npc_types():
             'face' : 0,
             'spf': 0.18,
             'dmg': 5, 
-            'health': 10,
+            'health': 20,
             'speed': 20,
             'mind': 'hostile',
             'state': 'patrouling',
@@ -826,7 +826,7 @@ def load_npc_types():
             'face' : 0,
             'spf': 0.18,
             'dmg': 6,
-            'health': 11,
+            'health': 20,
             'speed': 20,
             'mind': 'hostile',
             'state': 'idle',
@@ -844,13 +844,13 @@ def load_npc_types():
             'face' : 0,
             'spf': 0.18,
             'dmg': 0,
-            'health': 30,
+            'health': 35,
             'speed': 20,
             'mind': 'shy',
             'state': 'idle',
             'atcktype': 'melee',
             'atckrate': 1,
-            'id': 13,
+            'id': 15,
             'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
             'name' : 'shy sick',
             'soundpack' : 'zombie hostile',
@@ -861,14 +861,14 @@ def load_npc_types():
             'pos' : [0,0],
             'face' : 0,
             'spf': 0.25,
-            'dmg': 1,
+            'dmg': 8,
             'health': 5,
             'speed': 45,
             'mind': 'hostile',
             'state': 'patrouling',
             'atcktype': 'melee',
             'atckrate': 0.4,
-            'id': 14,
+            'id': 16,
             'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
             'name' : 'hostile blurry',
             'soundpack' : 'blurry zombie',
@@ -880,13 +880,13 @@ def load_npc_types():
             'face' : 0,
             'spf': 0.25,
             'dmg': 1,
-            'health': 4,
+            'health': 15,
             'speed': 45,
             'mind': 'hostile',
             'state': 'patrouling',
             'atcktype': 'hitscan',
             'atckrate': 0.4,
-            'id': 15,
+            'id': 17,
             'filepath' : ('graphics', 'npc', 'blurry_zombie_spritesheet.png'),
             'name' : 'hostile blurry',
             'soundpack' : 'blurry zombie',
@@ -954,12 +954,13 @@ def load_npc_sounds():
 
 
 def spawn_npcs():
-    seed = SETTINGS.seed
+    seed = SETTINGS.current_level + SETTINGS.seed
     for npc in SETTINGS.levels_list[SETTINGS.current_level].npcs:
         if [x for x in SETTINGS.npc_types if x['id'] == npc[2]][0]['name'] == 'random':
             random.seed(seed)
             seed += 0.001
             stats = copy.deepcopy(random.choice([x for x in SETTINGS.npc_types if x['name'] != 'random']))
+            print(stats['name'])
         else: 
             stats = copy.deepcopy([x for x in SETTINGS.npc_types if x['id'] == npc[2]][0])
             
@@ -1224,7 +1225,7 @@ def load_item_types():
             ]
 
 def spawn_items():
-    seed = SETTINGS.seed
+    seed = SETTINGS.current_level + SETTINGS.seed
     for item in SETTINGS.levels_list[SETTINGS.current_level].items:
         stats = [x for x in SETTINGS.item_types if x['id'] == item[1]][0]
         if stats['type'] == 'random':

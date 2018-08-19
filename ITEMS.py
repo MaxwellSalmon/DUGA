@@ -12,7 +12,7 @@ class Item:
         self.pos = (pos[0] * SETTINGS.tile_size, pos[1] * SETTINGS.tile_size)
         self.map_pos = pos
         self.item_type = item_type
-        self.rect = pygame.Rect(self.pos[0], self.pos[1], int(SETTINGS.tile_size/2), int(SETTINGS.tile_size/2))
+        self.rect = pygame.Rect(self.pos[0], self.pos[1], int(SETTINGS.tile_size), int(SETTINGS.tile_size))
         self.rect.center = (self.pos[0] + SETTINGS.tile_size/2, self.pos[1] + SETTINGS.tile_size/2)
         self.sprite = SPRITES.Sprite(pygame.image.load(sprite), hash(item_type), self.rect.center, 'sprite')
         self.effect = effect

@@ -94,7 +94,7 @@ class Tile:
             #Need some weird coordinates to make it centered.
             self.texture = SPRITES.Sprite(SETTINGS.tile_texture[self.ID], self.ID, (self.pos[0]+SETTINGS.tile_size/3, self.pos[1]+SETTINGS.tile_size/3), 'sprite')
             
-            self.rect = pygame.Rect(pos[0], pos[1], SETTINGS.tile_size, SETTINGS.tile_size)
+            self.rect = pygame.Rect(pos[0], pos[1], SETTINGS.tile_size/2, SETTINGS.tile_size/2)
 
         else:
             self.texture = SETTINGS.tile_texture[self.ID].texture

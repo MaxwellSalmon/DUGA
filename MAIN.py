@@ -405,7 +405,7 @@ def main_loop():
                     render_screen(gameCanvas.canvas)
 
                     #BETA
-                    beta.draw(gameCanvas.window)
+                  #  beta.draw(gameCanvas.window)
                 
                 elif SETTINGS.mode == 0:
                     gameMap.draw(gameCanvas.window)                

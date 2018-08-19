@@ -21,6 +21,7 @@ class Npc:
         self.pos = [self.map_pos[0]*SETTINGS.tile_size, self.map_pos[1]*SETTINGS.tile_size]
         self.face = stats['face']
         self.frame_interval = stats['spf']
+        self.dda_list = SETTINGS.walkable_area + [x for x in SETTINGS.all_solid_tiles if x.type == 'sprite']
 
         #Visual and rect settings
         self.rect = pygame.Rect((self.pos[0], self.pos[1]), (SETTINGS.tile_size/3, SETTINGS.tile_size/3))
@@ -359,7 +360,12 @@ class Npc:
             mapy = self.round_up(y)
             
             #If line of sight hits a wall
-            next_wall = [tile for tile in SETTINGS.all_tiles if tile.map_pos == [mapx, mapy]][0]
+            next_wall = [tile for tile in self.dda_list if tile.map_pos == [mapx, mapy]]
+            
+            if not next_wall:
+                break
+            else:
+                next_wall = next_wall[0]
             
             if SETTINGS.tile_visible[next_wall.ID]:
                 if next_wall.type != 'hdoor' and next_wall.type != 'vdoor':

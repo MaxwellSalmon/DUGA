@@ -69,10 +69,10 @@ class Generator:
         self.max_npcs_per_segment = 3
         self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
         self.npc_probability = [0,0,
-                                1,1,1,
+                                1,1,
                                 2,2,
-                                3,3,3,
-                                4,4,4,
+                                3,3,
+                                4,4,
                                 5,5,
                                 7,
                                 8,
@@ -82,6 +82,8 @@ class Generator:
                                 12,
                                 13,
                                 15,
+                                16,
+                                17
                                 ]
 
         #Color list
@@ -485,6 +487,7 @@ class Generator:
 
     def place_random_items(self):
         items = 0
+        seed = SETTINGS.current_level + self.seed
 
         #If there are too many items, return
         for seg in self.segpath:
@@ -498,6 +501,7 @@ class Generator:
         for i in range(len(self.segpath)):    
             seg = self.segpath[i]
             for y in range(self.max_items_per_segment):
+                random.seed(seed)
                 if (len(seg.doors) <= 1 and self.spawn_chance_high >= random.randint(0,100)) or (len(seg.doors) > 1 and self.spawn_chance >= random.randint(0,100)):
                     is_good = False
                     while not is_good:
@@ -519,9 +523,11 @@ class Generator:
                                         self.segpath[i].items.append(((pos[0], pos[1]), ammo['id']))
                                         
                             is_good = True
+                            seed += 0.001
         
 
     def spawn_random_npcs(self):
+        seed = SETTINGS.current_level + self.seed
         npcs = 0
         degrees = [90, 180, 270, 360]
 
@@ -537,6 +543,7 @@ class Generator:
             seg = self.segpath[i]
             if seg.type != 'start':
                 for y in range(self.max_npcs_per_segment):
+                    random.seed(seed)
                     if self.npc_spawn_chance + len(self.segpath) >= random.randint(0,100):
                         is_good = False
                         while not is_good:
@@ -549,6 +556,7 @@ class Generator:
                                 self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
 
                                 is_good = True
+                                seed += 0.001
             else:
                 print("No NPC in spawn!!")
         

@@ -37,7 +37,12 @@ class Controller:
         with open(os.path.join('data', 'settings.dat'), 'wb') as file2:
             pickle.dump(self.optionsMenu.current_settings, file2)
 
+    def check_mouse(self):
+        pygame.event.set_grab(False)
+        pygame.mouse.set_visible(True)
+
     def control(self):
+        self.check_mouse()
         if self.current_type == 'main':
             if self.current_menu == 'main':
                 self.mainMenu.draw(self.canvas)
@@ -72,9 +77,12 @@ class Controller:
                     SETTINGS.playing_new = False
 
                 #Play custom maps
-                elif self.newMenu.custom_button.get_clicked() and SETTINGS.clevels_list != []:
-                    self.newMenu.reset_inventory()
-                    SETTINGS.playing_customs = True
+                elif self.newMenu.custom_button.get_clicked():
+                    if SETTINGS.clevels_list:
+                        self.newMenu.reset_inventory()
+                        SETTINGS.playing_customs = True
+                    else:
+                        self.newMenu.no_levels_on = True
                 #Check if custom levels have been loaded
                 elif SETTINGS.playing_customs:
                     self.current_type = 'game'
@@ -213,12 +221,22 @@ class NewMenu(Menu):
         self.loading = TEXT.Text(0,0, "LOADING...", SETTINGS.BLACK, "DUGAFONT.ttf", 74)
         self.loading.update_pos((SETTINGS.canvas_actual_width/2)-(self.loading.layout.get_width()/2)+8, (SETTINGS.canvas_target_height/2)-(self.loading.layout.get_height()/2))
 
+        self.nolevels = TEXT.Text(0,0, "NO  CUSTOM  LEVELS", SETTINGS.RED, "DUGAFONT.ttf", 50)
+        self.nolevels.update_pos((SETTINGS.canvas_actual_width/2)-(self.nolevels.layout.get_width()/2)+8, (SETTINGS.canvas_target_height/2)-(self.nolevels.layout.get_height()/2))
+        self.timer = 0
+        self.no_levels_on = False
+
     def draw(self, canvas):
         self.new_button.draw(canvas)
         self.custom_button.draw(canvas)
         self.tutorial_button.draw(canvas)
         self.back_button.draw(canvas)
         self.title.draw(canvas)
+
+        if self.no_levels_on:
+            self.draw_no_levels(canvas)
+        else:
+            self.timer = 0
 
     def reset_inventory(self):
         for i in SETTINGS.inventory:
@@ -241,6 +259,14 @@ class NewMenu(Menu):
         SETTINGS.player_states['heal'] = False
         SETTINGS.player_states['armor'] = False
         SETTINGS.player_states['cspeed'] = 0
+
+    def draw_no_levels(self, canvas):
+        if self.timer <= 1.2:
+            self.nolevels.draw(canvas)
+        else:
+            self.no_levels_on = False
+            
+        self.timer += SETTINGS.dt
         
 
 class OptionsMenu(Menu):
@@ -276,8 +302,8 @@ class OptionsMenu(Menu):
         self.graphics_button = Button((SETTINGS.canvas_actual_width/2, 150, 300, 30), "GRAPHICS: %s" % self.strings[self.graphics_index])
         self.fov_button = Button((SETTINGS.canvas_actual_width/2, 200, 300, 30), "FOV: %s" % self.degrees[self.fov_index])
         self.sensitivity_button = Button((SETTINGS.canvas_actual_width/2, 250, 300, 30), "SENSITIVITY: %s" % self.strings[self.sens_index])
-        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "MASTER iVOLUME: %s" % self.strings[self.vol_index])
-        self.music_button = Button((SETTINGS.canvas_actual_width/2, 350, 300, 30), "MUSIC VOLUME: %s" % self.music_strings[self.music_index])
+        self.volume_button = Button((SETTINGS.canvas_actual_width/2, 300, 300, 30), "MASTER  VOLUME: %s" % self.strings[self.vol_index])
+        self.music_button = Button((SETTINGS.canvas_actual_width/2, 350, 300, 30), "MUSIC  VOLUME: %s" % self.music_strings[self.music_index])
         self.fullscreen_button = Button((SETTINGS.canvas_actual_width/2, 400, 300, 30), "FULLSCREEN: %s" % self.onoff[self.fs_index])
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
 
@@ -360,15 +386,19 @@ class CreditsMenu(Menu):
         self.musicby = TEXT.Text(0,0, 'MUSIC  BY', SETTINGS.LIGHTGRAY, "DUGAFONT.ttf", 20)
         self.musicby.update_pos((SETTINGS.canvas_actual_width/2)-(self.musicby.layout.get_width()/2)+8, 210)
         
-        self.eli = TEXT.Text(0,0, 'HUDLUM  @  SOUNDCLOUD', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 30)
+        self.eli = TEXT.Text(0,0, 'HUD-LUM @ SOUNDCLOUD', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 30)
         self.eli.update_pos((SETTINGS.canvas_actual_width/2)-(self.eli.layout.get_width()/2)+8, 240)
 
         #Maps
-        self.contributions = TEXT.Text(0,0, 'MAP  CONTRIBUTIONS', SETTINGS.LIGHTGRAY, "DUGAFONT.ttf", 20)
+        self.contributions = TEXT.Text(0,0, 'THANKS  TO', SETTINGS.LIGHTGRAY, "DUGAFONT.ttf", 20)
         self.contributions.update_pos((SETTINGS.canvas_actual_width/2)-(self.contributions.layout.get_width()/2)+8, 290)
 
-        self.contributors = TEXT.Text(0,0, 'ANDY BOY,   NONSENSE REPLIES', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 20)
+        self.contributors = TEXT.Text(0,0, 'POELE,  OLE,  ROCKETTHEMINIFIG,  ANDY BOY,  J4CKINS', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 20)
         self.contributors.update_pos((SETTINGS.canvas_actual_width/2)-(self.contributors.layout.get_width()/2)+8, 320)
+
+        self.specialthanks = TEXT.Text(0,0, 'THANKS  TO  THE  PYGAME  COMMUNITY  FOR  HELP  AND  MOTIVATION', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 15)
+        self.specialthanks.update_pos((SETTINGS.canvas_actual_width/2)-(self.specialthanks.layout.get_width()/2)+8, 350)
+
 
     def draw(self, canvas):
         self.back_button.draw(canvas)
@@ -378,6 +408,7 @@ class CreditsMenu(Menu):
         self.eli.draw(canvas)
         self.contributions.draw(canvas)
         self.contributors.draw(canvas)
+        self.specialthanks.draw(canvas)
         self.maxwellsalmon.draw(canvas)
 
 #---------------------------------------- IN-GAME MENUS ----------------------------------------------------------------------------

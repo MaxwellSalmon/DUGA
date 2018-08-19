@@ -1,0 +1,65 @@
+  _____    _    _    _____                  __  __                                   _        
+ |  __ \  | |  | |  / ____|     /\         |  \/  |                                 | |       
+ | |  | | | |  | | | |  __     /  \        | \  / |   __ _   _ __    _   _    __ _  | |  ___  
+ | |  | | | |  | | | | |_ |   / /\ \       | |\/| |  / _` | | '_ \  | | | |  / _` | | | / __| 
+ | |__| | | |__| | | |__| |  / ____ \      | |  | | | (_| | | | | | | |_| | | (_| | | | \__ \ 
+ |_____/   \____/   \_____| /_/    \_\     |_|  |_|  \__,_| |_| |_|  \__,_|  \__,_| |_| |___/ 
+
+## CONTROLS FOR DUGA ##
+
+Move : WASD
+Aim : RMB
+Shoot : LMB
+Interact : E
+Inventory : I
+Pause: Esc
+
+
+## USING THE LEVEL EDITOR ##
+
+Controls:
+
+Place entity: LMB
+Remove entiry: RMB
+
+------------------------------------------------------------------------------------------------------------
+
+If you want to make custom levels or segments for level generation, follow these instructions.
+
+The editor is quite rough around the edges, but it should be easy to use. When opening LevelEditor.exe, 
+you will see a command prompt, which provides the instructions in order to make your own maps. 
+
+You can either make custom levels or custom segments for level generation. They both have some slightly
+different properties, so here a some things to remember:
+
+                                    --** Making custom levels **--
+Tiles of the type "hdoor" means "horisontal door" and "vdoor" meand "vertical door". Place the doors respectively.
+
+All levels must have a start position and a tile of the type "end", which is where the player exits the level.
+
+The level should be a closed area, in order to calculate the walkable space for NPC's.
+
+Your custom levels are saved in the file "customLevels.dat" found within the folder called "data".
+
+                                    --** Making custom segments **--
+All segments are 9x9 tiles in size. They function as a piece in a jigsaw puzzle, meaning they make up one large
+map. This means, they must have entrances to other maps. Each entrance must be in the middle of an edge - being
+the fifth tile. By the area names "entrances" you must indicate, where you have placed the entrances, so the
+level generations knows where to place your segment.
+
+There are three different types of segments. "normal", "end" and "start". There are no special properties to 
+"normal", there must be a tile of the type "end" in segments of the type "end" and there must be a player
+start position in segments of the type "start".
+
+The segments must also be a closed area in order to calculate the walkable space for NPC's.
+
+Your custom segments will automatically be used in the level generation and saved in the file "customSegments.dat"
+within the folder called "data"
+
+---------------------------------------------------------------------------------------------------------------------------
+
+If you have any questions, feel free to contact MaxwellSalmon on itch.io or reddit.com/r/duga
+
+                                                                                              
+                                                                                              
+

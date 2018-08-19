@@ -46,6 +46,7 @@ class Player:
         self.mouse2 = 0
         self.inventory = 0
         self.esc_pressed = False
+        self.dont_open_menu = False
         
 
     def direction(self, offset, distance):
@@ -182,11 +183,20 @@ class Player:
             elif not key[pygame.K_i]:
                 self.inventory = 0
 
+        #Use escape to close inventory
+            if key[pygame.K_ESCAPE] and SETTINGS.player_states['invopen']:
+                SETTINGS.player_states['invopen'] = False
+                SETTINGS.inv_strings_updated = False
+                self.dont_open_menu = True
+                
+            elif not key[pygame.K_ESCAPE] and not SETTINGS.player_states['invopen']:
+                self.dont_open_menu = False
+
         #Show menu
-            if key[pygame.K_ESCAPE]:
+            if key[pygame.K_ESCAPE] and not self.dont_open_menu:
                 self.esc_pressed = True
 
-            elif self.esc_pressed:
+            elif self.esc_pressed and not self.dont_open_menu:
                 SETTINGS.menu_showing = True
                 self.esc_pressed = False
                 
