@@ -18,8 +18,8 @@ dt = 0
 cfps = 0
 
 '''Level settings'''
-glevels_size = 4
-glevels_amount = 5
+glevels_size = 2
+glevels_amount = 1
 #These are non-configurable.
 levels_list = []
 segments_list = []
@@ -70,6 +70,7 @@ all_solid_tiles = []
 rendered_tiles = []
 walkable_area = []
 all_doors = []
+end_angle = 0
 
 
 '''Player settings'''
@@ -121,7 +122,7 @@ ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = False
+ignore_player = True
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

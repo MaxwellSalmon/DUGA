@@ -199,7 +199,7 @@ class Gun:
             target_npcs = sorted(target_npcs, key=lambda x: x.sprite.theta)[:3]
             
         for npc in target_npcs:
-            if npc.dist <= self.range:
+            if npc.dist <= self.range and not npc.dead:
                 if npc.dist <= SETTINGS.tile_size*2:
                     cap = 100
                 else:

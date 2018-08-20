@@ -67,6 +67,7 @@ class Generator:
         #NPC probability
         self.max_npc_amount = SETTINGS.current_level+1 #Will be multiplied by amount of segments
         self.max_npcs_per_segment = 3
+        self.min_npcs_per_level = 3
         self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
         self.npc_probability = [0,0,
                                 1,1,
@@ -231,7 +232,7 @@ class Generator:
         self.place_random_items()
         self.spawn_random_npcs()
             
-        self.translate_map(self.kill_dead_ends(array), size)            
+        self.translate_map(self.kill_dead_ends(array), size)
 
     def rotate_segment(self, segment):
         #Rotate array
@@ -428,7 +429,9 @@ class Generator:
             newseg = x[0]
             i = x[1]
 
+            npcs = self.segpath[i].npcs
             self.segpath[i] = newseg
+            newseg.npcs = npcs
             array[newseg.level_pos[1]][newseg.level_pos[0]] = newseg
 
         return array
@@ -543,6 +546,7 @@ class Generator:
             seg = self.segpath[i]
             if seg.type != 'start':
                 for y in range(self.max_npcs_per_segment):
+                    seed += 0.001
                     random.seed(seed)
                     if self.npc_spawn_chance + len(self.segpath) >= random.randint(0,100):
                         is_good = False
@@ -556,12 +560,26 @@ class Generator:
                                 self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
 
                                 is_good = True
-                                seed += 0.001
-            else:
-                print("No NPC in spawn!!")
-        
 
-if __name__ == '__main__':
-    mapGenerator = Generator()
-    mapGenerator.generate_levels(2, 2)
+        #If there were no NPCs, place minimum amount
+        npc_amount = 0
+        for i in self.segpath:
+            for npc in i.npcs:
+                npc_amount += 1
+
+        while npc_amount < self.min_npcs_per_level:
+            seed += 0.00001
+            random.seed(seed)
+            segment = random.choice(self.segpath)
+            index = self.segpath.index(segment)
+            randomx = random.randint(0, len(segment.array)-1)
+            randomy = random.randint(0, len(segment.array)-1)
+            occupied = [x for x in segment.npcs if list(x[0]) == [randomx, randomy]]
+
+            if not SETTINGS.tile_solid[segment.array[randomy][randomx]] and not occupied:
+                npc = random.choice(self.npc_probability)
+                self.segpath[index].npcs.append(((randomx, randomy), random.choice(degrees), npc))
+                npc_amount += 1
+            
+        
 

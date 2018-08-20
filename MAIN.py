@@ -218,6 +218,7 @@ def sort_atan(x):
         pos = SETTINGS.middle_ray_pos
     else:
         pos = SETTINGS.player_rect.center
+        
     #find the position on each tile that is closest to middle_ray_pos
     xpos = max(x.rect.left, min(pos[0], x.rect.right)) - SETTINGS.player_rect.centerx
     ypos = SETTINGS.player_rect.centery - max(x.rect.top, min(pos[1], x.rect.bottom))
@@ -229,6 +230,10 @@ def sort_atan(x):
         theta += 360
     if theta > 180:
         theta -= 360
+
+    if x.type == 'end':
+        SETTINGS.end_angle = theta
+
     theta = abs(theta)
     
     return(theta)
@@ -464,7 +469,7 @@ if __name__ == '__main__':
     gamePlayer = PLAYER.Player(SETTINGS.player_pos)
     gameRaycast = RAYCAST.Raycast(gameCanvas.canvas, gameCanvas.window)
     gameInv = INVENTORY.inventory({'bullet': 150, 'shell':25, 'ferromag' : 50})
-    gameHUD = HUD.hud(os.path.join('graphics', 'hud.png'))
+    gameHUD = HUD.hud()
 
     #More loading - Level specific
     gameLoad.load_new_level()
