@@ -17,11 +17,15 @@ class Controller:
                        [5,11]]
             }
 
-        self.items = {
+        self.items1 = {
             'string' : "PICK  UP  THE  ARMOR  AND  HEALTH  ON  THE  GROUND",
-            'tiles' : [[2,5],[3,5],[4,5],
-                       [2,6],[3,6],[4,6],
+            'tiles' : [[2,6],[3,6],[4,6],
                        [2,7],[3,7],[4,7],]
+            }
+
+        self.arrow = {
+            'string' : "FOLLOW  THE  GREEN  ARROW  IN  THE  LOWER  CORNER",
+            'tiles' : [[2,5],[3,5],[4,5]]
             }
 
         self.exits = {
@@ -95,8 +99,10 @@ class Controller:
         if SETTINGS.current_level == 0:
             if SETTINGS.player_map_pos in self.welcome['tiles']:
                 self.draw(self.welcome, canvas)
-            elif SETTINGS.player_map_pos in self.items['tiles']:
-                self.draw(self.items, canvas)
+            elif SETTINGS.player_map_pos in self.items1['tiles']:
+                self.draw(self.items1, canvas)
+            elif SETTINGS.player_map_pos in self.arrow['tiles']:
+                self.draw(self.arrow, canvas)
             elif SETTINGS.player_map_pos in self.exits['tiles']:
                 self.draw(self.exits, canvas)
                 

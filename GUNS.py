@@ -251,6 +251,7 @@ class Gun:
     def draw(self, canvas):
         swing = self.swing
         wobble = self.wobble
+        
         if not SETTINGS.player_states['dead']:
             self.timer += SETTINGS.dt
             self.firetimer += SETTINGS.dt

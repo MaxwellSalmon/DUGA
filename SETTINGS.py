@@ -18,7 +18,7 @@ dt = 0
 cfps = 0
 
 '''Level settings'''
-glevels_size = 2
+glevels_size = 4
 glevels_amount = 1
 #These are non-configurable.
 levels_list = []
@@ -122,7 +122,7 @@ ground_weapon = None
 
 '''NPC settings'''
 #NPC information goes here
-ignore_player = True
+ignore_player = False
 #Below this point are non-configurable variables.
 npc_list = []
 npc_types = []

@@ -42,6 +42,8 @@ class Player:
         self.hurt_sound = pygame.mixer.Sound(os.path.join('sounds', 'other', 'damage.ogg'))
         self.change_level = pygame.mixer.Sound(os.path.join('sounds', 'other', 'next_level.ogg'))
 
+        self.current_level = SETTINGS.current_level
+
         #input variables
         self.mouse2 = 0
         self.inventory = 0
@@ -60,6 +62,10 @@ class Player:
         #Make sure the collide list is complete
         if len(self.collide_list) != len(SETTINGS.all_solid_tiles + SETTINGS.npc_list):
             self.collide_list = SETTINGS.all_solid_tiles + SETTINGS.npc_list
+        elif self.current_level != SETTINGS.current_level:
+            self.collide_list = SETTINGS.all_solid_tiles + SETTINGS.npc_list
+            self.current_level = SETTINGS.current_level
+            
         #Update health
         if self.health != SETTINGS.player_health and SETTINGS.player_states['heal']:
             self.health = SETTINGS.player_health

@@ -63,7 +63,7 @@ def player_hurt(canvas):
     blood = pygame.Surface((SETTINGS.canvas_actual_width, SETTINGS.canvas_target_height)).convert_alpha()
 
     if SETTINGS.player_states['hurt']:
-        blood.fill((255, 0, 0, hurt_intensity))
+        blood.fill((255, 0, 0, max(min(hurt_intensity, 255), 0)))
         hurt_intensity = int(hurt_intensity / (2-SETTINGS.dt))
         if hurt_intensity == 0:
             SETTINGS.player_states['hurt'] = False

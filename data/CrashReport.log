@@ -18,3 +18,19 @@ Traceback (most recent call last):
   File "C:\Python34\Portfolio\PyGame\DUGA\HUD.py", line 42, in render
     self.arrow = pygame.transform.rotate(self.arrow, 45)
 pygame.error: Width or height is too large
+WARNING:root:DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.
+ERROR:root:Error message: 
+Traceback (most recent call last):
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 424, in main_loop
+    if i.rect and i.dist <= SETTINGS.render * SETTINGS.tile_size * 1.2:
+TypeError: unorderable types: NoneType() <= float()
+WARNING:root:DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.
+ERROR:root:Error message: 
+Traceback (most recent call last):
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 367, in main_loop
+    menuController.control()
+  File "C:\Python34\Portfolio\PyGame\DUGA\MENU.py", line 110, in control
+    self.save_settings()
+  File "C:\Python34\Portfolio\PyGame\DUGA\MENU.py", line 40, in save_settings
+    print(settings['play time'])
+NameError: name 'settings' is not defined

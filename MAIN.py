@@ -346,6 +346,7 @@ def main_loop():
     
     while not game_exit:
         SETTINGS.zbuffer = []
+        menuController.play_time += SETTINGS.dt
         for event in pygame.event.get():
             if event.type == pygame.QUIT or SETTINGS.quit_game:
                 game_exit = True
@@ -354,85 +355,86 @@ def main_loop():
 ##                for x in allfps:
 ##                    b += x
 ##                print(b/len(allfps))
-                
+                menuController.save_settings()
                 pygame.quit()
                 sys.exit(0)
 
-        try:
-            #Music
-            musicController.control_music()
+#        try:
+        #Music
+        musicController.control_music()
+        
+        if SETTINGS.menu_showing and menuController.current_type == 'main':
+            gameCanvas.window.fill(SETTINGS.WHITE)
+            menuController.control()
+
+            #Load custom maps
+            if SETTINGS.playing_customs:
+                SETTINGS.levels_list = SETTINGS.clevels_list
+                gameLoad.get_canvas_size()
+                gameLoad.load_new_level()
+
+            #Load generated maps
+            elif SETTINGS.playing_new:
+                mapGenerator.__init__()
+                mapGenerator.generate_levels(SETTINGS.glevels_amount, SETTINGS.glevels_size)
+                SETTINGS.levels_list = SETTINGS.glevels_list
+                gameLoad.get_canvas_size()
+                gameLoad.load_new_level()
+
+            #Or.. If they are playing the tutorial
+            elif SETTINGS.playing_tutorial:
+                SETTINGS.levels_list = SETTINGS.tlevels_list
+                gameLoad.get_canvas_size()
+                gameLoad.load_new_level()
+
+        elif SETTINGS.menu_showing and menuController.current_type == 'game':
+            menuController.control()
             
-            if SETTINGS.menu_showing and menuController.current_type == 'main':
-                gameCanvas.window.fill(SETTINGS.WHITE)
-                menuController.control()
+        else:
+            #Update logic
+            gamePlayer.control(gameCanvas.canvas)
+            
+            if SETTINGS.fov >= 100:
+                SETTINGS.fov = 100
+            elif SETTINGS.fov <= 10:
+                SETTINGS.fov = 10
 
-                #Load custom maps
-                if SETTINGS.playing_customs:
-                    SETTINGS.levels_list = SETTINGS.clevels_list
-                    gameLoad.get_canvas_size()
-                    gameLoad.load_new_level()
+            if SETTINGS.switch_mode:
+                gameCanvas.change_mode()
 
-                #Load generated maps
-                elif SETTINGS.playing_new:
-                    mapGenerator.__init__()
-                    mapGenerator.generate_levels(SETTINGS.glevels_amount, SETTINGS.glevels_size)
-                    SETTINGS.levels_list = SETTINGS.glevels_list
-                    gameLoad.get_canvas_size()
-                    gameLoad.load_new_level()
+            #Render - Draw
+            gameRaycast.calculate()
+            gameCanvas.draw()
+            
+            
+            if SETTINGS.mode == 1:
+                render_screen(gameCanvas.canvas)
 
-                #Or.. If they are playing the tutorial
-                elif SETTINGS.playing_tutorial:
-                    SETTINGS.levels_list = SETTINGS.tlevels_list
-                    gameLoad.get_canvas_size()
-                    gameLoad.load_new_level()
+                #BETA
+              #  beta.draw(gameCanvas.window)
+            
+            elif SETTINGS.mode == 0:
+                gameMap.draw(gameCanvas.window)                
+                gamePlayer.draw(gameCanvas.window)
 
-            elif SETTINGS.menu_showing and menuController.current_type == 'game':
-                menuController.control()
-                
-            else:
-                #Update logic
-                gamePlayer.control(gameCanvas.canvas)
-                
-                if SETTINGS.fov >= 100:
-                    SETTINGS.fov = 100
-                elif SETTINGS.fov <= 10:
-                    SETTINGS.fov = 10
+                for x in SETTINGS.raylines:
+                    pygame.draw.line(gameCanvas.window, SETTINGS.RED, (x[0][0]/4, x[0][1]/4), (x[1][0]/4, x[1][1]/4))
+                SETTINGS.raylines = []
 
-                if SETTINGS.switch_mode:
-                    gameCanvas.change_mode()
+                for i in SETTINGS.npc_list:
+                    if i.rect and i.dist <= SETTINGS.render * SETTINGS.tile_size * 1.2:
+                        pygame.draw.rect(gameCanvas.window, SETTINGS.RED, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
+                    elif i.rect:
+                        pygame.draw.rect(gameCanvas.window, SETTINGS.DARKGREEN, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
 
-                #Render - Draw
-                gameRaycast.calculate()
-                gameCanvas.draw()
-                
-                
-                if SETTINGS.mode == 1:
-                    render_screen(gameCanvas.canvas)
+            update_game()
 
-                    #BETA
-                  #  beta.draw(gameCanvas.window)
-                
-                elif SETTINGS.mode == 0:
-                    gameMap.draw(gameCanvas.window)                
-                    gamePlayer.draw(gameCanvas.window)
-
-                    for x in SETTINGS.raylines:
-                        pygame.draw.line(gameCanvas.window, SETTINGS.RED, (x[0][0]/4, x[0][1]/4), (x[1][0]/4, x[1][1]/4))
-                    SETTINGS.raylines = []
-
-                    for i in SETTINGS.npc_list:
-                        if i.rect and i.dist <= SETTINGS.render * SETTINGS.tile_size * 1.2:
-                            pygame.draw.rect(gameCanvas.window, SETTINGS.RED, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
-                        elif i.rect:
-                            pygame.draw.rect(gameCanvas.window, SETTINGS.DARKGREEN, (i.rect[0]/4, i.rect[1]/4, i.rect[2]/4, i.rect[3]/4))
-
-                update_game()
-
-        except Exception as e:
-            logging.warning("DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.")
-            logging.exception("Error message: ")
-            pygame.quit()
-            sys.exit(0)
+      #  except Exception as e:
+      #      menuController.save_settings()
+      #      logging.warning("DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.")
+      #      logging.exception("Error message: ")
+      #      pygame.quit()
+      #      sys.exit(0)
 
         #Update Game
         pygame.display.update()

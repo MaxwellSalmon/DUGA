@@ -14,6 +14,8 @@ class Controller:
         self.current_menu = 'main'
         self.current_type = 'main'
         self.canvas = canvas
+        self.play_time = 0
+        self.shut_up = False
 
         self.load_settings()
         self.esc_pressed = False
@@ -24,6 +26,7 @@ class Controller:
         self.optionsMenu = OptionsMenu(self.current_settings)
         self.creditsMenu = CreditsMenu()
         self.gMainMenu = GMainMenu()
+        self.supportSplash = SupportSplash()
 
     def load_settings(self):
         #This script does not change the settings themselves, but only the settings.dat
@@ -31,11 +34,23 @@ class Controller:
             settings = pickle.load(file1)
 
         self.current_settings = settings
- #       self.current_settings = {'fov': 60, 'fullscreen': False, 'sensitivity': 0.25, 'graphics': (140, 12), 'volume': 1, 'music volume' : 1}
 
+        
+        #self.current_settings = {'fov': 60, 'fullscreen': False, 'sensitivity': 0.25, 'graphics': (140, 12), 'volume': 0.5, 'music volume' : 0, 'play time' : 0, 'shut up' : False}
+
+
+        self.play_time = self.current_settings['play time']
+        self.shut_up = self.current_settings['shut up']
+        
+        
     def save_settings(self):
+        current_settings = self.optionsMenu.current_settings
+        current_settings['play time'] = self.play_time
+        current_settings['shut up'] = self.shut_up
+        
         with open(os.path.join('data', 'settings.dat'), 'wb') as file2:
-            pickle.dump(self.optionsMenu.current_settings, file2)
+            pickle.dump(current_settings, file2)
+            
 
     def check_mouse(self):
         pygame.event.set_grab(False)
@@ -54,6 +69,12 @@ class Controller:
                     self.current_menu = 'credits'
                 elif self.mainMenu.quit_button.get_clicked():
                     SETTINGS.quit_game = True
+                #Splash screen
+                if self.play_time >= 7200 and not self.shut_up:
+                    self.supportSplash.draw(self.canvas)
+                    if self.supportSplash.button.get_clicked():
+                        self.shut_up = True
+                        self.save_settings()
                 
             elif self.current_menu == 'new':
                 self.newMenu.draw(self.canvas)
@@ -105,11 +126,13 @@ class Controller:
             elif self.current_menu == 'options':
                 self.optionsMenu.draw(self.canvas)
                 if self.optionsMenu.back_button.get_clicked():
-                    self.save_settings()
                     self.current_menu = 'main'
+                if self.optionsMenu.save:
+                    self.save_settings()
+                    self.optionsMenu.save = False
 
             elif self.current_menu == 'credits':
-                self.creditsMenu.draw(self.canvas)
+                self.creditsMenu.draw(self.canvas, self.shut_up)
                 if self.creditsMenu.back_button.get_clicked():
                     self.current_menu = 'main'
 
@@ -272,6 +295,7 @@ class NewMenu(Menu):
 class OptionsMenu(Menu):
     def __init__(self, settings):
         Menu.__init__(self, 'OPTIONS')
+        self.save = False
 
         self.strings = ['LOW', 'MED', 'HIGH']
         self.music_strings = ['OFF', 'MED', 'HIGH']
@@ -285,7 +309,7 @@ class OptionsMenu(Menu):
             'sensitivity' : [0.15, 0.25, 0.35], #Tjek den her
             'volume' : [0.1, 0.5, 1],
             'music volume' : [0, 0.5, 1],
-            'fullscreen' : [True, False]}
+            'fullscreen' : [True, False],}
 
         self.graphics_index = self.strings_to_data['graphics'].index(settings['graphics'])
         self.fov_index = self.strings_to_data['fov'].index(settings['fov'])
@@ -316,7 +340,9 @@ class OptionsMenu(Menu):
             'sensitivity' : self.strings_to_data['sensitivity'][self.sens_index],
             'volume' : self.strings_to_data['volume'][self.vol_index],
             'music volume' : self.strings_to_data['music volume'][self.music_index],
-            'fullscreen' : self.strings_to_data['fullscreen'][self.fs_index]}
+            'fullscreen' : self.strings_to_data['fullscreen'][self.fs_index],}
+
+        self.save = True
 
     def control_options(self):
         if self.graphics_button.get_clicked():
@@ -393,14 +419,19 @@ class CreditsMenu(Menu):
         self.contributions = TEXT.Text(0,0, 'THANKS  TO', SETTINGS.LIGHTGRAY, "DUGAFONT.ttf", 20)
         self.contributions.update_pos((SETTINGS.canvas_actual_width/2)-(self.contributions.layout.get_width()/2)+8, 290)
 
-        self.contributors = TEXT.Text(0,0, 'POELE,  OLE,  ROCKETTHEMINIFIG,  ANDY BOY,  J4CKINS', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 20)
+        self.contributors = TEXT.Text(0,0, 'POELE,  OLE,  ROCKETTHEMINIFIG,  ANDY BOY,  J4CKINS' , SETTINGS.DARKGRAY, "DUGAFONT.ttf", 20)
         self.contributors.update_pos((SETTINGS.canvas_actual_width/2)-(self.contributors.layout.get_width()/2)+8, 320)
+        self.contributors2 =  TEXT.Text(0,0, 'THEFATHOBBITS,  STARLITEPONY' , SETTINGS.DARKGRAY, "DUGAFONT.ttf", 20)
+        self.contributors2.update_pos((SETTINGS.canvas_actual_width/2)-(self.contributors2.layout.get_width()/2)+8, 345)
 
         self.specialthanks = TEXT.Text(0,0, 'THANKS  TO  THE  PYGAME  COMMUNITY  FOR  HELP  AND  MOTIVATION', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 15)
-        self.specialthanks.update_pos((SETTINGS.canvas_actual_width/2)-(self.specialthanks.layout.get_width()/2)+8, 350)
+        self.specialthanks.update_pos((SETTINGS.canvas_actual_width/2)-(self.specialthanks.layout.get_width()/2)+8, 380)
+
+        self.and_you = TEXT.Text(0,0, 'THANKS  TO  YOU  FOR  PLAYING!' , SETTINGS.GREEN, "DUGAFONT.ttf", 22)
+        self.and_you.update_pos((SETTINGS.canvas_actual_width/2)-(self.and_you.layout.get_width()/2)+8, 410)
 
 
-    def draw(self, canvas):
+    def draw(self, canvas, show):
         self.back_button.draw(canvas)
         self.title.draw(canvas)
         self.createdby.draw(canvas)
@@ -408,8 +439,55 @@ class CreditsMenu(Menu):
         self.eli.draw(canvas)
         self.contributions.draw(canvas)
         self.contributors.draw(canvas)
+        self.contributors2.draw(canvas)
         self.specialthanks.draw(canvas)
         self.maxwellsalmon.draw(canvas)
+
+        if show:
+            self.and_you.draw(canvas)
+        
+
+class SupportSplash:
+
+    def __init__(self):
+        self.area = pygame.Surface((200, 300)).convert()
+        self.rect = self.area.get_rect()
+        self.rect.topleft = SETTINGS.canvas_actual_width - 220, SETTINGS.canvas_target_height - 280
+        self.area.fill((200,200,200))
+
+        self.title = TEXT.Text(0,0, 'THANKS   FOR   PLAYING', SETTINGS.DARKGRAY, "DUGAFONT.ttf", 19)
+        self.title.update_pos((self.rect.width/2) - (self.title.layout.get_width()/2)+2, 5)
+
+        self.pleas = ['You  have  been  playing  DUGA', 'for  over  two  hours  now.  I', 'really  hope  you  enjoy  it.',
+                      'If  you  do,  please  consider', 'buying  it.  If  you  have  al-', 'ready  bought  it,  thank  you', 'very  much!  If  you  don\'t  think',
+                      'it  is  worth  money,  please  let', 'me  know  what  to  improve.', 'Well,  I\'m  happy  to  have  you',
+                      'playing,  so  I  added  you  to',  'the  credits!']
+        self.texts = []
+
+        self.pos = 30
+
+        self.button = Button((SETTINGS.canvas_actual_width - 120, SETTINGS.canvas_target_height - 15, 192, 40), "LEAVE ME ALONE!")
+
+        for i in range(len(self.pleas)):
+            self.texts.append(TEXT.Text(0, 0, self.pleas[i], SETTINGS.WHITE, "DUGAFONT.ttf", 15))
+            self.texts[i].update_pos((self.rect.width/2) - (self.texts[i].layout.get_width()/2)+2, self.pos)
+            self.pos += 17
+        
+
+    def draw(self, canvas):
+        self.title.draw(self.area)
+
+        for text in self.texts:
+            text.draw(self.area)        
+
+        canvas.blit(self.area, self.rect)
+
+        self.button.draw(canvas)
+
+
+
+        
+        
 
 #---------------------------------------- IN-GAME MENUS ----------------------------------------------------------------------------
 

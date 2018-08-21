@@ -32,7 +32,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
     
     #Double Barrel Shotgun - 1
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -147,7 +147,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Shotgun pistol - 6
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -332,7 +332,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Extended mag AK - 14
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -355,7 +355,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Camo AK-47 - 15
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -378,7 +378,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Light AK-47 - 16
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -401,7 +401,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Gauss Hand gun - 17
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -470,7 +470,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #bump Gauss - 20
     SETTINGS.gun_list.append(GUNS.Gun(
@@ -493,7 +493,7 @@ def load_guns():
                 'click': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_click2.ogg'))],
                 'magout': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magout2.ogg'))],
                 'magin': [pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin1.ogg')), pygame.mixer.Sound(path.join('sounds', 'weapons', 'AK_magin2.ogg'))]
-                },(38,7)))
+                },(35,7)))
 
     #Black Shotgun pistol - 21
     SETTINGS.gun_list.append(GUNS.Gun(

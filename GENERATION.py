@@ -68,7 +68,7 @@ class Generator:
         self.max_npc_amount = SETTINGS.current_level+1 #Will be multiplied by amount of segments
         self.max_npcs_per_segment = 3
         self.min_npcs_per_level = 3
-        self.npc_spawn_chance = 25 + SETTINGS.current_level*2 #Also influenced
+        self.npc_spawn_chance = 20 + SETTINGS.current_level*1.5 #Also influenced
         self.npc_probability = [0,0,
                                 1,1,
                                 2,2,
@@ -541,6 +541,7 @@ class Generator:
         if npcs >= self.max_npc_amount * len(self.segpath):
             return
 
+        spawned_npcs = 0
         #Spawn NPCs randomly
         for i in range(len(self.segpath)):
             seg = self.segpath[i]
@@ -560,6 +561,10 @@ class Generator:
                                 self.segpath[i].npcs.append(((randomx, randomy), random.choice(degrees), npc))
 
                                 is_good = True
+                                spawned_npcs += 1
+
+        print("SPAWNED NPCS: ", spawned_npcs)
+                                
 
         #If there were no NPCs, place minimum amount
         npc_amount = 0
