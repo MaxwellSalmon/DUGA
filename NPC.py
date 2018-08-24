@@ -51,7 +51,7 @@ class Npc:
         self.type = 'npc'
 
         #NPC Characteristics
-        self.health = stats['health']
+        self.health = stats['health']    
         self.speed = stats['speed']
         self.OG_speed = self.speed
         self.mind = stats['mind']
@@ -63,10 +63,30 @@ class Npc:
         if stats['dmg'] != 3.1415:
             self.dmg = stats['dmg']
         else:
-            self.dmg = random.choice([0,0,1])
+            self.dmg = random.choice([1,2,3])
         self.atckrate = stats['atckrate']
 
         self.range = 5
+
+        #make first level easier
+        if SETTINGS.current_level == 0 and SETTINGS.levels_list == SETTINGS.glevels_list:
+            self.health = int(self.health * 0.8)
+            self.dmg = int(self.dmg * 0.8)
+            
+        #Make late levels harder >:)
+        elif SETTINGS.current_level > 4 and SETTINGS.levels_list == SETTINGS.glevels_list:
+            self.health += int(SETTINGS.current_level / 3)
+            self.dmg += int(SETTINGS.current_level / 5)
+
+        #Make NPC stronger if player is doing well
+        if SETTINGS.player_health >= 90 or SETTINGS.player_armor >= 90:
+            print("player health or amor high, making npc stronger")
+            self.dmg += 2
+
+        #Give NPC more health if player has lots of ammo - phew, long line.
+        if SETTINGS.inventory['primary'] and SETTINGS.held_ammo[SETTINGS.inventory['primary'].ammo_type] >= SETTINGS.max_ammo[SETTINGS.inventory['primary'].ammo_type]:
+            self.health = int(self.health * 1.5)
+            print("player ammo high, making npc healthy!")
 
         #Npc actions
         self.dead = False
@@ -510,7 +530,12 @@ class Npc:
         elif self.state == 'fleeing':
             if self.dist <= SETTINGS.tile_size * 4:
                 flee_pos = random.choice(SETTINGS.walkable_area)
-                player_tile = [x for x in SETTINGS.walkable_area if x.map_pos == SETTINGS.player_map_pos][0]
+                player_tile = [x for x in SETTINGS.walkable_area if x.map_pos == SETTINGS.player_map_pos]
+                if player_tile:
+                    player_tile = player_tile[0]
+                else:
+                    player_tile = PATHFINDING.find_near_position(SETTINGS.player_map_pos)
+                    
                 if self.player_in_view:
                     if self.detect_player():
                         if ((SETTINGS.walkable_area.index(flee_pos) < SETTINGS.walkable_area.index(player_tile) + int(SETTINGS.current_level_size[0] / 5)) or (SETTINGS.walkable_area.index(flee_pos) > SETTINGS.walkable_area.index(player_tile) - int(SETTINGS.current_level_size[0] / 5))) and self.path == []:
@@ -695,6 +720,7 @@ class Npc:
             elif self.current_frame == len(self.die_texture)-1 and self.knockback == 0:
                 self.dead = True
                 self.drop_item()
+                SETTINGS.statistics['last enemies'] += 1
             elif self.knockback > 0:
                 self.collide_update(-math.cos(math.radians(self.postheta))*self.knockback, 0)
                 self.collide_update(0, math.sin(math.radians(self.postheta))*self.knockback)
@@ -709,7 +735,7 @@ class Npc:
                 self.hurting = False
                 self.timer = 0
                 SOUND.play_sound(random.choice(self.sounds['damage']), self.dist)
-                if self.state == 'idle' or self.state == 'patrouling':
+                if self.state == 'idle' or self.state == 'patrouling' or self.state == 'fleeing':
                     self.face = self.face + self.theta
                     if self.face >= 360:
                         self.face -= 360

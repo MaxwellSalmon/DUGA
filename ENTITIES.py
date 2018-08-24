@@ -39,11 +39,11 @@ def load_guns():
         {'spritesheet': path.join('graphics', 'weapon', 'shotgun_spritesheet.png'),
          'item': path.join('graphics', 'items', 'shotgun.png')
          },{
-            'dmg' : 12,
+            'dmg' : 10,
             'spread' : 200,
             'hitchance': 65,
             'firerate': 0.3,
-            'range': 8,
+            'range': 7,
             'magsize': 2,
             'rlspeed': 1.4,
             'zoom': 8,
@@ -270,11 +270,11 @@ def load_guns():
         {'spritesheet': path.join('graphics', 'weapon', 'modded_shotgun_spritesheet.png'),
          'item': path.join('graphics', 'items', 'moddedshotgun.png')
          },{
-            'dmg' : 18,
+            'dmg' : 15,
             'spread' : 220,
             'hitchance': 65,
             'firerate': 0.3,
-            'range': 8,
+            'range': 6,
             'magsize': 3.1415, #lol bad code.
             'rlspeed': 1.4,
             'zoom': 8,
@@ -293,10 +293,10 @@ def load_guns():
         {'spritesheet': path.join('graphics', 'weapon', 'shotgun_spritesheet.png'),
          'item': path.join('graphics', 'items', 'weirdshotgun.png')
          },{
-            'dmg' : 10,
+            'dmg' : 8,
             'spread' : 200,
             'hitchance': 65,
-            'firerate': 0.3,
+            'firerate': 0.5,
             'range': 8,
             'magsize': 3,
             'rlspeed': 1.4,
@@ -336,8 +336,8 @@ def load_guns():
 
     #Extended mag AK - 14
     SETTINGS.gun_list.append(GUNS.Gun(
-        {'spritesheet': path.join('graphics', 'weapon', 'ak_spritesheet.png'),
-         'item': path.join('graphics', 'items', 'akitem.png')
+        {'spritesheet': path.join('graphics', 'weapon', 'akext_spritesheet.png'),
+         'item': path.join('graphics', 'items', 'akextitem.png')
          },{
             'dmg' : 3,
             'spread' : 50,
@@ -528,7 +528,7 @@ def load_guns():
              'hitchance': 60,
              'firerate': 0.2,
              'range': 6,
-             'magsize': 1,
+             'magsize': 2,
              'rlspeed': 0.8,
              'zoom': 1,
              'ammotype': 'shell',
@@ -699,7 +699,7 @@ def load_npc_types():
             'face' : 0,
             'spf': 0.10,
             'dmg': 5,
-            'health': 30,
+            'health': 40,
             'speed': 20,
             'mind': 'hostile',
             'state': 'idle',
@@ -715,7 +715,7 @@ def load_npc_types():
         {
             'pos': [0,0],
             'face': 0,
-            'spf': 0.2,
+            'spf': 0.12,
             'dmg': 2,
             'health': random.randint(15,20),
             'speed': 30,
@@ -734,7 +734,7 @@ def load_npc_types():
         {
             'pos': [0,0],
             'face': 0,
-            'spf': 0.2,
+            'spf': 0.12,
             'dmg': 2,
             'health': random.randint(15,20),
             'speed': 30,
@@ -752,10 +752,10 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.2,
-            'dmg': 2,
+            'spf': 0.12,
+            'dmg': 3,
             'health': random.randint(8, 11),
-            'speed': 80,
+            'speed': 100,
             'mind': 'hostile',
             'state': 'idle',
             'atcktype': 'melee',
@@ -770,10 +770,10 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.2,
+            'spf': 0.12,
             'dmg': 2,
             'health': random.randint(8, 11),
-            'speed': 80,
+            'speed': 100,
             'mind': 'hostile',
             'state': 'patrouling',
             'atcktype': 'melee',
@@ -831,7 +831,7 @@ def load_npc_types():
             'mind': 'hostile',
             'state': 'idle',
             'atcktype': 'melee',
-            'atckrate': 1,
+            'atckrate': 0.8,
             'id': 14,
             'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
             'name' : 'idle sick',
@@ -843,13 +843,13 @@ def load_npc_types():
             'pos' : [0,0],
             'face' : 0,
             'spf': 0.18,
-            'dmg': 0,
+            'dmg': 10,
             'health': 35,
             'speed': 20,
-            'mind': 'shy',
+            'mind': 'hostile',
             'state': 'idle',
             'atcktype': 'melee',
-            'atckrate': 1,
+            'atckrate': 1.2,
             'id': 15,
             'filepath' : ('graphics', 'npc', 'sick_zombie_spritesheet.png'),
             'name' : 'shy sick',
@@ -860,7 +860,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.25,
+            'spf': 0.18,
             'dmg': 8,
             'health': 5,
             'speed': 45,
@@ -878,7 +878,7 @@ def load_npc_types():
         {
             'pos' : [0,0],
             'face' : 0,
-            'spf': 0.25,
+            'spf': 0.18,
             'dmg': 1,
             'health': 15,
             'speed': 45,
@@ -1000,7 +1000,7 @@ def load_item_types():
             {
                 'filepath' : ('graphics', 'items', 'shell.png'),
                 'type' : 'shell',
-                'effect': 6,
+                'effect': 4,
                 'id': 3
                 },
             #Knife

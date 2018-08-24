@@ -29,7 +29,12 @@ int_to_string = {
     11 : 'TWELVTH',
     12 : 'THIRTEENTH',
     13 : 'FOURTEENTH',
-    14 : 'FIFTEENTH',    
+    14 : 'FIFTEENTH',
+    15 : 'SIXTEENTH',
+    16 : 'SEVENTEENTH',
+    17 : 'EIGHTTEENTH',
+    18 : 'NINETEENTH',
+    19 : 'TWENTIETH',
     }
 
 def render(canvas):
@@ -147,7 +152,7 @@ def show_title(canvas):
         if SETTINGS.current_level in int_to_string:
             title.update_string("%s  LEVEL" % int_to_string[SETTINGS.current_level])
         else:
-            title.update_string("%s.  LEVEL" % SETTINGS.current_level)
+            title.update_string("%s.  LEVEL" % SETTINGS.current_level + 1)
         white_box = pygame.Surface((title.layout.get_width()+5, title.layout.get_height()+5)).convert_alpha()
         white_box.fill((255,255,255,180))
 

@@ -41,8 +41,8 @@ class hud:
     def render(self, canvas):
         
         canvas.blit(self.sprite, self.rect)
-        self.text[0].update_string('%s' % SETTINGS.player_armor)
-        self.text[1].update_string('%s' % SETTINGS.player_health)
+        self.text[0].update_string('%s / 100' % SETTINGS.player_armor)
+        self.text[1].update_string('%s / 100' % SETTINGS.player_health)
         if SETTINGS.current_gun and SETTINGS.current_gun.ammo_type:
             self.text[2].update_string('%s / %s' % (SETTINGS.current_gun.current_mag, SETTINGS.held_ammo[SETTINGS.current_gun.ammo_type]))
         else:

@@ -1,6 +1,7 @@
 import pygame
 import pickle
 import os
+import copy
 import random
 import SETTINGS
 import TEXT
@@ -14,7 +15,6 @@ class Controller:
         self.current_menu = 'main'
         self.current_type = 'main'
         self.canvas = canvas
-        self.play_time = 0
         self.shut_up = False
 
         self.load_settings()
@@ -22,11 +22,12 @@ class Controller:
         self.new_pressed = False
 
         self.mainMenu = MainMenu()
-        self.newMenu = NewMenu()
+        self.newMenu = NewMenu(self.current_settings)
         self.optionsMenu = OptionsMenu(self.current_settings)
         self.creditsMenu = CreditsMenu()
         self.gMainMenu = GMainMenu()
         self.supportSplash = SupportSplash()
+        self.scoreMenu = ScoreMenu()
 
     def load_settings(self):
         #This script does not change the settings themselves, but only the settings.dat
@@ -35,17 +36,12 @@ class Controller:
 
         self.current_settings = settings
 
-        
-        #self.current_settings = {'fov': 60, 'fullscreen': False, 'sensitivity': 0.25, 'graphics': (140, 12), 'volume': 0.5, 'music volume' : 0, 'play time' : 0, 'shut up' : False}
+        #self.current_settings = {'fov': 60, 'fullscreen': False, 'sensitivity': 0.25, 'graphics': (140, 12), 'volume': 0.5, 'music volume' : 0, 'shut up' : False}
 
-
-        self.play_time = self.current_settings['play time']
-        self.shut_up = self.current_settings['shut up']
-        
+        self.shut_up = self.current_settings['shut up']        
         
     def save_settings(self):
         current_settings = self.optionsMenu.current_settings
-        current_settings['play time'] = self.play_time
         current_settings['shut up'] = self.shut_up
         
         with open(os.path.join('data', 'settings.dat'), 'wb') as file2:
@@ -65,12 +61,14 @@ class Controller:
                     self.current_menu = 'new'
                 elif self.mainMenu.options_button.get_clicked():
                     self.current_menu = 'options'
+                elif self.mainMenu.score_button.get_clicked():
+                    self.current_menu = 'score'
                 elif self.mainMenu.credits_button.get_clicked():
                     self.current_menu = 'credits'
                 elif self.mainMenu.quit_button.get_clicked():
                     SETTINGS.quit_game = True
                 #Splash screen
-                if self.play_time >= 7200 and not self.shut_up:
+                if SETTINGS.statistics['playtime'] >= 120 and not self.shut_up:
                     self.supportSplash.draw(self.canvas)
                     if self.supportSplash.button.get_clicked():
                         self.shut_up = True
@@ -131,6 +129,11 @@ class Controller:
                     self.save_settings()
                     self.optionsMenu.save = False
 
+            elif self.current_menu == 'score':
+                self.scoreMenu.draw(self.canvas)
+                if self.scoreMenu.back_button.get_clicked():
+                    self.current_menu = 'main'
+
             elif self.current_menu == 'credits':
                 self.creditsMenu.draw(self.canvas, self.shut_up)
                 if self.creditsMenu.back_button.get_clicked():
@@ -165,8 +168,9 @@ class MainMenu(Menu):
     def __init__(self):
         Menu.__init__(self, '')
         self.new_button = Button((SETTINGS.canvas_actual_width/2, 200, 200, 60), "NEW GAME")
-        self.options_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "OPTIONS")
-        self.credits_button = Button((SETTINGS.canvas_actual_width/2, 400, 200, 60), "CREDITS")
+        self.options_button = Button((SETTINGS.canvas_actual_width/2, 270, 200, 60), "OPTIONS")
+        self.score_button = Button((SETTINGS.canvas_actual_width/2, 340, 200, 60), "STATISTICS")
+        self.credits_button = Button((SETTINGS.canvas_actual_width/2, 410, 200, 60), "CREDITS")
         self.quit_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "QUIT")
 
         self.logo = pygame.image.load(os.path.join('graphics', 'logo_cutout.png')).convert_alpha()
@@ -214,6 +218,7 @@ class MainMenu(Menu):
         
         self.new_button.draw(canvas)
         self.options_button.draw(canvas)
+        self.score_button.draw(canvas)
         self.credits_button.draw(canvas)
         self.quit_button.draw(canvas)
 
@@ -234,11 +239,11 @@ class MainMenu(Menu):
 
 class NewMenu(Menu):
 
-    def __init__(self):
+    def __init__(self, settings):
         Menu.__init__(self, 'NEW GAME')
         self.new_button = Button((SETTINGS.canvas_actual_width/2, 200, 200, 60), "NEW GAME")
-        self.custom_button = Button((SETTINGS.canvas_actual_width/2, 300, 200, 60), "CUSTOM  MAPS")
-        self.tutorial_button = Button((SETTINGS.canvas_actual_width/2, 360, 200, 30), "TUTORIAL")
+        self.custom_button = Button((SETTINGS.canvas_actual_width/2, 270, 200, 60), "CUSTOM  MAPS")
+        self.tutorial_button = Button((SETTINGS.canvas_actual_width/2, 325, 200, 30), "TUTORIAL")
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
 
         self.loading = TEXT.Text(0,0, "LOADING...", SETTINGS.BLACK, "DUGAFONT.ttf", 74)
@@ -248,6 +253,7 @@ class NewMenu(Menu):
         self.nolevels.update_pos((SETTINGS.canvas_actual_width/2)-(self.nolevels.layout.get_width()/2)+8, (SETTINGS.canvas_target_height/2)-(self.nolevels.layout.get_height()/2))
         self.timer = 0
         self.no_levels_on = False
+        self.settings = settings
 
     def draw(self, canvas):
         self.new_button.draw(canvas)
@@ -283,6 +289,17 @@ class NewMenu(Menu):
         SETTINGS.player_states['armor'] = False
         SETTINGS.player_states['cspeed'] = 0
 
+        SETTINGS.statistics['last enemies'] = 0
+        SETTINGS.statistics['last dtaken'] = 0
+        SETTINGS.statistics['last ddealt'] = 0
+        SETTINGS.statistics['last shots'] = 0
+        SETTINGS.statistics['last levels'] = 0
+
+        SETTINGS.fov = self.settings['fov']
+        SETTINGS.player_states['cspeed'] = SETTINGS.player_speed
+        SETTINGS.aiming = False
+        SETTINGS.player.update_collide_list = True
+
     def draw_no_levels(self, canvas):
         if self.timer <= 1.2:
             self.nolevels.draw(canvas)
@@ -293,6 +310,7 @@ class NewMenu(Menu):
         
 
 class OptionsMenu(Menu):
+    
     def __init__(self, settings):
         Menu.__init__(self, 'OPTIONS')
         self.save = False
@@ -394,9 +412,123 @@ class OptionsMenu(Menu):
         self.restart.draw(canvas)
 
         self.control_options()
+        
+
+class ScoreMenu(Menu):
+
+    def __init__(self):
+        Menu.__init__(self, 'STATISTICS')
+
+        self.area = pygame.Surface((600, 300))
+        self.area_rect = self.area.get_rect()
+        self.area_rect.center = (SETTINGS.canvas_actual_width / 2, SETTINGS.canvas_target_height / 2)
+        self.area.fill((200,200,200))
+
+        self.middle_area = pygame.Surface((200, 300))
+        self.middle_area.fill((180,180,180))
+
+        self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
+        self.score_testing = copy.copy(SETTINGS.statistics)
+
+        self.highlights = []
+        for i in range(6):
+            if i == 0:
+                self.highlights.append(pygame.Surface((600, 35)).convert_alpha())
+            else:
+                self.highlights.append(pygame.Surface((600, 30)).convert_alpha())
+            self.highlights[i].fill((0,0,0,20))
+
+        #High scores
+        self.best_scores = ['HIGHEST SCORES',
+                        'ENEMIES  KILLED : %s' % SETTINGS.statistics['best enemies'],
+                        'DAMAGE  DEALT : %s' % SETTINGS.statistics['best ddealt'],
+                        'DAMAGE  TAKEN : %s' % SETTINGS.statistics['best dtaken'],
+                        'SHOTS  FIRED : %s' % SETTINGS.statistics['best shots'],
+                        'LEVEL  STREAK : %s' % SETTINGS.statistics['best levels']]
+
+        self.texts = []
+        self.pos = 10
+
+        for i in range(len(self.best_scores)):
+            if i == 0:
+                self.texts.append(TEXT.Text(0, 0, self.best_scores[i], SETTINGS.DARKGRAY, "DUGAFONT.ttf", 18))
+            else:
+                self.texts.append(TEXT.Text(0, 0, self.best_scores[i], SETTINGS.WHITE, "DUGAFONT.ttf", 18))
+            self.texts[i].update_pos(10, self.pos)
+            self.pos += 30
+
+        #Last play scores
+        self.last_scores = ['LAST PLAY',
+                        'ENEMIES  KILLED : %s' % SETTINGS.statistics['last enemies'],
+                        'DAMAGE  DEALT : %s' % SETTINGS.statistics['last ddealt'],
+                        'DAMAGE  TAKEN : %s' % SETTINGS.statistics['last dtaken'],
+                        'SHOTS  FIRED : %s' % SETTINGS.statistics['last shots'],
+                        'LEVEL  STREAK : %s' % SETTINGS.statistics['last levels']]
+        self.last_texts = []
+        self.pos = 10
+
+        for i in range(len(self.last_scores)):
+            if i == 0:
+                self.last_texts.append(TEXT.Text(0, 0, self.last_scores[i], SETTINGS.DARKGRAY, "DUGAFONT.ttf", 18))
+            else:
+                if self.last_scores[i] == self.best_scores[i] and self.last_scores[i].find(' 0') == -1:
+                    self.last_texts.append(TEXT.Text(0, 0, self.last_scores[i], (100,100,200), "DUGAFONT.ttf", 18))
+                else:
+                    self.last_texts.append(TEXT.Text(0, 0, self.last_scores[i], SETTINGS.WHITE, "DUGAFONT.ttf", 18))
+            self.last_texts[i].update_pos(210, self.pos)
+            self.pos += 30
+
+        #all time statistics
+        #format play time
+            
+        self.all_scores = ['ALL TIME',
+                        'ENEMIES  KILLED : %s' % SETTINGS.statistics['all enemies'],
+                        'DAMAGE  DEALT : %s' % SETTINGS.statistics['all ddealt'],
+                        'DAMAGE  TAKEN : %s' % SETTINGS.statistics['all dtaken'],
+                        'SHOTS  FIRED : %s' % SETTINGS.statistics['all shots'],
+                        'LEVEL  STREAK : %s' % SETTINGS.statistics['all levels'],
+                        'TIME PLAYED : {:02d}h {:02d}m'.format(*divmod(SETTINGS.statistics['playtime'], 60))]
+        self.all_texts = []
+        self.pos = 10
+
+        for i in range(len(self.all_scores)):
+            if i == 0:
+                self.all_texts.append(TEXT.Text(0, 0, self.all_scores[i], SETTINGS.DARKGRAY, "DUGAFONT.ttf", 18))
+            else:
+                self.all_texts.append(TEXT.Text(0, 0, self.all_scores[i], SETTINGS.WHITE, "DUGAFONT.ttf", 18))
+            self.all_texts[i].update_pos(410, self.pos)
+            self.pos += 30
+
+    def draw(self, canvas):
+        if self.score_testing != SETTINGS.statistics:
+            self.__init__()
+        
+        self.title.draw(canvas)
+        self.back_button.draw(canvas)
+        self.area.fill((200,200,200))
+        self.area.blit(self.middle_area, (200,0))
+
+        pos = 0
+        for i in self.highlights:
+            self.area.blit(i, (0, pos))
+            if pos == 0:
+                pos = 5
+            pos += 60
+
+        for i in self.texts:
+            i.draw(self.area)
+
+        for i in self.last_texts:
+            i.draw(self.area)
+
+        for i in self.all_texts:
+            i.draw(self.area)
+
+        canvas.blit(self.area, self.area_rect)
 
             
 class CreditsMenu(Menu):
+    
     def __init__(self):
         Menu.__init__(self, 'CREDITS')
         self.back_button = Button((SETTINGS.canvas_actual_width/2, 500, 200, 60), "BACK")
@@ -443,7 +575,7 @@ class CreditsMenu(Menu):
         self.specialthanks.draw(canvas)
         self.maxwellsalmon.draw(canvas)
 
-        if show:
+        if show or SETTINGS.statistics['playtime'] >= 120:
             self.and_you.draw(canvas)
         
 

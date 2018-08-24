@@ -16,10 +16,12 @@ quit_game = False
 game_won = False
 dt = 0
 cfps = 0
+statistics = {}
+play_seconds = 0
 
 '''Level settings'''
 glevels_size = 4
-glevels_amount = 1
+glevels_amount = 100
 #These are non-configurable.
 levels_list = []
 segments_list = []

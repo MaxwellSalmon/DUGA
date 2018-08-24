@@ -140,8 +140,10 @@ class Gun:
                         self.current_img = self.aim[0]
                         self.shoot_busy = False
                         self.current_mag -= 1
+                        SETTINGS.statistics['last shots'] += 1
                         if self.stats['magsize'] == 3.1415:
                             self.current_mag -= 1
+                            SETTINGS.statistics['last shots'] += 1
                         self.firetimer = 0
 
                 #Melee weapon animation
@@ -180,8 +182,10 @@ class Gun:
                         self.current_img = self.aim[-1]
                         self.shoot_busy = False
                         self.current_mag -= 1
+                        SETTINGS.statistics['last shots'] += 1
                         if self.stats['magsize'] == 3.1415:
                             self.current_mag -= 1
+                            SETTINGS.statistics['last shots'] += 1
                         self.firetimer = 0
         else:
             if self.firetimer >= self.firerate:
@@ -207,11 +211,24 @@ class Gun:
                         
                 if cap >= random.randint(0,int(npc.dist*(1/self.range))):
                     SOUND.play_sound(self.hit_marker, 0)
-                    #Critical hit
-                    if (npc.state == 'idle' or npc.state == 'patrouling') and not npc.player_in_view:
-                        npc.health -= self.dmg * 2
+
+                    #Damage less if NPC is far away from center.
+                    if self.hit_rect.width < 120 or (npc.hit_rect.centerx > self.hit_rect.left + self.hit_rect.width/3 and npc.hit_rect.centerx < self.hit_rect.right - self.hit_rect.width/3):
+                        #Critical hit
+            
+                        if (npc.state == 'idle' or npc.state == 'patrouling') and not npc.player_in_view:
+                            npc.health -= self.dmg * 2
+                            SETTINGS.statistics['last ddealt'] += self.dmg*2
+                        else:
+                            npc.health -= self.dmg
+                            SETTINGS.statistics['last ddealt'] += self.dmg
                     else:
-                        npc.health -= self.dmg
+                        if (npc.state == 'idle' or npc.state == 'patrouling') and not npc.player_in_view:
+                            npc.health -= self.dmg
+                            SETTINGS.statistics['last ddealt'] += self.dmg*2
+                        else:
+                            npc.health -= self.dmg / 2
+                            SETTINGS.statistics['last ddealt'] += self.dmg
                     npc.timer = 0
                     npc.hurting = True
                     if npc.health <= 0:

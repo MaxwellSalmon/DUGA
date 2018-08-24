@@ -35,6 +35,7 @@ class Player:
 
         SETTINGS.player = self
         self.collide_list = SETTINGS.all_solid_tiles + SETTINGS.npc_list
+        self.update_collide_list = False
         self.solid = True
         self.dead = False
         self.last_call = 0
@@ -65,6 +66,9 @@ class Player:
         elif self.current_level != SETTINGS.current_level:
             self.collide_list = SETTINGS.all_solid_tiles + SETTINGS.npc_list
             self.current_level = SETTINGS.current_level
+        elif self.update_collide_list:
+            self.collide_list = SETTINGS.all_solid_tiles + SETTINGS.npc_list
+            self.update_collide_list = False
             
         #Update health
         if self.health != SETTINGS.player_health and SETTINGS.player_states['heal']:
@@ -208,6 +212,7 @@ class Player:
                 
         #Is the player dead or taking damage?
         if self.health > SETTINGS.player_health:
+            SETTINGS.statistics['last dtaken'] += (self.health - SETTINGS.player_health)
             self.health = SETTINGS.player_health
             SETTINGS.player_states['hurt'] = True
             SOUND.play_sound(self.hurt_sound, 0)

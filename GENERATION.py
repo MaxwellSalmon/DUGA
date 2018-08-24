@@ -18,8 +18,8 @@ class Generator:
 
         #Constants
         #Item probability
-        self.max_item_amount = int(SETTINGS.current_level+1 * 1.5 ) + 10 #Multiplied by amount of segments
-        self.max_items_per_segment = 6
+        self.max_item_amount =  15 #Multiplied by amount of segments
+        self.max_items_per_segment = 5
         self.spawn_chance = 8
         self.spawn_chance_high = 40 #Also influenced
         self.ammo_spawn_chance = 35 #Also influenced
@@ -29,7 +29,7 @@ class Generator:
             0 : 28, #health
             1 : 30, #Kevlar
             2 : 25, #bullet
-            3 : 22, #shell
+            3 : 18, #shell
             4 : 15, #knife
             5 : 16, #pistol
             6 : 13, #ak47

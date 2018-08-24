@@ -9,7 +9,6 @@ import random
 #open/closedlist syntax = [G, H, F, parent]
 #Parent is from where the node is checked.
 
-
 def pathfind(start, end):
     #print(start, end)
     '''== A* Pathfinding ==\npathfind(start, end) -> Shortest path from start to end\nFormat is list with tile objects'''
@@ -31,7 +30,7 @@ def pathfind(start, end):
     if not error:
         start_point = [x for x in SETTINGS.all_tiles if x.map_pos == start][0]
         end_point = [x for x in SETTINGS.all_tiles if x.map_pos == end][0]
-
+        
         #Report errors
         if SETTINGS.tile_solid[start_point.ID] and (start_point.type != 'hdoor' and start_point.type != 'vdoor'):
             print("=== WARNING: ===")
@@ -45,6 +44,14 @@ def pathfind(start, end):
             print(end_point.map_pos, end_point.ID)
             print()
             error = True
+
+        if error:
+            end_point = [x for x in SETTINGS.all_tiles if x.map_pos == find_near_position(end)]
+            if end_point:
+                end_point = end_point[0]
+                error = False
+                    
+                
 
     if not error:
         #f_value has to be determined after creation of node.
@@ -101,6 +108,17 @@ def pathfind(start, end):
             return closedlist
         else:
             return path
+
+def find_near_position(position):
+    adjacent_tiles = [x for x in SETTINGS.walkable_area if (x.map_pos[0] == position[0] + 1 or x.map_pos[0] == position[0] -1 or x.map_pos[0] == position[0])
+                      and (x.map_pos[1] == position[1] + 1 or x.map_pos[1] == position[1] - 1 or x.map_pos[1] == position[1])]
+    #convert coordinates to a tile
+    chosen_tiles = [x for x in SETTINGS.all_tiles if x.map_pos in adjacent_tiles]
+
+    if chosen_tiles:
+        return random.choice(chosen_tiles)
+    else:
+        return None
     
         
 def find_distance(point, end):

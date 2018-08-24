@@ -20,6 +20,7 @@ class Text:
     def update_string(self, string):
         #Update the string that will be shown if needed.
         self.layout = self.font.render(string, True, self.color)
+        self.string = string
 
     def update_pos(self, x, y):
         #Updates the position of the text.

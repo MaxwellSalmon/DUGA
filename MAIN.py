@@ -68,6 +68,12 @@ class Load:
         SETTINGS.render = settings['graphics'][1]
         SETTINGS.fullscreen = settings['fullscreen']
 
+        #Load statistics
+        with open(os.path.join('data', 'statistics.dat'), 'rb') as stats_file:
+            stats = pickle.load(stats_file)
+
+        SETTINGS.statistics = stats
+
     def get_canvas_size(self):
         SETTINGS.canvas_map_width = len(SETTINGS.levels_list[SETTINGS.current_level].array[0])*SETTINGS.tile_size
         SETTINGS.canvas_map_height = len(SETTINGS.levels_list[SETTINGS.current_level].array)*SETTINGS.tile_size
@@ -311,10 +317,11 @@ def update_game():
     if (SETTINGS.changing_level and SETTINGS.player_states['black']) or SETTINGS.player_states['dead']:
         if SETTINGS.current_level < len(SETTINGS.levels_list)-1 and SETTINGS.changing_level:
             SETTINGS.current_level += 1
+            SETTINGS.statistics['last levels']
             gameLoad.load_new_level()
         
         elif (SETTINGS.current_level == len(SETTINGS.levels_list)-1 or SETTINGS.player_states['dead']) and gameLoad.timer < 4 and not SETTINGS.player_states['fade']:
-            if SETTINGS.current_level == len(SETTINGS.levels_list)-1 and text.string != 'YOU  WON':
+            if not SETTINGS.player_states['dead'] and SETTINGS.current_level == len(SETTINGS.levels_list)-1 and text.string != 'YOU  WON':
                 text.update_string('YOU  WON')
             elif SETTINGS.player_states['dead'] and text.string != 'GAME  OVER':
                 text.update_string('GAME  OVER')
@@ -329,11 +336,34 @@ def update_game():
             gameLoad.timer = 0
             SETTINGS.game_won = False
             menuController.current_type = 'main'
+            menuController.current_menu = 'score'
+            calculate_statistics()
             SETTINGS.menu_showing = True
             SETTINGS.current_level = 0
+
+def calculate_statistics():
+    #Update 'all' stats
+    SETTINGS.statistics['all enemies'] += SETTINGS.statistics['last enemies']
+    SETTINGS.statistics['all ddealt'] += SETTINGS.statistics['last ddealt']
+    SETTINGS.statistics['all dtaken'] += SETTINGS.statistics['last dtaken']
+    SETTINGS.statistics['all shots'] += SETTINGS.statistics['last shots']
+    SETTINGS.statistics['all levels'] += SETTINGS.statistics['last levels']
+
+    #Update 'best' stats
+    if SETTINGS.statistics['best enemies'] < SETTINGS.statistics['last enemies']:
+        SETTINGS.statistics['best enemies'] = SETTINGS.statistics['last enemies']
+    if SETTINGS.statistics['best ddealt'] < SETTINGS.statistics['last ddealt']:
+        SETTINGS.statistics['best ddealt'] = SETTINGS.statistics['last ddealt']
+    if SETTINGS.statistics['best dtaken'] < SETTINGS.statistics['last dtaken']:
+        SETTINGS.statistics['best dtaken'] = SETTINGS.statistics['last dtaken']
+    if SETTINGS.statistics['best shots'] < SETTINGS.statistics['last shots']:
+        SETTINGS.statistics['best shots'] = SETTINGS.statistics['last shots']
+    if SETTINGS.statistics['best levels'] < SETTINGS.statistics['last levels']:
+        SETTINGS.statistics['best levels'] = SETTINGS.statistics['last levels']
+    #'last' statistics will be cleared when starting new game in menu.
+    with open(os.path.join('data', 'statistics.dat'), 'wb') as saved_stats:
+        pickle.dump(SETTINGS.statistics, saved_stats)
     
-        
-        
 
 
 #Main loop
@@ -346,7 +376,12 @@ def main_loop():
     
     while not game_exit:
         SETTINGS.zbuffer = []
-        menuController.play_time += SETTINGS.dt
+        if SETTINGS.play_seconds >= 60:
+            SETTINGS.statistics['playtime'] += 1
+            SETTINGS.play_seconds = 0
+        else:
+            SETTINGS.play_seconds += SETTINGS.dt
+            
         for event in pygame.event.get():
             if event.type == pygame.QUIT or SETTINGS.quit_game:
                 game_exit = True
@@ -356,6 +391,7 @@ def main_loop():
 ##                    b += x
 ##                print(b/len(allfps))
                 menuController.save_settings()
+                calculate_statistics()
                 pygame.quit()
                 sys.exit(0)
 
@@ -431,6 +467,7 @@ def main_loop():
 
       #  except Exception as e:
       #      menuController.save_settings()
+      #      calculate_statistics()
       #      logging.warning("DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.")
       #      logging.exception("Error message: ")
       #      pygame.quit()
