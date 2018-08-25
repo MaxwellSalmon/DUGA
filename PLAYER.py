@@ -229,13 +229,13 @@ class Player:
    #     elif key[pygame.K_q]:
    #         pygame.event.set_grab(True)
    #         self.mouse.set_visible(False)
-        else: #DEV REMOVE
+        else:
             pygame.event.set_grab(True)
             self.mouse.set_visible(False)
 
 ##        #Change to map view (DEV)
-        if key[pygame.K_m]:
-            SETTINGS.switch_mode = True
+##        if key[pygame.K_m]:
+##            SETTINGS.switch_mode = True
 ##
 ##
 ##        #Change FOV (DEV)

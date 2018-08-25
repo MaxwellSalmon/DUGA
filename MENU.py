@@ -282,6 +282,7 @@ class NewMenu(Menu):
         SETTINGS.next_gun = None
         SETTINGS.player_health = SETTINGS.og_player_health
         SETTINGS.player_armor = SETTINGS.og_player_armor
+        SETTINGS.current_level = 0
 
         SETTINGS.player_states['dead'] = False
         SETTINGS.player_states['invopen'] = False

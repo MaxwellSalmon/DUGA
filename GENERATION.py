@@ -562,8 +562,6 @@ class Generator:
 
                                 is_good = True
                                 spawned_npcs += 1
-
-        print("SPAWNED NPCS: ", spawned_npcs)
                                 
 
         #If there were no NPCs, place minimum amount

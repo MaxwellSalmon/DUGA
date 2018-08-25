@@ -80,13 +80,11 @@ class Npc:
 
         #Make NPC stronger if player is doing well
         if SETTINGS.player_health >= 90 or SETTINGS.player_armor >= 90:
-            print("player health or amor high, making npc stronger")
             self.dmg += 2
 
         #Give NPC more health if player has lots of ammo - phew, long line.
         if SETTINGS.inventory['primary'] and SETTINGS.held_ammo[SETTINGS.inventory['primary'].ammo_type] >= SETTINGS.max_ammo[SETTINGS.inventory['primary'].ammo_type]:
             self.health = int(self.health * 1.5)
-            print("player ammo high, making npc healthy!")
 
         #Npc actions
         self.dead = False
@@ -164,14 +162,12 @@ class Npc:
                                     self.path = []
                                     SOUND.play_sound(self.sounds['spot'], self.dist)
                                     self.state = 'attacking'
-                                    print("NPC %s is attacking you" % self.ID)
                     
                     elif self.state == 'patrouling':
                         if self.player_in_view and not SETTINGS.ignore_player and self.detect_player():
                             self.path = []
                             SOUND.play_sound(self.sounds['spot'], self.dist)
                             self.state = 'attacking'
-                            print("NPC %s is attacking you" % self.ID)
                         elif self.dist <= SETTINGS.tile_size / 2 and not SETTINGS.ignore_player:
                             state = 'attacking'
                         else:
@@ -191,7 +187,6 @@ class Npc:
                                     self.path = []
                                     SOUND.play_sound(self.sounds['spot'], self.dist)
                                     self.state = 'fleeing'
-                                    print("NPC %s is fleeing from you" % self.ID)
                             elif self.dist <= SETTINGS.tile_size / 2:
                                 state = 'attacking'
                         
@@ -202,7 +197,6 @@ class Npc:
                                     self.path = []
                                     SOUND.play_sound(self.sounds['spot'], self.dist)
                                     self.state = 'fleeing'
-                                    print("NPC %s is fleeing from you" % self.ID)
                         elif self.dist <= SETTINGS.tile_size / 2:
                             if not SETTINGS.ignore_player:
                                 state = 'attacking'
@@ -537,7 +531,7 @@ class Npc:
                     player_tile = PATHFINDING.find_near_position(SETTINGS.player_map_pos)
                     
                 if self.player_in_view:
-                    if self.detect_player():
+                    if self.detect_player() and player_tile:
                         if ((SETTINGS.walkable_area.index(flee_pos) < SETTINGS.walkable_area.index(player_tile) + int(SETTINGS.current_level_size[0] / 5)) or (SETTINGS.walkable_area.index(flee_pos) > SETTINGS.walkable_area.index(player_tile) - int(SETTINGS.current_level_size[0] / 5))) and self.path == []:
                             self.path_progress = 0
                             self.path = PATHFINDING.pathfind(self.map_pos, flee_pos.map_pos)
