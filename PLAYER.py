@@ -26,6 +26,7 @@ class Player:
         self.rect.x = self.real_x
         self.rect.y = self.real_y
         SETTINGS.player_rect = self.rect
+        self.last_pos_tile = None
 
         self.mouse = pygame.mouse
         self.sensitivity = SETTINGS.sensitivity
@@ -283,6 +284,36 @@ class Player:
                     self.real_y = self.rect.y
 
         SETTINGS.player_map_pos = [int(self.rect.centerx / SETTINGS.tile_size), int(self.rect.centery / SETTINGS.tile_size)]
+
+        #check if player is out of bounds and teleport them back.
+        generator_check_list = [x for x in SETTINGS.walkable_area if x.map_pos == SETTINGS.player_map_pos]
+        if generator_check_list:
+            pos = generator_check_list[0].map_pos
+        else:
+            pos = []
+
+        check_list = SETTINGS.walkable_area + SETTINGS.all_solid_tiles
+        out_generator = [x for x in check_list if x.map_pos == SETTINGS.player_map_pos]
+        if out_generator:
+            pos2 = out_generator[0].map_pos
+        else:
+            pos2 = []
+            
+        
+        if SETTINGS.player_map_pos == pos:
+            SETTINGS.last_player_map_pos = SETTINGS.player_map_pos
+            self.last_pos_tile = generator_check_list[0]
+            
+        elif SETTINGS.player_map_pos != pos2 and SETTINGS.last_player_map_pos:
+            if self.last_pos_tile:
+                SETTINGS.player_map_pos = SETTINGS.last_player_map_pos
+                self.rect.center = self.last_pos_tile.rect.center
+                SETTINGS.player_rect = self.rect
+                self.real_x = self.rect.x
+                self.real_y = self.rect.y
+            
+            
+            
 
     def draw(self, canvas):
         pointer = self.direction(0, 10)

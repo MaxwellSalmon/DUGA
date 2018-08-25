@@ -105,6 +105,7 @@ player_states = {
     'cspeed' : 0,
     }
 player = None
+last_player_map_pos = None
 
 
 '''Texture settings'''
