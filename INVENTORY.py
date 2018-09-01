@@ -240,16 +240,17 @@ class inventory:
                 i += 1
 
             #Update weapon stats  -  updates strings, even though it is not needed. Might want to change later, if needed.
-            self.text[0].update_string('%s' % SETTINGS.inventory[self.selected].name)
-            self.text[1].update_string('DAMAGE            : %s' % SETTINGS.inventory[self.selected].dmg)
-            self.text[2].update_string('SPREAD              : %s' % SETTINGS.inventory[self.selected].accuracy)
-            self.text[3].update_string('ACCURACY    : %s / 100' % SETTINGS.inventory[self.selected].hit_percent)
-            self.text[4].update_string('RANGE                 : %s' % SETTINGS.inventory[self.selected].range)
-            self.text[5].update_string('MAG SIZE      : %s' % SETTINGS.inventory[self.selected].mag_size)
-            self.text[6].update_string('REL TIME      : %s' % SETTINGS.inventory[self.selected].rlspeed)
-            self.text[7].update_string('FIR RATE      : %s' % SETTINGS.inventory[self.selected].firerate)
-            self.text[8].update_string('AMMO TYP  : %s' % SETTINGS.inventory[self.selected].ammo_type)
-            self.text[9].update_string('DROP')            
+            if SETTINGS.inventory[self.selected]:
+                self.text[0].update_string('%s' % SETTINGS.inventory[self.selected].name)
+                self.text[1].update_string('DAMAGE            : %s' % SETTINGS.inventory[self.selected].dmg)
+                self.text[2].update_string('SPREAD              : %s' % SETTINGS.inventory[self.selected].accuracy)
+                self.text[3].update_string('ACCURACY    : %s / 100' % SETTINGS.inventory[self.selected].hit_percent)
+                self.text[4].update_string('RANGE                 : %s' % SETTINGS.inventory[self.selected].range)
+                self.text[5].update_string('MAG SIZE      : %s' % SETTINGS.inventory[self.selected].mag_size)
+                self.text[6].update_string('REL TIME      : %s' % SETTINGS.inventory[self.selected].rlspeed)
+                self.text[7].update_string('FIR RATE      : %s' % SETTINGS.inventory[self.selected].firerate)
+                self.text[8].update_string('AMMO TYP  : %s' % SETTINGS.inventory[self.selected].ammo_type)
+                self.text[9].update_string('DROP')            
 
             #Update text
             x = 0
