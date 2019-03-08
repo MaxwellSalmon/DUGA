@@ -30,6 +30,7 @@ import GENERATION
 import MENU
 import MUSIC
 import TUTORIAL
+import PS4Controller
 
 pygame.init()
 pygame.font.init()
@@ -517,6 +518,13 @@ if __name__ == '__main__':
     menuController = MENU.Controller(gameCanvas.window)
     musicController = MUSIC.Music()
     tutorialController = TUTORIAL.Controller()
+
+    #Initialize the PlayStation controller
+    try:
+        ps4 = PS4Controller.PS4Controller()
+        ps4.init()
+    except Exception as ex:
+        print("Using keyboard and mouse only: %s" % ex)
 
     #Run at last
     main_loop()
