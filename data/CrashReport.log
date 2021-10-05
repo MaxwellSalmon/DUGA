@@ -1,0 +1,12 @@
+WARNING:root:DUGA has crashed. Please send this report to MaxwellSalmon, so he can fix it.
+ERROR:root:Error message: 
+Traceback (most recent call last):
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 447, in main_loop
+    render_screen(gameCanvas.canvas)
+  File "C:\Python34\Portfolio\PyGame\DUGA\MAIN.py", line 295, in render_screen
+    EFFECTS.render(gameCanvas.canvas)
+  File "C:\Python34\Portfolio\PyGame\DUGA\EFFECTS.py", line 48, in render
+    player_armor(canvas)
+  File "C:\Python34\Portfolio\PyGame\DUGA\EFFECTS.py", line 101, in player_armor
+    armor.fill((0, 0, 225, armor_intensity))
+TypeError: invalid color argument

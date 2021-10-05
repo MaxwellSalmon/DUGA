@@ -3,11 +3,11 @@
 '''Game settings'''
 current_level = 0
 fps = 31
-caption = "DUGA Beta v1.3"
+caption = "DUGA v1.4"
 mode = 1
 volume = 1
 music_volume = 1
-fullscreen = False
+fullscreen = True
 menu_showing = True
 #Below this point are the non-configurable game variables.
 current_level_size = None
@@ -50,7 +50,7 @@ screen_shake = 0
 '''Raycasting settings'''
 resolution = 140
 fov = 60
-render = 10
+render = 16
 shade = False
 shade_rgba = (0,0,0,255)
 shade_visibility = 1000

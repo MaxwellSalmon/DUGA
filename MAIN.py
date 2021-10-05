@@ -172,12 +172,13 @@ class Canvas:
             self.res_width = SETTINGS.canvas_actual_width
 
         if SETTINGS.fullscreen:
-            self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))) ,pygame.FULLSCREEN)
+            self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))), pygame.HWSURFACE + pygame.SCALED + pygame.NOFRAME + pygame.FULLSCREEN, 32, vsync=1)
         else:
             self.window = pygame.display.set_mode((self.width, int(self.height+(self.height*0.15))))
         self.canvas = pygame.Surface((self.width, self.height))
         
         pygame.display.set_caption("DUGA")
+
 
         self.shade = [pygame.Surface((self.width, self.height)).convert_alpha(),
                       pygame.Surface((self.width, self.height/1.2)).convert_alpha(),
@@ -372,7 +373,7 @@ def main_loop():
     clock = pygame.time.Clock()
     logging.basicConfig(filename = os.path.join('data', 'CrashReport.log'), level=logging.WARNING)
 
-#    allfps = []
+##    allfps = []
     
     while not game_exit:
         SETTINGS.zbuffer = []
@@ -381,6 +382,8 @@ def main_loop():
             SETTINGS.play_seconds = 0
         else:
             SETTINGS.play_seconds += SETTINGS.dt
+
+##        allfps.append(clock.get_fps())
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT or SETTINGS.quit_game:
@@ -390,6 +393,7 @@ def main_loop():
 ##                for x in allfps:
 ##                    b += x
 ##                print(b/len(allfps))
+                
                 menuController.save_settings()
                 calculate_statistics()
                 pygame.quit()

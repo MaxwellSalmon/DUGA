@@ -152,7 +152,7 @@ def show_title(canvas):
         if SETTINGS.current_level in int_to_string:
             title.update_string("%s  LEVEL" % int_to_string[SETTINGS.current_level])
         else:
-            title.update_string("%s.  LEVEL" % SETTINGS.current_level + 1)
+            title.update_string("LEVEL %s" % (SETTINGS.current_level + 1))
         white_box = pygame.Surface((title.layout.get_width()+5, title.layout.get_height()+5)).convert_alpha()
         white_box.fill((255,255,255,180))
 
