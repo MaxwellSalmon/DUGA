@@ -318,7 +318,7 @@ def update_game():
     if (SETTINGS.changing_level and SETTINGS.player_states['black']) or SETTINGS.player_states['dead']:
         if SETTINGS.current_level < len(SETTINGS.levels_list)-1 and SETTINGS.changing_level:
             SETTINGS.current_level += 1
-            SETTINGS.statistics['last levels']
+            SETTINGS.statistics['last levels'] += 1
             gameLoad.load_new_level()
         
         elif (SETTINGS.current_level == len(SETTINGS.levels_list)-1 or SETTINGS.player_states['dead']) and gameLoad.timer < 4 and not SETTINGS.player_states['fade']:
