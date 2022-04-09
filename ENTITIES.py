@@ -584,7 +584,7 @@ def load_npc_types():
             'soundpack' : 'soldier',
             },
         
-        #Soldier Patrouling
+        #Soldier Patrolling
         {
             'pos' : [0,0],
             'face' : 0,
@@ -593,7 +593,7 @@ def load_npc_types():
             'health': random.randint(12,15),
             'speed': 40,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'hitscan',
             'atckrate': 1,
             'id': 1,
@@ -620,7 +620,7 @@ def load_npc_types():
             'soundpack' : 'ninja',
             },
 
-        #Ninja patrouling
+        #Ninja patrolling
         {
             'pos' : [0,0],
             'face' : 0,
@@ -629,7 +629,7 @@ def load_npc_types():
             'health': 12,
             'speed': 60,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 0.8,
             'id': 3,
@@ -647,7 +647,7 @@ def load_npc_types():
             'health': 6,
             'speed': 70,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 0.6,
             'id': 4,
@@ -739,7 +739,7 @@ def load_npc_types():
             'health': random.randint(15,20),
             'speed': 30,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'hitscan',
             'atckrate': 1.5,
             'id': 9,
@@ -766,7 +766,7 @@ def load_npc_types():
             'soundpack' : 'ninja',
             },
 
-        #green ninja patrouling
+        #green ninja patrolling
         {
             'pos' : [0,0],
             'face' : 0,
@@ -775,7 +775,7 @@ def load_npc_types():
             'health': random.randint(8, 11),
             'speed': 100,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 0.5,
             'id': 11,
@@ -793,7 +793,7 @@ def load_npc_types():
             'health': 14,
             'speed': 35,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 1.1,
             'id': 12,
@@ -802,7 +802,7 @@ def load_npc_types():
             'soundpack' : 'ninja',
             },
 
-        #Zombie yellow patrouling
+        #Zombie yellow patrolling
         {
             'pos' : [0,0],
             'face' : 0,
@@ -811,7 +811,7 @@ def load_npc_types():
             'health': 20,
             'speed': 20,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 1,
             'id': 13,
@@ -865,7 +865,7 @@ def load_npc_types():
             'health': 5,
             'speed': 45,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'melee',
             'atckrate': 0.4,
             'id': 16,
@@ -883,7 +883,7 @@ def load_npc_types():
             'health': 15,
             'speed': 45,
             'mind': 'hostile',
-            'state': 'patrouling',
+            'state': 'patrolling',
             'atcktype': 'hitscan',
             'atckrate': 0.4,
             'id': 17,
