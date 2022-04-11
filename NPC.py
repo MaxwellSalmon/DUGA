@@ -149,7 +149,7 @@ class Npc:
                     if self.state == 'idle':
                         self.idle()
                         
-                    elif self.state == 'patrouling':
+                    elif self.state == 'patrolling':
                         self.move()
 
                 #HOSTILE
@@ -163,7 +163,7 @@ class Npc:
                                     SOUND.play_sound(self.sounds['spot'], self.dist)
                                     self.state = 'attacking'
                     
-                    elif self.state == 'patrouling':
+                    elif self.state == 'patrolling':
                         if self.player_in_view and not SETTINGS.ignore_player and self.detect_player():
                             self.path = []
                             SOUND.play_sound(self.sounds['spot'], self.dist)
@@ -190,7 +190,7 @@ class Npc:
                             elif self.dist <= SETTINGS.tile_size / 2:
                                 state = 'attacking'
                         
-                    elif self.state == 'patrouling':
+                    elif self.state == 'patrolling':
                         if self.player_in_view:
                             if not SETTINGS.ignore_player:
                                 if self.detect_player():
@@ -511,7 +511,7 @@ class Npc:
                 self.path = []
                 self.path_progress = 0
 
-        if self.state == 'patrouling':
+        if self.state == 'patrolling':
             if self.path == []:
                 if random.randint(0,3) == 3:
                     self.state = 'idle'
@@ -548,10 +548,10 @@ class Npc:
                 self.face -= 360
             self.idle_timer = 0
 
-            #Do only change to patrouling if it was that in the first place.
+            #Do only change to patrolling if it was that in the first place.
             if self.OG_state != 'idle':
                 if random.randint(0, 2) == 2:
-                    self.state = 'patrouling'
+                    self.state = 'patrolling'
 
         #Make NPC react to gunshot if close. Or just if the player is too close.
         if (self.dist <= SETTINGS.tile_size * 4 and SETTINGS.mouse_btn_active and SETTINGS.current_gun) or self.dist <= self.rect.width:
@@ -729,7 +729,7 @@ class Npc:
                 self.hurting = False
                 self.timer = 0
                 SOUND.play_sound(random.choice(self.sounds['damage']), self.dist)
-                if self.state == 'idle' or self.state == 'patrouling' or self.state == 'fleeing':
+                if self.state == 'idle' or self.state == 'patrolling' or self.state == 'fleeing':
                     self.face = self.face + self.theta
                     if self.face >= 360:
                         self.face -= 360
@@ -788,7 +788,7 @@ class Npc:
 #    'health' : health points,
 #    'speed': pixels per second,
 #    'mind': string -> hostile, passive, shy,
-#    'state': string -> idle, patrouling,
+#    'state': string -> idle, patrolling,
 #    'atcktype': string -> melee, hitscan,
 #    'atckrate': chance of attacking - lower = faster
 #    'id' : unique ID for npcs,
