@@ -10,6 +10,9 @@ The trailer for DUGA
 Inititally, my goal was to make a first person shooter with roguelike elements and local multiplayer. However, I discarded the multiplayer and kept the other parts.
 Now I just want the game to be good and I hope people will enjoy playing it!
 
+## Game doesn't start?
+
+Are you seeing a white rectangle on a black background? Try downgrading Pygame (2.1.3 should work)
 
 ## License
 
